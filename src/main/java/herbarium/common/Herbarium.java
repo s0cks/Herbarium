@@ -4,11 +4,21 @@ import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageGenerator;
 import herbarium.api.commentarium.IPageManager;
+import herbarium.common.core.brew.BrewLevelManager;
+import herbarium.common.core.brew.PlayerBrewLevel;
 import herbarium.common.core.commentarium.DefaultPageGenerator;
 import herbarium.common.core.commentarium.DefaultPages;
 import herbarium.common.items.ItemJournal;
+import herbarium.common.items.ItemPage;
+import herbarium.common.net.HerbariumNetwork;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -34,6 +44,10 @@ implements IPageManager{
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_commentarium")
             .setMaxStackSize(1);
+    public static final Item itemPage = new ItemPage()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_commentarium_page")
+            .setMaxStackSize(1);
 
     private final Set<IPage> pages = new HashSet<>();
     private IPageGenerator generator;
@@ -41,22 +55,45 @@ implements IPageManager{
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
         HerbariumApi.PAGE_MANAGER = this;
-        Collections.addAll(this.pages, DefaultPages.values());
+        for(DefaultPages page : DefaultPages.values()){
+            System.out.println("Registering Page: " + page);
+            register(page);
+        }
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
         GameRegistry.registerItem(itemJournal, "herba_commentarium");
+        GameRegistry.registerItem(itemPage, "herba_commentarium_page");
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
         this.generator = new DefaultPageGenerator(this);
+        HerbariumNetwork.init();
+        MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
     }
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent e){
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "brew_level";
+            }
 
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "brew_level";
+            }
+
+            @Override
+            public void processCommand(ICommandSender sender, String[] args)
+            throws CommandException {
+                PlayerBrewLevel level = PlayerBrewLevel.get(((EntityPlayer) sender));
+                ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText(level.get().name()));
+            }
+        });
     }
 
     @Override
@@ -67,6 +104,18 @@ implements IPageManager{
     @Override
     public Set<IPage> all() {
         return Collections.unmodifiableSet(this.pages);
+    }
+
+    @Override
+    public IPage get(String uuid) {
+        for(IPage page : this.pages){
+            System.out.println(page.uuid() + " ==? " + uuid);
+            if(page.uuid().equals(uuid)){
+                return page;
+            }
+        }
+
+        return null;
     }
 
     @Override
