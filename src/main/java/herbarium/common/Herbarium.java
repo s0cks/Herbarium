@@ -59,12 +59,14 @@ implements IPageManager{
             System.out.println("Registering Page: " + page);
             register(page);
         }
+
+        GameRegistry.registerItem(itemJournal, "herba_commentarium");
+        GameRegistry.registerItem(itemPage, "herba_commentarium_page");
+        proxy.registerRenders();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e){
-        GameRegistry.registerItem(itemJournal, "herba_commentarium");
-        GameRegistry.registerItem(itemPage, "herba_commentarium_page");
     }
 
     @Mod.EventHandler

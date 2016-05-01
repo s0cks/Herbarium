@@ -1,5 +1,8 @@
 package herbarium.common;
 
-public class CommonProxy{
+import net.minecraft.client.Minecraft;
 
+public class CommonProxy{
+    public void registerRenders(){}
+    public Minecraft getClient(){ return null; }
 }

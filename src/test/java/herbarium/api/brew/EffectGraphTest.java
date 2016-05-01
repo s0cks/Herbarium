@@ -1,7 +1,5 @@
 package herbarium.api.brew;
 
-import org.junit.Test;
-
 import java.util.Random;
 
 public class EffectGraphTest {
@@ -124,7 +122,6 @@ public class EffectGraphTest {
         }
     }
 
-    @Test
     public void testCanonicalize()
     throws Exception {
         EffectGraph graph = new EffectGraph();
