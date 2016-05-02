@@ -10,7 +10,7 @@ implements Iterable<IEffect>{
 
     public void add(IEffect effect){
         for(IEffect e : this.internal){
-            if(e.equals(effect)){
+            if(e.uuid().equals(effect.uuid())){
                 return;
             }
         }
