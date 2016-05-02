@@ -2,6 +2,7 @@ package herbarium.common.items;
 
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.IPage;
+import herbarium.common.core.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,21 +15,15 @@ public final class ItemPage
 extends Item {
     private static final String PAGE_TAG = "Page";
 
-    private static NBTTagCompound getCompound(ItemStack stack){
-        if(stack == null) return null;
-        if(!stack.hasTagCompound()) return null;
-        return stack.getTagCompound();
-    }
-
     public static void setPage(ItemStack stack, IPage page){
-        NBTTagCompound comp = getCompound(stack);
+        NBTTagCompound comp = NBTHelper.getCompound(stack);
         if(comp == null) comp = new NBTTagCompound();
         comp.setString(PAGE_TAG, page.uuid());
-        if(getCompound(stack) == null) stack.setTagCompound(comp);
+        if(!stack.hasTagCompound()) stack.setTagCompound(comp);
     }
 
     public static IPage getPage(ItemStack stack){
-        NBTTagCompound comp = getCompound(stack);
+        NBTTagCompound comp = NBTHelper.getCompound(stack);
         if(comp == null) return null;
         return HerbariumApi.PAGE_MANAGER.get(comp.getString(PAGE_TAG));
     }

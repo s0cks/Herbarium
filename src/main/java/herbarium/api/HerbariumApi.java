@@ -8,4 +8,5 @@ public final class HerbariumApi{
     public static IPageManager PAGE_MANAGER;
     public static IPageTracker PAGE_TRACKER;
     public static IMixerFactory MIXER_FACTORY;
+    public static IFlowerManager FLOWER_MANAGER;
 }

@@ -21,6 +21,8 @@ extends CommonProxy{
         // Items
         registerRender(Herbarium.itemJournal, "journal");
         registerRender(Herbarium.itemPage, "page");
+        registerRender(Herbarium.itemDust, "dust");
+        registerRender(Herbarium.itemMortarAndPestle, "mortar_pestle");
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");

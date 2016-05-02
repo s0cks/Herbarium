@@ -1,13 +1,17 @@
 package herbarium.common.blocks;
 
+import herbarium.api.IFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.EnumWorldBlockLayer;
 
 public final class BlockHerbariumFlower
-        extends Block{
-    public BlockHerbariumFlower(){
+extends Block{
+    public final IFlower flower;
+
+    public BlockHerbariumFlower(IFlower flower){
         super(Material.plants);
+        this.flower = flower;
     }
 
     @Override
