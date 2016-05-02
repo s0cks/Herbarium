@@ -8,6 +8,7 @@ import herbarium.api.commentarium.IPageManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
+import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.Mixer;
 import herbarium.common.core.brew.PlayerBrewLevel;
@@ -25,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -80,6 +82,30 @@ public final class Herbarium
     public static final Block blockBlueberry = new BlockHerbariumFlower()
                                                        .setCreativeTab(CreativeTabs.tabBrewing)
                                                        .setUnlocalizedName("herba_blueberry");
+    public static final Block blockButtercup = new BlockHerbariumFlower()
+                                                       .setCreativeTab(CreativeTabs.tabBrewing)
+                                                       .setUnlocalizedName("herba_buttercup");
+    public static final Block blockCave = new BlockHerbariumFlower()
+                                                  .setCreativeTab(CreativeTabs.tabBrewing)
+                                                  .setUnlocalizedName("herba_cave");
+    public static final Block blockDaisy = new BlockHerbariumFlower()
+                                                   .setCreativeTab(CreativeTabs.tabBrewing)
+                                                   .setUnlocalizedName("herba_daisy");
+    public static final Block blockFire = new BlockHerbariumFlower()
+                                                  .setCreativeTab(CreativeTabs.tabBrewing)
+                                                  .setUnlocalizedName("herba_fire");
+    public static final Block blockLongEarIris = new BlockHerbariumFlower()
+                                                         .setCreativeTab(CreativeTabs.tabBrewing)
+                                                         .setUnlocalizedName("herba_long_ear_iris");
+    public static final Block blockLotus = new BlockHerbariumFlower()
+                                                   .setCreativeTab(CreativeTabs.tabBrewing)
+                                                   .setUnlocalizedName("herba_lotus");
+    public static final Block blockNether = new BlockHerbariumFlower()
+                                                    .setCreativeTab(CreativeTabs.tabBrewing)
+                                                    .setUnlocalizedName("herba_nether");
+    public static final Block blockTropicalBerries = new BlockHerbariumFlower()
+                                                             .setCreativeTab(CreativeTabs.tabBrewing)
+                                                             .setUnlocalizedName("herba_tropical_berries");
 
     // Misc
     public static final Block blockDebug = new BlockDebug()
@@ -112,6 +138,14 @@ public final class Herbarium
         GameRegistry.registerBlock(blockBelladonna, "belladonna");
         GameRegistry.registerBlock(blockBlueAnemone, "blue_anemone");
         GameRegistry.registerBlock(blockBlueberry, "blueberry");
+        GameRegistry.registerBlock(blockButtercup, "buttercup");
+        GameRegistry.registerBlock(blockCave, "cave");
+        GameRegistry.registerBlock(blockDaisy, "daisy");
+        GameRegistry.registerBlock(blockFire, "fire");
+        GameRegistry.registerBlock(blockLongEarIris, "long_ear_iris");
+        GameRegistry.registerBlock(blockLotus, "lotus");
+        GameRegistry.registerBlock(blockNether, "nether");
+        GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
 
         // Misc
         GameRegistry.registerBlock(blockDebug, "debug");
@@ -129,6 +163,10 @@ public final class Herbarium
         HerbariumNetwork.init();
 
         MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.forest, blockAlstromeria));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.birchForest, blockButtercup));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.extremeHills, blockLongEarIris));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.jungle, blockTropicalBerries));
     }
 
     @Mod.EventHandler

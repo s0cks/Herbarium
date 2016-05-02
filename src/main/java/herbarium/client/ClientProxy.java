@@ -27,6 +27,14 @@ extends CommonProxy{
         registerRender(Herbarium.blockBelladonna, "belladonna");
         registerRender(Herbarium.blockBlueAnemone, "blue_anemone");
         registerRender(Herbarium.blockBlueberry, "blueberry");
+        registerRender(Herbarium.blockButtercup, "buttercup");
+        registerRender(Herbarium.blockCave, "cave");
+        registerRender(Herbarium.blockDaisy, "daisy");
+        registerRender(Herbarium.blockFire, "fire");
+        registerRender(Herbarium.blockLongEarIris, "long_ear_iris");
+        registerRender(Herbarium.blockLotus, "lotus");
+        registerRender(Herbarium.blockNether, "nether");
+        registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
     }
 
     private void registerRender(Block block, String id){
