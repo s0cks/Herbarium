@@ -4,13 +4,13 @@ import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageLocation;
 import net.minecraft.util.BlockPos;
 
-public final class DefaultPageLocation
+public final class PageLocation
 implements IPageLocation{
     private final IPage page;
     private final String description;
     private final BlockPos position;
 
-    protected DefaultPageLocation(PageLocationBuilder builder){
+    protected PageLocation(PageLocationBuilder builder){
         this.page = builder.page;
         this.description = builder.description;
         this.position = builder.pos;

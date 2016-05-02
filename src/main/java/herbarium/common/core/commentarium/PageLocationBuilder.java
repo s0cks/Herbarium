@@ -10,7 +10,7 @@ public final class PageLocationBuilder{
     protected String description;
 
     public IPageLocation build(){
-        return new DefaultPageLocation(this);
+        return new PageLocation(this);
     }
 
     protected void setDescription(String desc){

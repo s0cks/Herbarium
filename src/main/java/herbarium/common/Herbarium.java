@@ -2,13 +2,14 @@ package herbarium.common;
 
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.IPage;
-import herbarium.api.commentarium.IPageGenerator;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockAlstromeria;
+import herbarium.common.blocks.BlockDebug;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.PlayerBrewLevel;
-import herbarium.common.core.commentarium.DefaultPageGenerator;
+import herbarium.common.core.commentarium.PageBuilder;
+import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
@@ -60,16 +61,22 @@ implements IPageManager,
     public static final Block blockAlstromeria = new BlockAlstromeria()
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_alstromeria");
+    public static final Block blockDebug = new BlockDebug()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_debug");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
 
     private final Set<IPage> pages = new HashSet<>();
-    private IPageGenerator generator;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
         HerbariumApi.PAGE_MANAGER = this;
+        HerbariumApi.PAGE_TRACKER = new PageTracker();
+
+        this.register(new PageBuilder().setTitle("Contents").build());
+        this.register(new PageBuilder().setTitle("Alstromeria").build());
 
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
@@ -77,6 +84,7 @@ implements IPageManager,
 
         // Blocks
         GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
+        GameRegistry.registerBlock(blockDebug, "debug");
 
         proxy.registerRenders();
     }
@@ -88,8 +96,6 @@ implements IPageManager,
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
-        this.generator = new DefaultPageGenerator(this);
-
         HerbariumNetwork.init();
 
         MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
@@ -115,11 +121,24 @@ implements IPageManager,
                 ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText(level.get().name()));
             }
         });
-    }
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "pages_clear";
+            }
 
-    @Override
-    public IPageGenerator generator() {
-        return this.generator;
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "pages_clear";
+            }
+
+            @Override
+            public void processCommand(ICommandSender sender, String[] args)
+            throws CommandException {
+                PageTracker.set(((EntityPlayer) sender), new HashSet<IPage>());
+                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
+            }
+        });
     }
 
     @Override
@@ -130,12 +149,10 @@ implements IPageManager,
     @Override
     public IPage get(String uuid) {
         for(IPage page : this.pages){
-            System.out.println(page.uuid() + " ==? " + uuid);
             if(page.uuid().equals(uuid)){
                 return page;
             }
         }
-
         return null;
     }
 
@@ -152,7 +169,7 @@ implements IPageManager,
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch(ID){
-            case GUI_JOURNAL: return new GuiJournal();
+            case GUI_JOURNAL: return new GuiJournal(player);
             default: return null;
         }
     }

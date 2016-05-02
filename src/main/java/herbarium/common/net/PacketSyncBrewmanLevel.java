@@ -1,10 +1,10 @@
 package herbarium.common.net;
 
 import herbarium.api.brew.BrewmanLevel;
+import herbarium.common.Herbarium;
 import herbarium.common.core.brew.PlayerBrewLevel;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -43,7 +43,7 @@ public final class PacketSyncBrewmanLevel
     @Override
     @SideOnly(Side.CLIENT)
     public IMessage onMessage(PacketSyncBrewmanLevel message, MessageContext ctx) {
-        PlayerBrewLevel.get(FMLClientHandler.instance().getClient().thePlayer).set(message.level);
+        PlayerBrewLevel.get(Herbarium.proxy.getClient().thePlayer).set(message.level);
         return null;
     }
 }
