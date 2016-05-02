@@ -7,4 +7,5 @@ public interface IEffect{
     public boolean is(EffectType type);
     public IEffect combine(IEffect other);
     public float complexity();
+    public EffectType type();
 }

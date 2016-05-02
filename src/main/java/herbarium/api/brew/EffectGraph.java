@@ -99,4 +99,9 @@ public final class EffectGraph{
 
         return changed;
     }
+
+    public EffectSet compile(){
+        this.optimize();
+        return this.effects;
+    }
 }
