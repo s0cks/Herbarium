@@ -24,6 +24,9 @@ extends CommonProxy{
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
+        registerRender(Herbarium.blockBelladonna, "belladonna");
+        registerRender(Herbarium.blockBlueAnemone, "blue_anemone");
+        registerRender(Herbarium.blockBlueberry, "blueberry");
     }
 
     private void registerRender(Block block, String id){

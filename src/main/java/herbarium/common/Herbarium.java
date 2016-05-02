@@ -4,7 +4,7 @@ import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.client.gui.GuiJournal;
-import herbarium.common.blocks.BlockAlstromeria;
+import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.PlayerBrewLevel;
@@ -58,9 +58,22 @@ implements IPageManager,
             .setMaxStackSize(1);
 
     // Blocks
-    public static final Block blockAlstromeria = new BlockAlstromeria()
+    // Flowers
+    public static final Block blockAlstromeria = new BlockHerbariumFlower()
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_alstromeria");
+    public static final Block blockBelladonna = new BlockHerbariumFlower()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_belladonna");
+    public static final Block blockBlueAnemone = new BlockHerbariumFlower()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_blue_anemone");
+
+    public static final Block blockBlueberry = new BlockHerbariumFlower()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_blueberry");
+
+    // Misc
     public static final Block blockDebug = new BlockDebug()
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_debug");
@@ -83,7 +96,13 @@ implements IPageManager,
         GameRegistry.registerItem(itemPage, "page");
 
         // Blocks
+        // Flowers
         GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
+        GameRegistry.registerBlock(blockBelladonna, "belladonna");
+        GameRegistry.registerBlock(blockBlueAnemone, "blue_anemone");
+        GameRegistry.registerBlock(blockBlueberry, "blueberry");
+
+        // Misc
         GameRegistry.registerBlock(blockDebug, "debug");
 
         proxy.registerRenders();
