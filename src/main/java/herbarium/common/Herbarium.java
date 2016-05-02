@@ -8,8 +8,10 @@ import herbarium.api.brew.IMixerFactory;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.client.gui.GuiJournal;
+import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
+import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.DustRecipe;
 import herbarium.common.core.Flowers;
@@ -73,7 +75,7 @@ public final class Herbarium
                                                    .setMaxStackSize(1);
     public static final Item itemPage = new ItemPage()
                                                 .setCreativeTab(CreativeTabs.tabBrewing)
-                                                .setUnlocalizedName("herbar_page")
+                                                .setUnlocalizedName("herba_page")
                                                 .setMaxStackSize(1);
     public static final Item itemMortarAndPestle = new ItemMortarPestle()
                                                            .setCreativeTab(CreativeTabs.tabBrewing)
@@ -101,13 +103,13 @@ public final class Herbarium
     public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP)
                                                        .setCreativeTab(CreativeTabs.tabBrewing)
                                                        .setUnlocalizedName("herba_buttercup");
-    public static final Block blockCave = new BlockHerbariumFlower(Flowers.CAVE)
+    public static final Block blockCave = new BlockCaveFlower()
                                                   .setCreativeTab(CreativeTabs.tabBrewing)
                                                   .setUnlocalizedName("herba_cave");
     public static final Block blockDaisy = new BlockHerbariumFlower(Flowers.DAISY)
                                                    .setCreativeTab(CreativeTabs.tabBrewing)
                                                    .setUnlocalizedName("herba_daisy");
-    public static final Block blockFire = new BlockHerbariumFlower(Flowers.FIRE)
+    public static final Block blockFire = new BlockNetherFlower(Flowers.FIRE)
                                                   .setCreativeTab(CreativeTabs.tabBrewing)
                                                   .setUnlocalizedName("herba_fire");
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
@@ -116,7 +118,7 @@ public final class Herbarium
     public static final Block blockLotus = new BlockHerbariumFlower(Flowers.LOTUS)
                                                    .setCreativeTab(CreativeTabs.tabBrewing)
                                                    .setUnlocalizedName("herba_lotus");
-    public static final Block blockNether = new BlockHerbariumFlower(Flowers.NETHER)
+    public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
                                                     .setCreativeTab(CreativeTabs.tabBrewing)
                                                     .setUnlocalizedName("herba_nether");
     public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPCIAL_BERRIES)

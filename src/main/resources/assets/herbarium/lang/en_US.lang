@@ -1,0 +1,21 @@
+# Items
+# Misc
+item.herba_commentarium.name=Herba Commentarium
+item.herba_page.name=Herba Commentarium Page
+item.herba_mortar_pestle.name=Mortal & Pestle
+item.herba_dust.name=Dust
+
+# Blocks
+# Flowers
+tile.herba_alstromeria.name=Alstromeria
+tile.herba_belladonna.name=Belladonna
+tile.herba_blue_anemone.name=Blue Anemone
+tile.herba_blueberry.name=Blueberry
+tile.herba_cave.name=Cave Flower
+tile.herba_daisy.name=Daisy
+tile.herba_buttercup.name=Buttercup
+tile.herba_long_ear_iris.name=Long Ear Iris
+tile.herba_lotus.name=Lotus
+tile.herba_nether.name=Infernal Flower
+tile.herba_tropical_berries.name=Tropical Berries
+tile.herba_fire.name=Fire Flower
