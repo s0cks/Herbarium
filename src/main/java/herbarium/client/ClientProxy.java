@@ -2,6 +2,7 @@ package herbarium.client;
 
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -17,10 +18,23 @@ extends CommonProxy{
 
     @Override
     public void registerRenders(){
+        // Items
         registerRender(Herbarium.itemJournal, "journal");
+        registerRender(Herbarium.itemPage, "page");
+
+        // Blocks
+        registerRender(Herbarium.blockAlstromeria, "alstromeria");
+    }
+
+    private void registerRender(Block block, String id){
+        registerRender(Item.getItemFromBlock(block), id);
+    }
+
+    private void registerRender(Item item, int meta, String id){
+        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation("herbarium:" + id, "inventory"));
     }
 
     private void registerRender(Item item, String id){
-        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("herbarium:" + id, "inventory"));
+    	ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("herbarium:" + id, "inventory"));
     }
 }

@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public final class PacketSyncBrewmanLevel
         implements IMessageHandler<PacketSyncBrewmanLevel, IMessage>,
@@ -39,6 +41,7 @@ public final class PacketSyncBrewmanLevel
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public IMessage onMessage(PacketSyncBrewmanLevel message, MessageContext ctx) {
         PlayerBrewLevel.get(FMLClientHandler.instance().getClient().thePlayer).set(message.level);
         return null;
