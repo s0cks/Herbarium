@@ -23,11 +23,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.InputStreamReader;
-import java.util.Random;
 
 public final class RuinGenerator{
-    private final Random rand = new Random();
-
     public static void generate(IRuin ruin, World world, BlockPos start, IPage page){
         if(page == null) return;
         Minecraft mc = Herbarium.proxy.getClient();
@@ -68,10 +65,10 @@ public final class RuinGenerator{
     @SubscribeEvent
     public void onPlayerJoin(EntityJoinWorldEvent e){
         if(e.entity instanceof EntityPlayer && HerbariumConfig.GENERATE_SPAWN_RUIN.getBoolean()){
-            double x = e.entity.posX + this.rand.nextInt(150);
-            double z = e.entity.posZ + this.rand.nextInt(150);
+            double x = e.entity.posX + e.world.rand.nextInt(150);
+            double z = e.entity.posZ + e.world.rand.nextInt(150);
             BlockPos pos = e.world.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
-            RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(this.rand), e.world, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(((EntityPlayer) e.entity)));
+            RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(e.world.rand), e.world, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(((EntityPlayer) e.entity)));
             ((EntityPlayer) e.entity).addChatComponentMessage(new ChatComponentText("Spawned Ruin @" + pos));
             HerbariumConfig.GENERATE_SPAWN_RUIN.set(false);
             HerbariumConfig.save();

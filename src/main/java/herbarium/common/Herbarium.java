@@ -176,7 +176,8 @@ public final class Herbarium
         }
 
         String[] ruins = new String[]{
-            "basic"
+            "basic",
+            "wooden"
         };
 
         for(String str : ruins){

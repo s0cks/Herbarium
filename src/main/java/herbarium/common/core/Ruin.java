@@ -39,6 +39,7 @@ implements IRuin {
         public RuinContext(){
             this.define('X', Blocks.stone);
             this.define('R', Blocks.redstone_block);
+            this.define('W', Blocks.planks);
         }
 
         @Override
