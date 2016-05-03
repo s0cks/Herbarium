@@ -28,6 +28,13 @@ extends Block{
     }
 
     @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+        if(!canPlaceBlockAt(worldIn, pos)){
+            worldIn.destroyBlock(pos, true);
+        }
+    }
+
+    @Override
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
         return null;
     }

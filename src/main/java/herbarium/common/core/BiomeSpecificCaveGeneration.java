@@ -8,22 +8,24 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public final class BiomeSpecificGeneration{
+public final class BiomeSpecificCaveGeneration{
     private final BiomeGenBase biome;
     private final Block flower;
+    private final int maxY;
 
-    public BiomeSpecificGeneration(BiomeGenBase biome, Block flower){
+    public BiomeSpecificCaveGeneration(BiomeGenBase biome, Block flower, int maxY){
         this.flower = flower;
         this.biome = biome;
+        this.maxY = maxY;
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onDecoration(DecorateBiomeEvent e){
         if(e.getResult() == Event.Result.ALLOW || e.getResult() == Event.Result.DEFAULT){
-            for(int i = 0; i < 3; i++){
+            for(int i = 0; i < 40; i++){
                 int x = e.pos.getX() + e.rand.nextInt(16) + 8;
                 int z = e.pos.getZ() + e.rand.nextInt(16) + 8;
-                int y = e.world.getTopSolidOrLiquidBlock(e.pos).getY();
+                int y = e.rand.nextInt(this.maxY) + 4;
 
                 BlockPos pos = new BlockPos(x, y, z);
                 if(e.world.isAirBlock(pos) && this.biome.isEqualTo(e.world.getBiomeGenForCoords(pos)) && (!e.world.provider.getHasNoSky() || y < 127) && this.flower.canPlaceBlockAt(e.world, pos)){

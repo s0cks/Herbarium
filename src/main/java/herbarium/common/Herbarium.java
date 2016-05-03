@@ -12,6 +12,7 @@ import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockNetherFlower;
+import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.DustRecipe;
 import herbarium.common.core.Flowers;
@@ -193,6 +194,7 @@ public final class Herbarium
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.birchForest, blockButtercup));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.extremeHills, blockLongEarIris));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.jungle, blockTropicalBerries));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(BiomeGenBase.extremeHills, blockCave, 30));
     }
 
     @Mod.EventHandler
