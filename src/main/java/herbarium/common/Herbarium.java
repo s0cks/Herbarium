@@ -7,6 +7,8 @@ import herbarium.api.brew.IMixer;
 import herbarium.api.brew.IMixerFactory;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
+import herbarium.api.ruins.IRuin;
+import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockDebug;
@@ -16,6 +18,7 @@ import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.DustRecipe;
 import herbarium.common.core.Flowers;
+import herbarium.common.core.Ruin;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.Mixer;
 import herbarium.common.core.brew.PlayerBrewLevel;
@@ -61,6 +64,7 @@ public final class Herbarium
         implements IPageManager,
                    IGuiHandler,
                    IMixerFactory,
+                   IRuinManager,
                    IFlowerManager{
     @Mod.Instance("herbarium")
     public static Herbarium instance;
@@ -136,6 +140,7 @@ public final class Herbarium
 
     private final Set<IPage> pages = new HashSet<>();
     private final List<IFlower> flowers = new LinkedList<>();
+    private final List<IRuin> ruins = new LinkedList<>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -143,6 +148,7 @@ public final class Herbarium
         HerbariumApi.PAGE_TRACKER = new PageTracker();
         HerbariumApi.MIXER_FACTORY = this;
         HerbariumApi.FLOWER_MANAGER = this;
+        HerbariumApi.RUIN_MANAGER = this;
 
         String[] titles = new String[]{
             "Commentarium",
@@ -162,6 +168,14 @@ public final class Herbarium
 
         for(String str : titles){
             register(new PageBuilder().setTitle(str).build());
+        }
+
+        String[] ruins = new String[]{
+            "basic"
+        };
+
+        for(String str : ruins){
+            register(new Ruin(str));
         }
 
         // Items
@@ -337,5 +351,27 @@ public final class Herbarium
     @Override
     public IMixer newMixer() {
         return new Mixer();
+    }
+
+    @Override
+    public void register(IRuin ruin) {
+        for(IRuin r : this.ruins){
+            if(r.uuid().equals(ruin.uuid())){
+                return;
+            }
+        }
+
+        this.ruins.add(ruin);
+    }
+
+    @Override
+    public IRuin getRuin(String uuid) {
+        for(IRuin r : this.ruins){
+            if(r.uuid().equals(uuid)){
+                return r;
+            }
+        }
+
+        return null;
     }
 }

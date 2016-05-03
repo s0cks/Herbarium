@@ -3,10 +3,12 @@ package herbarium.api;
 import herbarium.api.brew.IMixerFactory;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.api.commentarium.IPageTracker;
+import herbarium.api.ruins.IRuinManager;
 
 public final class HerbariumApi{
     public static IPageManager PAGE_MANAGER;
     public static IPageTracker PAGE_TRACKER;
     public static IMixerFactory MIXER_FACTORY;
     public static IFlowerManager FLOWER_MANAGER;
+    public static IRuinManager RUIN_MANAGER;
 }
