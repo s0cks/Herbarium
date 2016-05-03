@@ -33,7 +33,7 @@ public final class PacketSyncPageData
     public void fromBytes(ByteBuf buf) {
         NBTTagCompound comp = ByteBufUtils.readTag(buf);
         if(comp.hasKey("Pages")){
-            NBTTagList list = comp.getTagList("Pages", 10);
+            NBTTagList list = comp.getTagList("Pages", 8);
             this.pages = new HashSet<IPage>();
             for(int i = 0; i < list.tagCount(); i++){
                 this.pages.add(HerbariumApi.PAGE_MANAGER.get(list.getStringTagAt(i)));

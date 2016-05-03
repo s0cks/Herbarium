@@ -37,4 +37,8 @@ public enum BrewmanLevel{
             return values()[level.ordinal() - 1];
         }
     }
+
+    public String localizedName(){
+        return "herbarium.brewman_level." + this.name().toLowerCase();
+    }
 }

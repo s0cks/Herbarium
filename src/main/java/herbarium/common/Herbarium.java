@@ -144,10 +144,25 @@ public final class Herbarium
         HerbariumApi.MIXER_FACTORY = this;
         HerbariumApi.FLOWER_MANAGER = this;
 
-        this.register(new PageBuilder().setTitle("Contents")
-                                       .build());
-        this.register(new PageBuilder().setTitle("Alstromeria")
-                                       .build());
+        String[] titles = new String[]{
+            "Commentarium",
+            "Alstromeria",
+            "Belladonna",
+            "Blue Anemone",
+            "Blueberry",
+            "Buttercup",
+            "Cave",
+            "Daisy",
+            "Fire",
+            "Long Ear Iris",
+            "Lotus",
+            "Nether",
+            "Tropical Berries"
+        };
+
+        for(String str : titles){
+            register(new PageBuilder().setTitle(str).build());
+        }
 
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
@@ -190,6 +205,8 @@ public final class Herbarium
         HerbariumNetwork.init();
 
         MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
+
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.forest, blockAlstromeria));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.birchForest, blockButtercup));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.extremeHills, blockLongEarIris));
@@ -236,6 +253,26 @@ public final class Herbarium
                 HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
             }
         });
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "pages_all";
+            }
+
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "pages_all";
+            }
+
+            @Override
+            public void processCommand(ICommandSender sender, String[] args)
+            throws CommandException {
+                for(IPage page : pages){
+                    HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
+                }
+                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
+            }
+        });
     }
 
     @Override
@@ -251,6 +288,7 @@ public final class Herbarium
                 return page;
             }
         }
+
         return null;
     }
 

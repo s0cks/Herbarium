@@ -24,6 +24,12 @@ implements IPage {
 
     @Override
     public String uuid() {
-        return "herbarium." + this.title;
+        return "herbarium." + this.title.toLowerCase();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return obj instanceof Page
+            && ((Page) obj).uuid().equals(this.uuid());
     }
 }
