@@ -23,9 +23,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 public final class PageTracker
@@ -127,19 +130,15 @@ implements IPageTracker{
 
     @Override
     public IPage unlearnedPage(EntityPlayer player) {
-        Set<IPage> all = HerbariumApi.PAGE_MANAGER.all();
+        Queue<IPage> all = new LinkedList<>(HerbariumApi.PAGE_MANAGER.all());
+        Collections.shuffle(((LinkedList<IPage>) all));
         PageData data = get(player);
-        it:
-        for(IPage page0 : all){
-            for(IPage page1 : data.pages){
-               if(page0.uuid().equals(page1.uuid())){
-                   continue it;
-               }
-            }
-            return page0;
-        }
 
-        return null;
+        IPage page;
+        do{
+            page = all.poll();
+        } while(!all.isEmpty() && data.pages.contains(page));
+        return page;
     }
 
     @Override

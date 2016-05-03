@@ -1,7 +1,5 @@
 package herbarium.common.blocks;
 
-import herbarium.api.HerbariumApi;
-import herbarium.common.core.RuinGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,7 +16,6 @@ extends Block {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-        RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRuin("herbarium.ruin.basic"), worldIn, pos);
         return true;
     }
 }

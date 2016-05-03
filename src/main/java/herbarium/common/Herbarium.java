@@ -19,6 +19,7 @@ import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.DustRecipe;
 import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
+import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.Mixer;
 import herbarium.common.core.brew.PlayerBrewLevel;
@@ -40,6 +41,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -54,6 +56,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Mod(modid = "herbarium",
@@ -144,6 +147,8 @@ public final class Herbarium
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
+        HerbariumConfig.init(new Configuration(e.getSuggestedConfigurationFile()));
+
         HerbariumApi.PAGE_MANAGER = this;
         HerbariumApi.PAGE_TRACKER = new PageTracker();
         HerbariumApi.MIXER_FACTORY = this;
@@ -220,6 +225,7 @@ public final class Herbarium
 
         MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
         MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
+        MinecraftForge.EVENT_BUS.register(new RuinGenerator());
 
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.forest, blockAlstromeria));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.birchForest, blockButtercup));
@@ -373,5 +379,16 @@ public final class Herbarium
         }
 
         return null;
+    }
+
+    @Override
+    public IRuin getRandom(Random rand) {
+        for(IRuin ruin : this.ruins){
+            if(rand.nextBoolean()){
+                return ruin;
+            }
+        }
+
+        return this.ruins.get(0);
     }
 }
