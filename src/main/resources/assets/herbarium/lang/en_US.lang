@@ -19,3 +19,6 @@ tile.herba_lotus.name=Lotus
 tile.herba_nether.name=Infernal Flower
 tile.herba_tropical_berries.name=Tropical Berries
 tile.herba_fire.name=Fire Flower
+
+# Misc
+tile.herba_crucible.name=Crucible

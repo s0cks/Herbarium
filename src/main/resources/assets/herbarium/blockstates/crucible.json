@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:crucible",
+      "textures": {
+        "main": "herbarium:models/crucible"
+      }
+    },
+    "inventory": {
+      "model": "herbarium:crucible",
+      "textures": {
+        "main": "herbarium:models/crucible"
+      }
+    }
+  }
+}

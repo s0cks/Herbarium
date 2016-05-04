@@ -37,6 +37,8 @@ extends CommonProxy{
         registerRender(Herbarium.blockLotus, "lotus");
         registerRender(Herbarium.blockNether, "nether");
         registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
+        registerRender(Herbarium.blockCrucible, "crucible");
+        registerRender(Herbarium.blockPipe, "pipe");
     }
 
     private void registerRender(Block block, String id){

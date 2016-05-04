@@ -1,4 +1,5 @@
-"elements": [ 
+{
+    "elements": [
 {
     "__comment": "Pipe",
     "from": [ 0, 7, 7 ],

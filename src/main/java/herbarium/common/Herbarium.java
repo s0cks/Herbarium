@@ -11,9 +11,11 @@ import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockCaveFlower;
+import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockNetherFlower;
+import herbarium.common.blocks.BlockPipe;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.DustRecipe;
@@ -30,6 +32,7 @@ import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemMortarPestle;
 import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
+import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -137,6 +140,12 @@ public final class Herbarium
     public static final Block blockDebug = new BlockDebug()
                                                    .setCreativeTab(CreativeTabs.tabBrewing)
                                                    .setUnlocalizedName("herba_debug");
+    public static final Block blockCrucible = new BlockCrucible()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_crucible");
+    public static final Block blockPipe = new BlockPipe()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_pipe");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
@@ -207,6 +216,11 @@ public final class Herbarium
 
         // Misc
         GameRegistry.registerBlock(blockDebug, "debug");
+        GameRegistry.registerBlock(blockCrucible, "crucible");
+        GameRegistry.registerBlock(blockPipe, "pipe");
+
+        // Tiles
+        GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
 
         proxy.registerRenders();
     }
