@@ -11,7 +11,9 @@ import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockCaveFlower;
+import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
+import herbarium.common.blocks.BlockFlume;
 import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockNetherFlower;
@@ -143,6 +145,12 @@ public final class Herbarium
     public static final Block blockCrucible = new BlockCrucible()
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_crucible");
+    public static final Block blockCoil = new BlockCoil()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_coil");
+    public static final Block blockFlume = new BlockFlume()
+            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setUnlocalizedName("herba_flume");
     public static final Block blockPipe = new BlockPipe()
             .setCreativeTab(CreativeTabs.tabBrewing)
             .setUnlocalizedName("herba_pipe");
@@ -217,6 +225,8 @@ public final class Herbarium
         // Misc
         GameRegistry.registerBlock(blockDebug, "debug");
         GameRegistry.registerBlock(blockCrucible, "crucible");
+        GameRegistry.registerBlock(blockCoil, "coil");
+        GameRegistry.registerBlock(blockFlume, "flume");
         GameRegistry.registerBlock(blockPipe, "pipe");
 
         // Tiles

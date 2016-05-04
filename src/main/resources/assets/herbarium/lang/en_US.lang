@@ -21,4 +21,7 @@ tile.herba_tropical_berries.name=Tropical Berries
 tile.herba_fire.name=Fire Flower
 
 # Misc
-tile.herba_crucible.name=Crucible
+tile.herba_coil.name=Condensation Coil
+tile.herba_crucible.name=Rusted Crucible
+tile.herba_flume.name=Vapor Flume
+tile.herba_pipe.name=Vessel

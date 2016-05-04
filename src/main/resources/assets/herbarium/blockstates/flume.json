@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:flume",
+      "textures": {
+        "main": "herbarium:models/flume"
+      }
+    },
+    "inventory": {
+      "model": "herbarium:flume",
+      "textures": {
+        "main": "herbarium:models/flume"
+      }
+    }
+  }
+}
