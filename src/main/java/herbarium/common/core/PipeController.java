@@ -56,6 +56,7 @@ implements IPipeConnector{
 
     @Override
     public void remove(BlockPos pos) {
+        if(this.connections.isEmpty()) return;
         if(!hasConnectionTo(pos)) return;
 
         for(PipeConnection conn : this){
@@ -67,6 +68,7 @@ implements IPipeConnector{
 
     @Override
     public boolean hasConnectionTo(BlockPos pos) {
+        if(this.connections.isEmpty()) return false;
         for(PipeConnection conn : this){
             if(conn.from.equals(pos)){
                 return true;
