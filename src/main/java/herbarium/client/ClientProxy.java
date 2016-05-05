@@ -1,6 +1,5 @@
 package herbarium.client;
 
-import herbarium.client.render.RenderItemPageFP;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
 import net.minecraft.block.Block;
@@ -8,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 public final class ClientProxy
@@ -41,8 +39,6 @@ extends CommonProxy{
         registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
         registerRender(Herbarium.blockCrucible, "crucible");
         registerRender(Herbarium.blockPipe, "pipe");
-
-        MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
     }
 
     private void registerRender(Block block, String id){

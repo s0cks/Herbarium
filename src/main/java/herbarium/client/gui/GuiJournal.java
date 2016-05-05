@@ -49,12 +49,6 @@ extends GuiScreen{
         int x = this.guiLeft - XSIZE + 60;
         int y = this.guiTop - YSIZE - 10;
 
-        GL11.glPushMatrix();
-        GL11.glScalef(0.5F, 0.5F, 0.5F);
-        this.fontRendererObj.drawString("Table of Contents", x - 15, y += (this.fontRendererObj.FONT_HEIGHT + 10), 0x000000);
-        GL11.glScalef(1.0F, 1.0F, 1.0F);
-        GL11.glPopMatrix();
-
         if(this.pages != null){
             int count = 0;
             for(IPage page : this.pages){
