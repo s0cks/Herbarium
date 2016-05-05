@@ -85,7 +85,7 @@ public final class RenderItemPageFP{
             if(page != null){
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
                 GlStateManager.translate(-5.0F, 10.0F, -1.0F);
-                mc.fontRendererObj.drawString(page.title(), 10, 10, 0x000000);
+                page.renderer().render(e.getPartialTicks());
             }
 
             GlStateManager.popMatrix();

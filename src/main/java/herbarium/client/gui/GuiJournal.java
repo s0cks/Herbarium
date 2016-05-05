@@ -2,12 +2,7 @@ package herbarium.client.gui;
 
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.IPage;
-import herbarium.client.md.IMarkdownComponent;
-import herbarium.client.md.MarkdownComponentContainer;
-import herbarium.client.md.MarkdownRenderer;
-import herbarium.common.Herbarium;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,13 +20,6 @@ extends GuiScreen{
             "XI", "XII", "XIII", "XIV", "XV",
             "XVI", "XVII", "XVIII", "XIX", "XX"
     };
-    private static final ResourceLocation markdown = new ResourceLocation("herbarium", "pages/Test.md");
-    private static final MarkdownComponentContainer container = new MarkdownComponentContainer();
-
-    static{
-        (new MarkdownRenderer(container)).render(Herbarium.proxy.getClient(), markdown);
-    }
-
     private static final ResourceLocation texture = new ResourceLocation("herbarium", "textures/gui/journal_gui.png");
     private static final int XSIZE = 190;
     private static final int YSIZE = 93;
@@ -78,12 +66,5 @@ extends GuiScreen{
                 GL11.glPopMatrix();
             }
         }
-
-        GlStateManager.translate(this.guiLeft - XSIZE + 60, this.guiTop - YSIZE - 23, 1.0F);
-        GlStateManager.scale(0.3F, 0.3F, 0.3F);
-        for (IMarkdownComponent comp : container) {
-            comp.render(0, 0, partialTicks);
-        }
-        GlStateManager.scale(1.0F, 1.0F, 1.0F);
     }
 }

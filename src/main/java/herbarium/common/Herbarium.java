@@ -26,6 +26,8 @@ import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.Mixer;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageTracker;
+import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
+import herbarium.common.core.commentarium.renderer.TextPageRenderer;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
@@ -39,6 +41,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -156,25 +159,8 @@ public final class Herbarium
         HerbariumApi.FLOWER_MANAGER = this;
         HerbariumApi.RUIN_MANAGER = this;
 
-        String[] titles = new String[]{
-            "Commentarium",
-            "Alstromeria",
-            "Belladonna",
-            "Blue Anemone",
-            "Blueberry",
-            "Buttercup",
-            "Cave",
-            "Daisy",
-            "Fire",
-            "Long Ear Iris",
-            "Lotus",
-            "Nether",
-            "Tropical Berries"
-        };
-
-        for(String str : titles){
-            register(new PageBuilder().setTitle(str).build());
-        }
+        this.register(new PageBuilder().setTitle("Commentarium").setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt"))).build());
+        this.register(new PageBuilder().setTitle("Tropical Berries").setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md"))).build());
 
         String[] ruins = new String[]{
             "basic",
