@@ -28,14 +28,14 @@
   
 ### 3: Ingame Doc
  - [ ] Own font
- - [ ] Markdown Support
- - [ ] Chapter System
-  - [ ] Introduction chapter where lore is explained so that other entries arent flooded with it but linked (for example like Thaumcraft)
-  - [ ] Each mechanic a new chapter
-  - [ ] Chapters get unlocked by ?
-  - [ ] Each chapter has a headline and a roman numeral
-  - [ ] Chapters contain array of entries (http://i.imgur.com/YTBnxAD.png)
-    - [ ] Entries contain information for the object in an informing but lore-y kind of way with pics (see thaumonomicon as the best example)
+ - [ ] Markdown Support *
+ - [ ] Chapter System *
+  - [ ] Introduction chapter where lore is explained so that other entries arent flooded with it but linked (for example like Thaumcraft) *
+  - [ ] Each mechanic a new chapter *
+  - [ ] Chapters get unlocked by ? *
+  - [ ] Each chapter has a headline and a roman numeral *
+  - [ ] Chapters contain array of entries (http://i.imgur.com/YTBnxAD.png) *
+    - [ ] Entries contain information for the object in an informing but lore-y kind of way with pics (see thaumonomicon as the best example) *
   - [ ] Index searching
   
 ### 4: Breeding
