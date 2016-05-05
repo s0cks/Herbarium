@@ -5,6 +5,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -16,7 +17,6 @@ extends BlockContainer{
         super(Material.IRON);
     }
 
-    /*
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
@@ -27,25 +27,9 @@ extends BlockContainer{
         return false;
     }
 
-    @Override
-<<<<<<< HEAD
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
-=======
-    public int getRenderType() {
-        return 3;
     }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-        for(PipeConnection conn : ((TileEntityPipe) worldIn.getTileEntity(pos)).connector()){
-            playerIn.addChatComponentMessage(new TextComponentString("Connection " + conn.from + " -> " + conn.to));
-        }
-
-        return true;
->>>>>>> be897837bab9097fd55a882db36e3c210b8e084a
-    }
-    */
 
     @Override
     public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {

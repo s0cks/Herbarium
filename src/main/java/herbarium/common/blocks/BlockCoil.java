@@ -10,7 +10,6 @@ public final class BlockCoil
         super(Material.IRON);
     }
 
-    /*
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
@@ -20,5 +19,4 @@ public final class BlockCoil
     public boolean isNormalCube(IBlockState state) {
         return false;
     }
-    */
 }

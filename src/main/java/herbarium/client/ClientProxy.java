@@ -1,6 +1,7 @@
 package herbarium.client;
 
 import herbarium.common.CommonProxy;
+import herbarium.common.Herbarium;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,12 +18,9 @@ extends CommonProxy{
 
     @Override
     public void registerRenders(){
-        /*
         // Items
         registerRender(Herbarium.itemJournal, "journal");
         registerRender(Herbarium.itemPage, "page");
-        registerRender(Herbarium.itemDust, "dust");
-        registerRender(Herbarium.itemMortarAndPestle, "mortar_pestle");
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
@@ -41,7 +39,6 @@ extends CommonProxy{
         registerRender(Herbarium.blockCrucible, "crucible");
         registerRender(Herbarium.blockFlume, "flume");
         registerRender(Herbarium.blockPipe, "pipe");
-        */
     }
 
     private void registerRender(Block block, String id){

@@ -31,10 +31,14 @@ import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -188,7 +192,7 @@ public final class Herbarium
         // Blocks
         // Flowers
         GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
-        GameRegistry.registerBlock(blockBelladonna, "belledonna");
+        GameRegistry.registerBlock(blockBelladonna, "belladonna");
         GameRegistry.registerBlock(blockBlueAnemone, "blue_anemone");
         GameRegistry.registerBlock(blockBlueberry, "blueberry");
         GameRegistry.registerBlock(blockButtercup, "buttercup");
@@ -236,7 +240,28 @@ public final class Herbarium
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent e) {
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "pages_all";
+            }
 
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "pages_all";
+            }
+
+            @Override
+            public void execute(MinecraftServer server, ICommandSender sender, String[] args)
+            throws CommandException {
+                for(IPage page : HerbariumApi.PAGE_MANAGER.all()){
+                    if(!HerbariumApi.PAGE_TRACKER.learned(((EntityPlayer) sender), page)){
+                        HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
+                    }
+                }
+                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
+            }
+        });
     }
 
     @Override
