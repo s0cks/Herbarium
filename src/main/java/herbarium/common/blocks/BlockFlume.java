@@ -2,20 +2,21 @@ package herbarium.common.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 
 public final class BlockFlume
         extends Block{
     public BlockFlume(){
-        super(Material.iron);
+        super(Material.IRON);
     }
 
     @Override
-    public boolean isOpaqueCube() {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isNormalCube() {
+    public boolean isNormalCube(IBlockState state) {
         return false;
     }
 }

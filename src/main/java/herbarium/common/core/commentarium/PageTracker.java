@@ -5,13 +5,13 @@ import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageTracker;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.net.PacketSyncPageData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -80,7 +80,7 @@ implements IPageTracker{
     }
 
     public void loadPlayerData(EntityPlayer player){
-        IPlayerFileData nbtManager = MinecraftServer.getServer()
+        IPlayerFileData nbtManager = Minecraft.getMinecraft().getIntegratedServer()
                                                     .worldServerForDimension(0)
                                                     .getSaveHandler().getPlayerNBTManager();
         SaveHandler handler = ((SaveHandler) nbtManager);
@@ -93,7 +93,7 @@ implements IPageTracker{
     }
 
     public void savePlayerData(EntityPlayer player){
-        IPlayerFileData nbtManager = MinecraftServer.getServer()
+        IPlayerFileData nbtManager = Minecraft.getMinecraft().getIntegratedServer()
                                                     .worldServerForDimension(0)
                                                     .getSaveHandler().getPlayerNBTManager();
         SaveHandler handler = ((SaveHandler) nbtManager);
@@ -172,12 +172,12 @@ implements IPageTracker{
 
     @SubscribeEvent
     public void onPlayerLoad(PlayerEvent.LoadFromFile e){
-        loadPlayerData(e.entityPlayer);
+        loadPlayerData(e.getEntityPlayer());
     }
 
     @SubscribeEvent
     public void onPlayerSave(PlayerEvent.SaveToFile e){
-        savePlayerData(e.entityPlayer);
+        savePlayerData(e.getEntityPlayer());
     }
 
     @SubscribeEvent

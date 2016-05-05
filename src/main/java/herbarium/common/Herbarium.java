@@ -14,37 +14,28 @@ import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockFlume;
-import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
-import herbarium.common.core.DustRecipe;
 import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.BrewLevelManager;
 import herbarium.common.core.brew.Mixer;
-import herbarium.common.core.brew.PlayerBrewLevel;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageTracker;
-import herbarium.common.items.ItemDust;
 import herbarium.common.items.ItemJournal;
-import herbarium.common.items.ItemMortarPestle;
 import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -83,76 +74,65 @@ public final class Herbarium
 
     // Items
     public static final Item itemJournal = new ItemJournal()
-                                                   .setCreativeTab(CreativeTabs.tabBrewing)
+                                                   .setCreativeTab(CreativeTabs.BREWING)
                                                    .setUnlocalizedName("herba_commentarium")
                                                    .setMaxStackSize(1);
     public static final Item itemPage = new ItemPage()
-                                                .setCreativeTab(CreativeTabs.tabBrewing)
+                                                .setCreativeTab(CreativeTabs.BREWING)
                                                 .setUnlocalizedName("herba_page")
                                                 .setMaxStackSize(1);
-    public static final Item itemMortarAndPestle = new ItemMortarPestle()
-                                                           .setCreativeTab(CreativeTabs.tabBrewing)
-                                                           .setUnlocalizedName("herba_mortar_pestle")
-                                                           .setMaxStackSize(1);
-    public static final Item itemDust = new ItemDust()
-                                                .setCreativeTab(CreativeTabs.tabBrewing)
-                                                .setUnlocalizedName("herba_dust")
-                                                .setMaxStackSize(16);
 
     // Blocks
     // Flowers
     public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA)
-                                                         .setCreativeTab(CreativeTabs.tabBrewing)
+                                                         .setCreativeTab(CreativeTabs.BREWING)
                                                          .setUnlocalizedName("herba_alstromeria");
     public static final Block blockBelladonna = new BlockHerbariumFlower(Flowers.BELLADONNA)
-                                                        .setCreativeTab(CreativeTabs.tabBrewing)
+                                                        .setCreativeTab(CreativeTabs.BREWING)
                                                         .setUnlocalizedName("herba_belladonna");
     public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE)
-                                                         .setCreativeTab(CreativeTabs.tabBrewing)
+                                                         .setCreativeTab(CreativeTabs.BREWING)
                                                          .setUnlocalizedName("herba_blue_anemone");
     public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY)
-                                                       .setCreativeTab(CreativeTabs.tabBrewing)
+                                                       .setCreativeTab(CreativeTabs.BREWING)
                                                        .setUnlocalizedName("herba_blueberry");
     public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP)
-                                                       .setCreativeTab(CreativeTabs.tabBrewing)
+                                                       .setCreativeTab(CreativeTabs.BREWING)
                                                        .setUnlocalizedName("herba_buttercup");
     public static final Block blockCave = new BlockCaveFlower()
-                                                  .setCreativeTab(CreativeTabs.tabBrewing)
+                                                  .setCreativeTab(CreativeTabs.BREWING)
                                                   .setUnlocalizedName("herba_cave");
     public static final Block blockDaisy = new BlockHerbariumFlower(Flowers.DAISY)
-                                                   .setCreativeTab(CreativeTabs.tabBrewing)
+                                                   .setCreativeTab(CreativeTabs.BREWING)
                                                    .setUnlocalizedName("herba_daisy");
     public static final Block blockFire = new BlockNetherFlower(Flowers.FIRE)
-                                                  .setCreativeTab(CreativeTabs.tabBrewing)
+                                                  .setCreativeTab(CreativeTabs.BREWING)
                                                   .setUnlocalizedName("herba_fire");
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
-                                                         .setCreativeTab(CreativeTabs.tabBrewing)
+                                                         .setCreativeTab(CreativeTabs.BREWING)
                                                          .setUnlocalizedName("herba_long_ear_iris");
     public static final Block blockLotus = new BlockHerbariumFlower(Flowers.LOTUS)
-                                                   .setCreativeTab(CreativeTabs.tabBrewing)
+                                                   .setCreativeTab(CreativeTabs.BREWING)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
-                                                    .setCreativeTab(CreativeTabs.tabBrewing)
+                                                    .setCreativeTab(CreativeTabs.BREWING)
                                                     .setUnlocalizedName("herba_nether");
     public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPCIAL_BERRIES)
-                                                             .setCreativeTab(CreativeTabs.tabBrewing)
+                                                             .setCreativeTab(CreativeTabs.BREWING)
                                                              .setUnlocalizedName("herba_tropical_berries");
 
     // Misc
-    public static final Block blockDebug = new BlockDebug()
-                                                   .setCreativeTab(CreativeTabs.tabBrewing)
-                                                   .setUnlocalizedName("herba_debug");
     public static final Block blockCrucible = new BlockCrucible()
-            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_crucible");
     public static final Block blockCoil = new BlockCoil()
-            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_coil");
     public static final Block blockFlume = new BlockFlume()
-            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_flume");
     public static final Block blockPipe = new BlockPipe()
-            .setCreativeTab(CreativeTabs.tabBrewing)
+            .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_pipe");
 
     // GUIs
@@ -204,13 +184,11 @@ public final class Herbarium
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
         GameRegistry.registerItem(itemPage, "page");
-        GameRegistry.registerItem(itemMortarAndPestle, "mortar_pestle");
-        GameRegistry.registerItem(itemDust, "dust");
 
         // Blocks
         // Flowers
         GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
-        GameRegistry.registerBlock(blockBelladonna, "belladonna");
+        GameRegistry.registerBlock(blockBelladonna, "belledonna");
         GameRegistry.registerBlock(blockBlueAnemone, "blue_anemone");
         GameRegistry.registerBlock(blockBlueberry, "blueberry");
         GameRegistry.registerBlock(blockButtercup, "buttercup");
@@ -223,7 +201,6 @@ public final class Herbarium
         GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
 
         // Misc
-        GameRegistry.registerBlock(blockDebug, "debug");
         GameRegistry.registerBlock(blockCrucible, "crucible");
         GameRegistry.registerBlock(blockCoil, "coil");
         GameRegistry.registerBlock(blockFlume, "flume");
@@ -240,8 +217,6 @@ public final class Herbarium
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
 
         Flowers.init();
-
-        GameRegistry.addRecipe(new DustRecipe());
     }
 
     @Mod.EventHandler
@@ -252,72 +227,15 @@ public final class Herbarium
         MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
         MinecraftForge.EVENT_BUS.register(new RuinGenerator());
 
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.forest, blockAlstromeria));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.birchForest, blockButtercup));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.extremeHills, blockLongEarIris));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(BiomeGenBase.jungle, blockTropicalBerries));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(BiomeGenBase.extremeHills, blockCave, 30));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.FOREST, blockAlstromeria));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.BIRCH_FOREST, blockButtercup));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.EXTREME_HILLS, blockLongEarIris));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.JUNGLE, blockTropicalBerries));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
     }
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent e) {
-        e.registerServerCommand(new CommandBase() {
-            @Override
-            public String getCommandName() {
-                return "brew_level";
-            }
-
-            @Override
-            public String getCommandUsage(ICommandSender sender) {
-                return "brew_level";
-            }
-
-            @Override
-            public void processCommand(ICommandSender sender, String[] args)
-            throws CommandException {
-                PlayerBrewLevel level = PlayerBrewLevel.get(((EntityPlayer) sender));
-                ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText(level.get()
-                                                                                           .name()));
-            }
-        });
-        e.registerServerCommand(new CommandBase() {
-            @Override
-            public String getCommandName() {
-                return "pages_clear";
-            }
-
-            @Override
-            public String getCommandUsage(ICommandSender sender) {
-                return "pages_clear";
-            }
-
-            @Override
-            public void processCommand(ICommandSender sender, String[] args)
-            throws CommandException {
-                PageTracker.set(((EntityPlayer) sender), new HashSet<IPage>());
-                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
-            }
-        });
-        e.registerServerCommand(new CommandBase() {
-            @Override
-            public String getCommandName() {
-                return "pages_all";
-            }
-
-            @Override
-            public String getCommandUsage(ICommandSender sender) {
-                return "pages_all";
-            }
-
-            @Override
-            public void processCommand(ICommandSender sender, String[] args)
-            throws CommandException {
-                for(IPage page : pages){
-                    HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
-                }
-                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
-            }
-        });
     }
 
     @Override

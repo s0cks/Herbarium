@@ -2,11 +2,11 @@ package herbarium.common.core.brew;
 
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.net.PacketSyncBrewmanLevel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -23,7 +23,7 @@ public enum BrewLevelManager{
     INSTANCE;
 
     public void loadPlayerData(EntityPlayer player){
-        IPlayerFileData nbtManager = MinecraftServer.getServer()
+        IPlayerFileData nbtManager = Minecraft.getMinecraft().getIntegratedServer()
                                                     .worldServerForDimension(0)
                                                     .getSaveHandler().getPlayerNBTManager();
         SaveHandler handler = ((SaveHandler) nbtManager);
@@ -36,7 +36,7 @@ public enum BrewLevelManager{
     }
 
     public void savePlayerData(EntityPlayer player){
-        IPlayerFileData nbtManager = MinecraftServer.getServer()
+        IPlayerFileData nbtManager = Minecraft.getMinecraft().getIntegratedServer()
                                                     .worldServerForDimension(0)
                                                     .getSaveHandler().getPlayerNBTManager();
         SaveHandler handler = ((SaveHandler) nbtManager);
@@ -79,12 +79,12 @@ public enum BrewLevelManager{
 
     @SubscribeEvent
     public void onPlayerLoad(PlayerEvent.LoadFromFile e){
-        loadPlayerData(e.entityPlayer);
+        loadPlayerData(e.getEntityPlayer());
     }
 
     @SubscribeEvent
     public void onPlayerSave(PlayerEvent.SaveToFile e){
-        savePlayerData(e.entityPlayer);
+        savePlayerData(e.getEntityPlayer());
     }
 
     @SubscribeEvent

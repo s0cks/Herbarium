@@ -37,9 +37,9 @@ implements IRuin {
         private final Map<Character, Block> map = new HashMap<>();
 
         public RuinContext(){
-            this.define('X', Blocks.stone);
-            this.define('R', Blocks.redstone_block);
-            this.define('W', Blocks.planks);
+            this.define('X', Blocks.STONE);
+            this.define('R', Blocks.REDSTONE_BLOCK);
+            this.define('W', Blocks.PLANKS);
         }
 
         @Override

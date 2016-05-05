@@ -1,6 +1,6 @@
 package herbarium.api;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 public final class WorldCoordinates{
     public final BlockPos position;

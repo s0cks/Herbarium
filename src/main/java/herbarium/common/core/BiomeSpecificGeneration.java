@@ -1,7 +1,7 @@
 package herbarium.common.core;
 
 import net.minecraft.block.Block;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -21,13 +21,13 @@ public final class BiomeSpecificGeneration{
     public void onDecoration(DecorateBiomeEvent e){
         if(e.getResult() == Event.Result.ALLOW || e.getResult() == Event.Result.DEFAULT){
             for(int i = 0; i < 3; i++){
-                int x = e.pos.getX() + e.rand.nextInt(16) + 8;
-                int z = e.pos.getZ() + e.rand.nextInt(16) + 8;
-                int y = e.world.getTopSolidOrLiquidBlock(e.pos).getY();
+                int x = e.getPos().getX() + e.getRand().nextInt(16) + 8;
+                int z = e.getPos().getZ() + e.getRand().nextInt(16) + 8;
+                int y = e.getWorld().getTopSolidOrLiquidBlock(e.getPos()).getY();
 
                 BlockPos pos = new BlockPos(x, y, z);
-                if(e.world.isAirBlock(pos) && this.biome.isEqualTo(e.world.getBiomeGenForCoords(pos)) && (!e.world.provider.getHasNoSky() || y < 127) && this.flower.canPlaceBlockAt(e.world, pos)){
-                    e.world.setBlockState(pos, this.flower.getDefaultState());
+                if(e.getWorld().isAirBlock(pos) && this.biome.equals(e.getWorld().getBiomeGenForCoords(pos)) && (!e.getWorld().provider.getHasNoSky() || y < 127) && this.flower.canPlaceBlockAt(e.getWorld(), pos)){
+                    e.getWorld().setBlockState(pos, this.flower.getDefaultState());
                 }
             }
         }
