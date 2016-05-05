@@ -6,24 +6,25 @@
 - [ ] 5:Finish 3 paths of Brewing : Remedy, Poison, Brew
 
 ### 1: Plants
- - [ ] Overworld Flowers
+ - [ ] Overworld Flowers *
  - [ ] Nether Flowers
  - [ ] End Flowers
  - [ ] Biome Specifications
- - [ ] Mortar and Pestle Model
- - [ ] Plant Paste
- - [ ] Allocate effects to all plants (vanilla too)
+ - [ ] Mortar and Pestle Model *
+ - [ ] Plant Paste *
+ - [ ] Allocate effects to all plants *
+   - [ ] Vanilla and modded effects
  
 ### 2: Scavenger Hunt
- - [ ] Note Rendering (looks like map rendering)
-  - [ ] Render information for ingame documentation on front page
-  - [ ] Flip page with sound to reveal riddle that leads to the site when solved
- - [ ] Site (Structures)
+ - [ ] Note Rendering (looks like map rendering) *
+  - [ ] Render information for ingame documentation on front page *
+  - [ ] Flip page with sound to reveal riddle that leads to the site when solved *
+ - [ ] Site (Structures) *
   - [ ] Biome Specifications
   - [ ] Defined by JSON
-  - [ ] Not overpowered reward
+  - [ ] Not overpowered reward *
   - [ ] The more dangerous the more information you have
-  - [ ] Contain a note that leads to the next site
+  - [ ] Contain a note that leads to the next site *
   
 ### 3: Ingame Doc
  - [ ] Own font
@@ -48,14 +49,16 @@
  - [ ] Each brewing path product has an array of 3 alternative item textures
   - [ ] Contains parts that need to be coloured via code
   - [ ] Colour is determined by input of items
- - [ ] Base effects of plants combine into more higher tier effects 
- - [ ] Each plant has 2 base effects and 1 special that can be revealed through breeding
+ - [ ] Base effects of plants combine into more higher tier effects *
+ - [ ] Each plant has 2 base effects *
+  - [ ] 1 special effect that can be revealed through breeding
  - [ ] Add catches so that you cannot make 1 super op remedy/venom
- - [ ] 1: Remedies
+ - [ ] Apply effects onto objects like shields, weapons, armour, arrows
+ - [ ] 1: Remedies *
   - [ ] Good effects
- - [ ] 2: Venoms
+ - [ ] 2: Venoms *
   - [ ] Bad effects
- - [ ] 3: Brews
+ - [ ] 3: Brews *
   - [ ] Mixed Effects
   - [ ] Alcoholic Effects
   
@@ -64,12 +67,12 @@
   
   
 #### Resources:
-https://www.reddit.com/r/Minecraft/comments/ulupv/lets_hear_your_potion_ideas_ill_start/
-https://www.reddit.com/r/Minecraft/comments/10pvc5/if_you_could_add_any_potion_to_the_game_what/
-https://www.reddit.com/r/Minecraft/comments/3r7oce/a_way_to_dramatically_improve_potion_combat/
-https://www.reddit.com/r/feedthebeast/comments/4eljzv/what_type_of_ingame_documentation_do_you_prefer/
-https://www.reddit.com/r/Minecraft/comments/28obcl/ideas_for_potions_in_the_next_update/
-https://www.reddit.com/r/Minecraft/comments/3r8b3e/the_way_you_make_tipped_arrows_is_silly/
+* https://www.reddit.com/r/Minecraft/comments/ulupv/lets_hear_your_potion_ideas_ill_start/
+* https://www.reddit.com/r/Minecraft/comments/10pvc5/if_you_could_add_any_potion_to_the_game_what/
+* https://www.reddit.com/r/Minecraft/comments/3r7oce/a_way_to_dramatically_improve_potion_combat/
+* https://www.reddit.com/r/feedthebeast/comments/4eljzv/what_type_of_ingame_documentation_do_you_prefer/
+* https://www.reddit.com/r/Minecraft/comments/28obcl/ideas_for_potions_in_the_next_update/
+* https://www.reddit.com/r/Minecraft/comments/3r8b3e/the_way_you_make_tipped_arrows_is_silly/
 	
 	
 	
