@@ -1,0 +1,4 @@
+Copper -> Brass
+Hue: +23
+Saturation: +22
+Curves: Red:  x:138 y:151

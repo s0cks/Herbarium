@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:coil",
+      "textures": {
+        "main": "herbarium:models/coil"
+      }
+    },
+    "inventory": {
+      "model": "herbarium:coil",
+      "textures": {
+        "main": "herbarium:models/coil"
+      }
+    }
+  }
+}
