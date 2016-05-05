@@ -37,6 +37,7 @@
   - [ ] Chapters contain array of entries (http://i.imgur.com/YTBnxAD.png) *
     - [ ] Entries contain information for the object in an informing but lore-y kind of way with pics (see thaumonomicon as the best example) *
   - [ ] Index searching
+  - [ ] Backround gets darker
   
 ### 4: Breeding
  - [ ] For you Tazz!
