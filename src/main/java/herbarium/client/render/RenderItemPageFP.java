@@ -8,10 +8,10 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL11;
 public final class RenderItemPageFP{
     private static final ResourceLocation texture = new ResourceLocation("herbarium", "textures/gui/note_gui.png");
 
+    /*
     @SubscribeEvent
     public void doRender(RenderHandEvent e){
         Minecraft mc = this.client();
@@ -74,12 +75,12 @@ public final class RenderItemPageFP{
       GL11.glTranslatef(0.4F, -0.4F, 0.0F);
       GL11.glEnable(32826);
       GL11.glScalef(2.0F, 2.0F, 2.0F);
-             */
+
 
             e.setCanceled(true);
 
             Tessellator tess = Tessellator.getInstance();
-            WorldRenderer rend = tess.getWorldRenderer();
+            VertexBuffer rend = tess.getWorldRenderer();
             EntityPlayerSP p = mc.thePlayer;
 
             float pitch = p.prevRotationPitch + (p.rotationPitch - p.prevRotationPitch) * e.partialTicks;
@@ -193,4 +194,5 @@ public final class RenderItemPageFP{
     private void renderPage(){
 
     }
+    */
 }

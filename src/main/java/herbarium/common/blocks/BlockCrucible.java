@@ -6,9 +6,10 @@ import net.minecraft.block.material.Material;
 public final class BlockCrucible
 extends Block{
     public BlockCrucible(){
-        super(Material.iron);
+        super(Material.IRON);
     }
 
+    /*
     @Override
     public boolean isOpaqueCube() {
         return false;
@@ -18,4 +19,5 @@ extends Block{
     public boolean isNormalCube() {
         return false;
     }
+    */
 }

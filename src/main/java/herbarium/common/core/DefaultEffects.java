@@ -3,7 +3,7 @@ package herbarium.common.core;
 import herbarium.api.brew.BrewmanLevel;
 import herbarium.api.brew.EffectType;
 import herbarium.api.brew.IEffect;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public enum DefaultEffects
 implements IEffect {
@@ -101,7 +101,7 @@ implements IEffect {
 
     @Override
     public String localizedName() {
-        return StatCollector.translateToLocal("herbarium.effect." + this.name().toLowerCase());
+        return I18n.translateToLocal("herbarium.effect." + this.name().toLowerCase());
     }
 
     @Override

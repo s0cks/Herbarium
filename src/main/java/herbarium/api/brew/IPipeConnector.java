@@ -1,6 +1,6 @@
 package herbarium.api.brew;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 
 public interface IPipeConnector
 extends Iterable<PipeConnection>{

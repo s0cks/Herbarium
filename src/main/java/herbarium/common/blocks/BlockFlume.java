@@ -6,9 +6,10 @@ import net.minecraft.block.material.Material;
 public final class BlockFlume
         extends Block{
     public BlockFlume(){
-        super(Material.iron);
+        super(Material.IRON);
     }
 
+    /*
     @Override
     public boolean isOpaqueCube() {
         return false;
@@ -18,4 +19,5 @@ public final class BlockFlume
     public boolean isNormalCube() {
         return false;
     }
+    */
 }

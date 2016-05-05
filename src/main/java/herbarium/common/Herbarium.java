@@ -42,7 +42,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.MinecraftForge;
@@ -276,7 +276,7 @@ public final class Herbarium
             public void processCommand(ICommandSender sender, String[] args)
             throws CommandException {
                 PlayerBrewLevel level = PlayerBrewLevel.get(((EntityPlayer) sender));
-                ((EntityPlayer) sender).addChatComponentMessage(new ChatComponentText(level.get()
+                ((EntityPlayer) sender).addChatComponentMessage(new TextComponentString(level.get()
                                                                                            .name()));
             }
         });

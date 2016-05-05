@@ -16,8 +16,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -43,7 +43,7 @@ public final class RuinGenerator{
                         if(c == 'T'){
                             ItemStack pageStack = new ItemStack(Herbarium.itemPage, 1);
                             ItemPage.setPage(pageStack, page);
-                            world.setBlockState(new BlockPos(x, y, z), Blocks.chest.getDefaultState());
+                            world.setBlockState(new BlockPos(x, y, z), Blocks.CHEST.getDefaultState());
                             TileEntityChest chest = ((TileEntityChest) world.getTileEntity(new BlockPos(x, y, z)));
                             chest.setInventorySlotContents(0, pageStack);
                         } else{
@@ -69,7 +69,7 @@ public final class RuinGenerator{
             double z = e.entity.posZ + e.world.rand.nextInt(150);
             BlockPos pos = e.world.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
             RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(e.world.rand), e.world, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(((EntityPlayer) e.entity)));
-            ((EntityPlayer) e.entity).addChatComponentMessage(new ChatComponentText("Spawned Ruin @" + pos));
+            ((EntityPlayer) e.entity).addChatComponentMessage(new TextComponentString("Spawned Ruin @" + pos));
             HerbariumConfig.GENERATE_SPAWN_RUIN.set(false);
             HerbariumConfig.save();
         }

@@ -8,8 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -31,6 +31,7 @@ extends Item {
         return HerbariumApi.PAGE_MANAGER.get(comp.getString(PAGE_TAG));
     }
 
+    /*
     @Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
         IPage page = getPage(itemStackIn);
@@ -41,10 +42,11 @@ extends Item {
             double z = playerIn.posZ + worldIn.rand.nextInt(150);
             BlockPos pos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
             RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(worldIn.rand), worldIn, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
-            playerIn.addChatComponentMessage(new ChatComponentText("Spawned Ruin @" + pos));
+            playerIn.addChatComponentMessage(new TextComponentString("Spawned Ruin @" + pos));
         }
         return itemStackIn;
     }
+    */
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
