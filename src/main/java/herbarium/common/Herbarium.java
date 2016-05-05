@@ -236,6 +236,7 @@ public final class Herbarium
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent e) {
+
     }
 
     @Override

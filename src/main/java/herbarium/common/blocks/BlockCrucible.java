@@ -10,6 +10,7 @@ extends Block{
         super(Material.IRON);
     }
 
+    /*
     @Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
@@ -19,4 +20,5 @@ extends Block{
     public boolean isNormalCube(IBlockState state) {
         return false;
     }
+    */
 }
