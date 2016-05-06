@@ -14,6 +14,7 @@
    - [ ] Mortar will contain items, if ground up render a layer that will have a texture and that will stack up the more you grind
    - [ ] Once all ground up, you can add a water container (not just bottles) that dilutes the paste into an essence that you can pick up
    - [ ] Easter Egg: The pestle is a weapon that has even slower attack speed than axe, it has a good amount of damage (stone sword) and a great knockback
+   - [ ] Combine essences in a crucible to make an elixir that can be distilled
    - [ ] Grinding sound 
    - [ ] Pestle has a good amount of durability (2x stone sword)
  - [ ] Plant Paste *
