@@ -19,9 +19,9 @@ import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockFlume;
 import herbarium.common.blocks.BlockHerbariumFlower;
+import herbarium.common.blocks.BlockMortar;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
-import herbarium.common.blocks.BlockMortar;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
@@ -81,16 +81,7 @@ public final class Herbarium
                    IGuiHandler,
                    IRuinManager,
                    IAlleleManager,
-                   IFlowerManager{
-    @Mod.Instance("herbarium")
-    public static Herbarium instance;
-
-    @SidedProxy(
-            clientSide = "herbarium.client.ClientProxy",
-            serverSide = "herbarium.common.CommonProxy"
-    )
-    public static CommonProxy proxy;
-
+                   IFlowerManager {
     // Items
     public static final Item itemJournal = new ItemJournal()
                                                    .setCreativeTab(CreativeTabs.BREWING)
@@ -101,14 +92,13 @@ public final class Herbarium
                                                 .setUnlocalizedName("herba_page")
                                                 .setMaxStackSize(1);
     public static final Item itemPestle = new ItemPestle()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_pestle")
-            .setMaxStackSize(1);
+                                                  .setCreativeTab(CreativeTabs.BREWING)
+                                                  .setUnlocalizedName("herba_pestle")
+                                                  .setMaxStackSize(1);
     public static final Item itemBrew = new ItemBrew()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_brew")
-            .setMaxStackSize(1);
-
+                                                .setCreativeTab(CreativeTabs.BREWING)
+                                                .setUnlocalizedName("herba_brew")
+                                                .setMaxStackSize(1);
     // Blocks
     // Flowers
     public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA)
@@ -147,30 +137,34 @@ public final class Herbarium
     public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPCIAL_BERRIES)
                                                              .setCreativeTab(CreativeTabs.BREWING)
                                                              .setUnlocalizedName("herba_tropical_berries");
-
     // Misc
     public static final Block blockCrucible = new BlockCrucible()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_crucible");
+                                                      .setCreativeTab(CreativeTabs.BREWING)
+                                                      .setUnlocalizedName("herba_crucible");
     public static final Block blockCoil = new BlockCoil()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_coil");
+                                                  .setCreativeTab(CreativeTabs.BREWING)
+                                                  .setUnlocalizedName("herba_coil");
     public static final Block blockFlume = new BlockFlume()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_flume");
+                                                   .setCreativeTab(CreativeTabs.BREWING)
+                                                   .setUnlocalizedName("herba_flume");
     public static final Block blockPipe = new BlockPipe()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_pipe");
+                                                  .setCreativeTab(CreativeTabs.BREWING)
+                                                  .setUnlocalizedName("herba_pipe");
     public static final Block blockMortar = new BlockMortar()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_mortar");
+                                                    .setCreativeTab(CreativeTabs.BREWING)
+                                                    .setUnlocalizedName("herba_mortar");
     public static final Block blockBarrel = new BlockBarrel()
-            .setCreativeTab(CreativeTabs.BREWING)
-            .setUnlocalizedName("herba_barrel");
-
+                                                    .setCreativeTab(CreativeTabs.BREWING)
+                                                    .setUnlocalizedName("herba_barrel");
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
-
+    @Mod.Instance("herbarium")
+    public static Herbarium instance;
+    @SidedProxy(
+            clientSide = "herbarium.client.ClientProxy",
+            serverSide = "herbarium.common.CommonProxy"
+    )
+    public static CommonProxy proxy;
     private final Set<IPage> pages = new HashSet<>();
     private final List<IFlower> flowers = new LinkedList<>();
     private final List<IRuin> ruins = new LinkedList<>();
@@ -181,7 +175,7 @@ public final class Herbarium
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         HerbariumConfig.init(new Configuration(e.getSuggestedConfigurationFile()));
-        System.setProperty("awt.useSystemAAFontSettings","off");
+        System.setProperty("awt.useSystemAAFontSettings", "off");
         System.setProperty("swing.aatext", "false");
 
         HerbariumApi.PAGE_MANAGER = this;
@@ -191,16 +185,20 @@ public final class Herbarium
         HerbariumApi.EFFECT_MANAGER = this;
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
 
-        this.register(new PageBuilder().setTitle("Commentarium").setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt"))).build());
-        this.register(new PageBuilder().setTitle("Tropical Berries").setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md"))).build());
+        this.register(new PageBuilder().setTitle("Commentarium")
+                                       .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt")))
+                                       .build());
+        this.register(new PageBuilder().setTitle("Tropical Berries")
+                                       .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md")))
+                                       .build());
         this.register(new EffectDebug());
 
         String[] ruins = new String[]{
-            "basic",
-            "wooden"
+                "basic",
+                "wooden"
         };
 
-        for(String str : ruins){
+        for (String str : ruins) {
             register(new Ruin(str));
         }
 
@@ -277,8 +275,8 @@ public final class Herbarium
             @Override
             public void execute(MinecraftServer server, ICommandSender sender, String[] args)
             throws CommandException {
-                for(IPage page : HerbariumApi.PAGE_MANAGER.all()){
-                    if(!HerbariumApi.PAGE_TRACKER.learned(((EntityPlayer) sender), page)){
+                for (IPage page : HerbariumApi.PAGE_MANAGER.all()) {
+                    if (!HerbariumApi.PAGE_TRACKER.learned(((EntityPlayer) sender), page)) {
                         HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
                     }
                 }
@@ -305,9 +303,15 @@ public final class Herbarium
     }
 
     @Override
+    public void register(IPage page) {
+        this.pages.add(page);
+    }
+
+    @Override
     public IFlower getFlower(String uuid) {
-        for(IFlower f : this.flowers){
-            if(f.uuid().equals(uuid)){
+        for (IFlower f : this.flowers) {
+            if (f.uuid()
+                 .equals(uuid)) {
                 return f;
             }
         }
@@ -317,18 +321,14 @@ public final class Herbarium
 
     @Override
     public void register(IFlower flower) {
-        for(IFlower f : this.flowers){
-            if(f.uuid().equals(flower.uuid())){
+        for (IFlower f : this.flowers) {
+            if (f.uuid()
+                 .equals(flower.uuid())) {
                 return;
             }
         }
 
         this.flowers.add(flower);
-    }
-
-    @Override
-    public void register(IPage page) {
-        this.pages.add(page);
     }
 
     @Override
@@ -348,8 +348,9 @@ public final class Herbarium
 
     @Override
     public void register(IRuin ruin) {
-        for(IRuin r : this.ruins){
-            if(r.uuid().equals(ruin.uuid())){
+        for (IRuin r : this.ruins) {
+            if (r.uuid()
+                 .equals(ruin.uuid())) {
                 return;
             }
         }
@@ -359,8 +360,9 @@ public final class Herbarium
 
     @Override
     public IRuin getRuin(String uuid) {
-        for(IRuin r : this.ruins){
-            if(r.uuid().equals(uuid)){
+        for (IRuin r : this.ruins) {
+            if (r.uuid()
+                 .equals(uuid)) {
                 return r;
             }
         }
@@ -370,8 +372,8 @@ public final class Herbarium
 
     @Override
     public IRuin getRandom(Random rand) {
-        for(IRuin ruin : this.ruins){
-            if(rand.nextBoolean()){
+        for (IRuin ruin : this.ruins) {
+            if (rand.nextBoolean()) {
                 return ruin;
             }
         }
@@ -381,8 +383,9 @@ public final class Herbarium
 
     @Override
     public void register(IEffect effect) {
-        for(IEffect e : this.effects){
-            if(e.uuid().equals(effect.uuid())){
+        for (IEffect e : this.effects) {
+            if (e.uuid()
+                 .equals(effect.uuid())) {
                 return;
             }
         }
@@ -392,8 +395,9 @@ public final class Herbarium
 
     @Override
     public IEffect getEffect(String uuid) {
-        for(IEffect e : this.effects){
-            if(e.uuid().equals(uuid)){
+        for (IEffect e : this.effects) {
+            if (e.uuid()
+                 .equals(uuid)) {
                 return e;
             }
         }
@@ -403,8 +407,9 @@ public final class Herbarium
 
     @Override
     public void registerSpecies(ISpecies species) {
-        for(ISpecies s : this.species){
-            if(s.uuid().equals(species.uuid())){
+        for (ISpecies s : this.species) {
+            if (s.uuid()
+                 .equals(species.uuid())) {
                 return;
             }
         }
@@ -414,8 +419,9 @@ public final class Herbarium
 
     @Override
     public void registerAllele(IAllele allele) {
-        for(IAllele a : this.alleles){
-            if(a.uuid().equals(allele.uuid())){
+        for (IAllele a : this.alleles) {
+            if (a.uuid()
+                 .equals(allele.uuid())) {
                 return;
             }
         }
@@ -425,8 +431,9 @@ public final class Herbarium
 
     @Override
     public ISpecies getSpecies(String uuid) {
-        for(ISpecies s : this.species){
-            if(s.uuid().equals(uuid)){
+        for (ISpecies s : this.species) {
+            if (s.uuid()
+                 .equals(uuid)) {
                 return s;
             }
         }
@@ -436,8 +443,9 @@ public final class Herbarium
 
     @Override
     public IAllele getAllele(String uuid) {
-        for(IAllele a : this.alleles){
-            if(a.uuid().equals(uuid)){
+        for (IAllele a : this.alleles) {
+            if (a.uuid()
+                 .equals(uuid)) {
                 return a;
             }
         }
