@@ -24,6 +24,9 @@ extends CommonProxy{
         registerRender(Herbarium.itemJournal, "journal");
         registerRender(Herbarium.itemPage, "page");
         registerRender(Herbarium.itemPestle, "pestle");
+        registerRender(Herbarium.itemBrew, 0, "brew_remedy");
+        registerRender(Herbarium.itemBrew, 1, "brew_spirit");
+        registerRender(Herbarium.itemBrew, 2, "brew_venom");
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
@@ -44,7 +47,13 @@ extends CommonProxy{
         registerRender(Herbarium.blockPipe, "pipe");
         registerRender(Herbarium.blockMortar, "mortar");
         registerRender(Herbarium.blockBarrel, "barrel");
+
         MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
+    }
+
+    @Override
+    public void registerColors(){
+
     }
 
     private void registerRender(Block block, String id){

@@ -1,11 +1,13 @@
 package herbarium.common.items;
 
 import herbarium.api.HerbariumApi;
+import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.core.NBTHelper;
 import herbarium.common.core.brew.Brew;
 import herbarium.common.core.brew.effects.effect.EffectDebug;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,6 +41,20 @@ extends Item {
         return brew;
     }
 
+    public ItemBrew(){
+        this.setHasSubtypes(true);
+        this.setMaxDamage(0);
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack stack) {
+        IBrew brew = getBrew(stack);
+        if(brew != null){
+            return "item.herbarium.brew." + brew.computeBrewType().name().toLowerCase();
+        }
+        return "item.herbarium.brew";
+    }
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
         IBrew brew = getBrew(itemStackIn);
@@ -60,6 +76,13 @@ extends Item {
             for(IEffect effect : brew.effects()){
                 tooltip.add(effect.uuid());
             }
+        }
+    }
+
+    @Override
+    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+        for(int i = 0; i < EnumBrewType.values().length; i++){
+            subItems.add(new ItemStack(itemIn, 1, i));
         }
     }
 }

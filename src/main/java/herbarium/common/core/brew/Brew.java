@@ -1,6 +1,7 @@
 package herbarium.common.core.brew;
 
 import herbarium.api.HerbariumApi;
+import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.effects.IEffect;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +21,31 @@ implements IBrew{
     @Override
     public List<IEffect> effects() {
         return Collections.unmodifiableList(this.effects);
+    }
+
+    @Override
+    public EnumBrewType computeBrewType() {
+        EnumBrewType lastType = EnumBrewType.POTION;
+        int lastCount = 0;
+        for(EnumBrewType type : EnumBrewType.values()){
+            int count = this.effectsFor(type);
+            if(count > lastCount){
+                lastCount = count;
+                lastType = type;
+            }
+        }
+        return lastType;
+    }
+
+    private int effectsFor(EnumBrewType type){
+        int count = 0;
+        for(IEffect effect : this.effects){
+            if(effect.type().equals(type)){
+                count++;
+            }
+        }
+
+        return count;
     }
 
     @Override

@@ -1,0 +1,7 @@
+{
+  "parent": "builtin/generated",
+  "textures": {
+    "layer0": "herbarium:items/potions/remedy_3_c",
+    "layer1": "herbarium:items/potions/remedy_3_n"
+  }
+}

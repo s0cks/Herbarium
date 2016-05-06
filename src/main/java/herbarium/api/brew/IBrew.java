@@ -8,4 +8,5 @@ import java.util.List;
 public interface IBrew
 extends INBTSavable{
     public List<IEffect> effects();
+    public EnumBrewType computeBrewType();
 }
