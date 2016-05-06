@@ -63,10 +63,12 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-@Mod(modid = "herbarium",
-     name = "Herbarium",
-     version = "0.0.0.0",
-     dependencies = "required-after:Forge@[1.8.9-11.15.1.1722,)")
+@Mod(
+        modid = "herbarium",
+        name = "Herbarium",
+        version = "0.0.0.0",
+        dependencies = "required-after:Forge@[1.8.9-11.15.1.1722,)"
+)
 public final class Herbarium
         implements IPageManager,
                    IEffectManager,
@@ -76,8 +78,10 @@ public final class Herbarium
     @Mod.Instance("herbarium")
     public static Herbarium instance;
 
-    @SidedProxy(clientSide = "herbarium.client.ClientProxy",
-                serverSide = "herbarium.common.CommonProxy")
+    @SidedProxy(
+            clientSide = "herbarium.client.ClientProxy",
+            serverSide = "herbarium.common.CommonProxy"
+    )
     public static CommonProxy proxy;
 
     // Items
