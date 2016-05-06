@@ -1,6 +1,6 @@
 {
 "textures": {
-    "main": "models/pestle"
+    "main": "herbarium:models/pestle"
 },
 "elements": [ 
 {
@@ -39,22 +39,12 @@
 }
 ],
 "display": {
-    "thirdperson_lefthand": {
-        "rotation": [ 18, 0, 0 ],
-        "translation": [ 0, 3.97, 2.25 ],
-        "scale": [ 1.3, 1.3, 1.3 ]
-    },
     "thirdperson_righthand": {
         "rotation": [ 18, 0, 0 ],
         "translation": [ 0, 3.97, 2.25 ],
         "scale": [ 1.3, 1.3, 1.3 ]
     },
     "firstperson_righthand": {
-        "rotation": [ -17, -139, -7 ],
-        "translation": [ 0, 4, 2 ],
-        "scale": [ 1.7, 1.7, 1.7 ]
-    },
-    "firstperson_lefthand": {
         "rotation": [ -17, -139, -7 ],
         "translation": [ 0, 4, 2 ],
         "scale": [ 1.7, 1.7, 1.7 ]

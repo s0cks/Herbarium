@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:mortar",
+      "textures": {
+        "main": "herbarium:models/mortar"
+      }
+    },
+    "inventory": {
+      "model": "herbarium:mortar",
+      "textures": {
+        "main": "herbarium:models/mortar"
+      }
+    }
+  }
+}

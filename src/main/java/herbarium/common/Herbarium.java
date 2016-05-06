@@ -17,6 +17,7 @@ import herbarium.common.blocks.BlockFlume;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
+import herbarium.common.blocks.BlockMortar;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
@@ -31,6 +32,7 @@ import herbarium.common.core.commentarium.renderer.TextPageRenderer;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
+import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
@@ -93,6 +95,10 @@ public final class Herbarium
                                                 .setCreativeTab(CreativeTabs.BREWING)
                                                 .setUnlocalizedName("herba_page")
                                                 .setMaxStackSize(1);
+    public static final Item itemPestle = new ItemPestle()
+            .setCreativeTab(CreativeTabs.BREWING)
+            .setUnlocalizedName("herba_pestle")
+            .setMaxStackSize(1);
     public static final Item itemBrew = new ItemBrew()
             .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_brew")
@@ -150,6 +156,9 @@ public final class Herbarium
     public static final Block blockPipe = new BlockPipe()
             .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_pipe");
+    public static final Block blockMortar = new BlockMortar()
+            .setCreativeTab(CreativeTabs.BREWING)
+            .setUnlocalizedName("herba_mortar");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
@@ -188,6 +197,7 @@ public final class Herbarium
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
         GameRegistry.registerItem(itemPage, "page");
+        GameRegistry.registerItem(itemPestle, "pestle");
         GameRegistry.registerItem(itemBrew, "brew");
 
         // Blocks
@@ -210,6 +220,8 @@ public final class Herbarium
         GameRegistry.registerBlock(blockCoil, "coil");
         GameRegistry.registerBlock(blockFlume, "flume");
         GameRegistry.registerBlock(blockPipe, "pipe");
+        GameRegistry.registerBlock(blockMortar, "mortar");
+
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
