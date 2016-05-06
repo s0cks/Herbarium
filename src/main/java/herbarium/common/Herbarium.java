@@ -3,6 +3,8 @@ package herbarium.common;
 import herbarium.api.HerbariumApi;
 import herbarium.api.IFlower;
 import herbarium.api.IFlowerManager;
+import herbarium.api.brew.effects.IEffect;
+import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.api.ruins.IRuin;
@@ -20,10 +22,13 @@ import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
+import herbarium.common.core.brew.effects.EffectTracker;
+import herbarium.common.core.brew.effects.effect.EffectDebug;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
 import herbarium.common.core.commentarium.renderer.TextPageRenderer;
+import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
 import herbarium.common.net.HerbariumNetwork;
@@ -64,6 +69,7 @@ import java.util.Set;
      dependencies = "required-after:Forge@[1.8.9-11.15.1.1722,)")
 public final class Herbarium
         implements IPageManager,
+                   IEffectManager,
                    IGuiHandler,
                    IRuinManager,
                    IFlowerManager{
@@ -83,6 +89,10 @@ public final class Herbarium
                                                 .setCreativeTab(CreativeTabs.BREWING)
                                                 .setUnlocalizedName("herba_page")
                                                 .setMaxStackSize(1);
+    public static final Item itemBrew = new ItemBrew()
+            .setCreativeTab(CreativeTabs.BREWING)
+            .setUnlocalizedName("herba_brew")
+            .setMaxStackSize(1);
 
     // Blocks
     // Flowers
@@ -143,6 +153,7 @@ public final class Herbarium
     private final Set<IPage> pages = new HashSet<>();
     private final List<IFlower> flowers = new LinkedList<>();
     private final List<IRuin> ruins = new LinkedList<>();
+    private final List<IEffect> effects = new LinkedList<>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -154,9 +165,12 @@ public final class Herbarium
         HerbariumApi.PAGE_TRACKER = new PageTracker();
         HerbariumApi.FLOWER_MANAGER = this;
         HerbariumApi.RUIN_MANAGER = this;
+        HerbariumApi.EFFECT_MANAGER = this;
+        HerbariumApi.EFFECT_TRACKER = new EffectTracker();
 
         this.register(new PageBuilder().setTitle("Commentarium").setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt"))).build());
         this.register(new PageBuilder().setTitle("Tropical Berries").setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md"))).build());
+        this.register(new EffectDebug());
 
         String[] ruins = new String[]{
             "basic",
@@ -170,6 +184,7 @@ public final class Herbarium
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
         GameRegistry.registerItem(itemPage, "page");
+        GameRegistry.registerItem(itemBrew, "brew");
 
         // Blocks
         // Flowers
@@ -210,6 +225,7 @@ public final class Herbarium
         HerbariumNetwork.init();
 
         MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
+        MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
         MinecraftForge.EVENT_BUS.register(new RuinGenerator());
 
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.FOREST, blockAlstromeria));
@@ -335,5 +351,27 @@ public final class Herbarium
         }
 
         return this.ruins.get(0);
+    }
+
+    @Override
+    public void register(IEffect effect) {
+        for(IEffect e : this.effects){
+            if(e.uuid().equals(effect.uuid())){
+                return;
+            }
+        }
+
+        this.effects.add(effect);
+    }
+
+    @Override
+    public IEffect getEffect(String uuid) {
+        for(IEffect e : this.effects){
+            if(e.uuid().equals(uuid)){
+                return e;
+            }
+        }
+
+        return null;
     }
 }

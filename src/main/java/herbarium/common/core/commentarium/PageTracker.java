@@ -99,7 +99,7 @@ implements IPageTracker{
         SaveHandler handler = ((SaveHandler) nbtManager);
         File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, handler, "playersDirectory", "field_75771_c");
         File file = new File(dir, player.getName() + ".commentarium");
-        NBTTagCompound comp = this.load(file);
+        NBTTagCompound comp = new NBTTagCompound();
         data.get(player).writeToNBT(comp);
         this.save(comp, file);
     }

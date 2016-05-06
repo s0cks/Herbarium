@@ -9,5 +9,6 @@ public final class HerbariumNetwork{
 
     public static void init(){
         INSTANCE.registerMessage(PacketSyncPageData.class, PacketSyncPageData.class, 0x00, Side.CLIENT);
+        INSTANCE.registerMessage(PacketSyncEffects.class, PacketSyncEffects.class, 0x01, Side.CLIENT);
     }
 }
