@@ -7,7 +7,19 @@
 
 ### 1: Plants
  - [ ] Overworld Flowers *
+   - [ ] Alstromeria: plains, forest, forest_hills
+   - [ ] Anemone: ocean, river, beaches, deep_ocean
+   - [ ] Belladonna: swampland, roofed_forest
+   - [ ] Blueberry Blossom: forest, forest_hills, birch_forest, birch_forest_hills
+   - [ ] Buttercup: plains, extreme_hills, smaller_extreme_hills, extreme_hills_with_trees
+   - [ ] Cavern Bloom: extreme_hills, smaller_extreme_hills, extreme_hills_with_trees
+   - [ ] Lancet Root: mesa, mesa_rock, mesa_clear_rock, desert, desert_hills, savanna, savanna_rock
+   - [ ] Spring Lotus: forest, forest_hills
+   - [ ] Tail Iris: jungle, jungle_hills, jungle_edge
+   - [ ] Tropical Berries: jungle, jungle_hills, jungle_edge
+   - [ ] Winter Lily: taiga, taiga_cold, taiga_cold_hills, frozen_ocean, frozen_river, ice_flats, ice_mountains, taiga_hills
  - [ ] Nether Flowers
+   - [ ] Igneous Spear: hell
  - [ ] End Flowers
  - [ ] Biome Specifications
  - [ ] Mortar and Pestle Model *
@@ -23,7 +35,7 @@
  
 ### 2: Scavenger Hunt
  - [ ] Note Rendering (looks like map rendering) *
-  - [ ] Render information for ingame documentation on front page *
+  - [x] Render information for ingame documentation on front page *
   - [ ] Flip page with sound to reveal riddle that leads to the site when solved *
  - [ ] Site (Structures) *
   - [ ] Biome Specifications
@@ -34,7 +46,7 @@
   
 ### 3: Ingame Doc
  - [ ] Own font
- - [ ] Markdown Support *
+ - [x] Markdown Support *
  - [ ] Chapter System *
   - [ ] Introduction chapter where lore is explained so that other entries arent flooded with it but linked (for example like Thaumcraft) *
   - [ ] Each mechanic a new chapter *
