@@ -52,6 +52,6 @@ extends Item {
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
         IPage page = getPage(stack);
         if(page == null) return;
-        tooltip.add("Page " + page.ordinal() + 1 + ": " + page.title());
+        tooltip.add("Page " + page.title());
     }
 }
