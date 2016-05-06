@@ -7,14 +7,17 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.actors.threadpool.Arrays;
+
+import java.util.List;
 
 public final class BiomeSpecificGeneration{
-    private final BiomeGenBase biome;
     private final Block flower;
+    private final List<BiomeGenBase> biomes;
 
-    public BiomeSpecificGeneration(BiomeGenBase biome, Block flower){
+    public BiomeSpecificGeneration(Block flower, BiomeGenBase... biomes){
         this.flower = flower;
-        this.biome = biome;
+        this.biomes = Arrays.asList(biomes);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -26,10 +29,20 @@ public final class BiomeSpecificGeneration{
                 int y = e.getWorld().getTopSolidOrLiquidBlock(e.getPos()).getY();
 
                 BlockPos pos = new BlockPos(x, y, z);
-                if(e.getWorld().isAirBlock(pos) && this.biome.equals(e.getWorld().getBiomeGenForCoords(pos)) && (!e.getWorld().provider.getHasNoSky() || y < 127) && this.flower.canPlaceBlockAt(e.getWorld(), pos)){
+                if(e.getWorld().isAirBlock(pos) && this.validBiome(e.getWorld().getBiomeGenForCoords(pos)) && (!e.getWorld().provider.getHasNoSky() || y < 127) && this.flower.canPlaceBlockAt(e.getWorld(), pos)){
                     e.getWorld().setBlockState(pos, this.flower.getDefaultState());
                 }
             }
         }
+    }
+
+    private boolean validBiome(BiomeGenBase biome){
+        for(BiomeGenBase b : this.biomes){
+            if(b.getRegistryType().equals(biome.getRegistryType())){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

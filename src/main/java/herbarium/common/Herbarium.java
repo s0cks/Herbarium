@@ -278,10 +278,16 @@ public final class Herbarium
         MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
         MinecraftForge.EVENT_BUS.register(new RuinGenerator());
 
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.FOREST, blockAlstromeria));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.BIRCH_FOREST, blockButtercup));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.EXTREME_HILLS, blockLongEarIris));
-        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(Biomes.JUNGLE, blockTropicalBerries));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockAlstromeria, Biomes.PLAINS, Biomes.RIVER, Biomes.FOREST_HILLS));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockBlueAnemone, Biomes.OCEAN, Biomes.RIVER, Biomes.DEEP_OCEAN, Biomes.BEACH));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockBelladonna, Biomes.SWAMPLAND, Biomes.ROOFED_FOREST));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockButtercup, Biomes.PLAINS, Biomes.EXTREME_HILLS, Biomes.EXTREME_HILLS_EDGE, Biomes.EXTREME_HILLS_WITH_TREES));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockFire, Biomes.MESA, Biomes.MESA_ROCK, Biomes.MESA_CLEAR_ROCK, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA_ROCK));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockLotus, Biomes.FOREST, Biomes.FOREST_HILLS));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockLongEarIris, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.JUNGLE_EDGE));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockTropicalBerries, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.JUNGLE_EDGE));
+        MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockWinterLily, Biomes.TAIGA, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.FROZEN_OCEAN, Biomes.FROZEN_RIVER, Biomes.MUTATED_ICE_FLATS, Biomes.ICE_MOUNTAINS, Biomes.TAIGA_HILLS));
+
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
     }
 
