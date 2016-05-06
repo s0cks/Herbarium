@@ -16,25 +16,25 @@ implements IPageRenderer{
     public TextPageRenderer(ResourceLocation loc){
         try(InputStream is = Herbarium.proxy.getClient().getResourceManager().getResource(loc).getInputStream()){
             this.text = IOUtils.toString(is);
-
         } catch(Exception e){
             throw new RuntimeException(e);
         }
     }
 
+    //TODO: Custom font rendering needs to disable cull and then re-enable it
     @Override
     public void render(float partialTicks) {
         Minecraft mc = Herbarium.proxy.getClient();
         GlStateManager.pushMatrix();
         GlStateManager.scale(0.5F, 0.5F, 0.5F);
-        GlStateManager.translate(35.0F, 20.0F, 0.0F);
+        GlStateManager.translate(60.0F, 20.0F, 0.0F);
 
-        int drawY = 0;
-        String[] text = this.wrap(this.text, 40).split("\n");
-        for(String str : text){
-            mc.fontRendererObj.drawString(str, 0, drawY += mc.fontRendererObj.FONT_HEIGHT, 0x000000);
+        String[] text = this.wrap(this.text, 35).split("\n");
+        for(int i = 0; i < text.length; i++){
+            GlStateManager.pushMatrix();
+            mc.fontRendererObj.drawString(text[i], 0, (i + 1) * mc.fontRendererObj.FONT_HEIGHT, 0x000000);
+            GlStateManager.popMatrix();
         }
-
         GlStateManager.popMatrix();
     }
 
