@@ -1,4 +1,6 @@
-package herbarium.api.brew;
+package herbarium.api.brew.piping;
+
+import herbarium.api.brew.BrewStack;
 
 public interface IPipe{
     public int drain(BrewStack stack, IPipe to);

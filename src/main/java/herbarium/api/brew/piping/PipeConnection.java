@@ -1,4 +1,4 @@
-package herbarium.api.brew;
+package herbarium.api.brew.piping;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

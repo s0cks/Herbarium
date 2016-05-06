@@ -1,4 +1,4 @@
-package herbarium.api.brew;
+package herbarium.api.brew.piping;
 
 import net.minecraft.util.math.BlockPos;
 

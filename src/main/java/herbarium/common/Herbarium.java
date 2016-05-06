@@ -3,8 +3,6 @@ package herbarium.common;
 import herbarium.api.HerbariumApi;
 import herbarium.api.IFlower;
 import herbarium.api.IFlowerManager;
-import herbarium.api.brew.IMixer;
-import herbarium.api.brew.IMixerFactory;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.api.ruins.IRuin;
@@ -22,8 +20,6 @@ import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
-import herbarium.common.core.brew.BrewLevelManager;
-import herbarium.common.core.brew.Mixer;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
@@ -69,7 +65,6 @@ import java.util.Set;
 public final class Herbarium
         implements IPageManager,
                    IGuiHandler,
-                   IMixerFactory,
                    IRuinManager,
                    IFlowerManager{
     @Mod.Instance("herbarium")
@@ -157,7 +152,6 @@ public final class Herbarium
 
         HerbariumApi.PAGE_MANAGER = this;
         HerbariumApi.PAGE_TRACKER = new PageTracker();
-        HerbariumApi.MIXER_FACTORY = this;
         HerbariumApi.FLOWER_MANAGER = this;
         HerbariumApi.RUIN_MANAGER = this;
 
@@ -215,7 +209,6 @@ public final class Herbarium
     public void postInit(FMLPostInitializationEvent e) {
         HerbariumNetwork.init();
 
-        MinecraftForge.EVENT_BUS.register(BrewLevelManager.INSTANCE);
         MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
         MinecraftForge.EVENT_BUS.register(new RuinGenerator());
 
@@ -309,11 +302,6 @@ public final class Herbarium
             default:
                 return null;
         }
-    }
-
-    @Override
-    public IMixer newMixer() {
-        return new Mixer();
     }
 
     @Override

@@ -2,10 +2,9 @@ package herbarium.api.brew;
 
 public final class BrewStack{
     public final IBrew brew;
-    public int amount;
+    public long amount;
 
-    public BrewStack(IBrew brew, int amount){
+    public BrewStack(IBrew brew){
         this.brew = brew;
-        this.amount = amount;
     }
 }

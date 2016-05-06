@@ -1,6 +1,7 @@
-package herbarium.api.brew;
+package herbarium.api.brew.piping;
 
 import herbarium.api.WorldCoordinates;
+import herbarium.api.brew.BrewStack;
 import net.minecraft.world.World;
 
 public interface IPipeNetHandler{
