@@ -16,7 +16,7 @@ extends Block{
 
     public BlockHerbariumFlower(IFlower flower){
         super(Material.PLANTS);
-        this.setSoundType(SoundType.GROUND);
+        this.setSoundType(SoundType.PLANT);
         this.flower = flower;
     }
 

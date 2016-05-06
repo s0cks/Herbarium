@@ -6,15 +6,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class BlockCaveFlower
+public final class BlockWaterFlower
         extends BlockHerbariumFlower{
-    public BlockCaveFlower(){
-        super(Flowers.CAVE);
+    public BlockWaterFlower(){
+        super(Flowers.LOTUS);
     }
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         Block top = worldIn.getBlockState(pos.up()).getBlock();
-        return top == Blocks.STONE;
+        return top == Blocks.WATER;
     }
 }

@@ -15,6 +15,7 @@ import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
+import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockFlume;
@@ -22,6 +23,7 @@ import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockMortar;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
+import herbarium.common.blocks.BlockJournal;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
@@ -130,8 +132,8 @@ public final class Herbarium
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_long_ear_iris");
-    public static final Block blockLotus = new BlockHerbariumFlower(Flowers.LOTUS)
-                                                   .setCreativeTab(Herbarium.tab)
+    public static final Block blockLotus = new BlockWaterFlower()
+                                                   .setCreativeTab(CreativeTabs.BREWING)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
                                                     .setCreativeTab(Herbarium.tab)
@@ -158,6 +160,9 @@ public final class Herbarium
     public static final Block blockBarrel = new BlockBarrel()
                                                     .setCreativeTab(Herbarium.tab)
                                                     .setUnlocalizedName("herba_barrel");
+    public static final Block blockJournal = new BlockJournal()
+                                                    .setCreativeTab(CreativeTabs.BREWING)
+                                                    .setUnlocalizedName("herba_journal");
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
     @Mod.Instance("herbarium")
@@ -232,6 +237,7 @@ public final class Herbarium
         GameRegistry.registerBlock(blockPipe, "pipe");
         GameRegistry.registerBlock(blockMortar, "mortar");
         GameRegistry.registerBlock(blockBarrel, "barrel");
+        GameRegistry.registerBlock(blockJournal, "journal_block");
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");

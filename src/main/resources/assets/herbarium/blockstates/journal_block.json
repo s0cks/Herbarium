@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:journal_block",
+      "textures": {
+        "texture": "herbarium:models/journal_block"
+      }
+    },
+    "inventory": {
+      "model": "herbarium:journal_block",
+      "textures": {
+        "texture": "herbarium:models/journal_block"
+      }
+    }
+  }
+}
