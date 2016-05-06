@@ -4,6 +4,8 @@ import herbarium.api.brew.effects.IEffect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
 
+import java.util.concurrent.TimeUnit;
+
 public final class EffectDebug
 implements IEffect {
     @Override
@@ -28,6 +30,6 @@ implements IEffect {
 
     @Override
     public long duration() {
-        return 100;
+        return TimeUnit.SECONDS.toMillis(10);
     }
 }
