@@ -3,6 +3,12 @@
   "variants": {
     "normal": {
       "model": "herbarium:buttercup"
+    },
+    "inventory": {
+      "model": "herbarium:buttercup",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/buttercup"
+      }
     }
   }
 }

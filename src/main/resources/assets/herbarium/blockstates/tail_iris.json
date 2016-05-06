@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:tail_iris"
+    },
+    "inventory": {
+      "model": "herbarium:tail_iris",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/tail_iris"
+      }
+    }
+  }
+}

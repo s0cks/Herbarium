@@ -116,31 +116,31 @@ public final class Herbarium
                                                         .setUnlocalizedName("herba_belladonna");
     public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE)
                                                          .setCreativeTab(Herbarium.tab)
-                                                         .setUnlocalizedName("herba_blue_anemone");
+                                                         .setUnlocalizedName("herba_anemone");
     public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY)
                                                        .setCreativeTab(Herbarium.tab)
-                                                       .setUnlocalizedName("herba_blueberry");
+                                                       .setUnlocalizedName("herba_blueberry_blossom");
     public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP)
                                                        .setCreativeTab(Herbarium.tab)
                                                        .setUnlocalizedName("herba_buttercup");
     public static final Block blockCave = new BlockCaveFlower()
                                                   .setCreativeTab(Herbarium.tab)
-                                                  .setUnlocalizedName("herba_cave");
-    public static final Block blockDaisy = new BlockHerbariumFlower(Flowers.DAISY)
+                                                  .setUnlocalizedName("herba_cavern_bloom");
+    public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.DAISY)
                                                    .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_daisy");
+                                                   .setUnlocalizedName("herba_winter_lily");
     public static final Block blockFire = new BlockNetherFlower(Flowers.FIRE)
                                                   .setCreativeTab(Herbarium.tab)
-                                                  .setUnlocalizedName("herba_fire");
+                                                  .setUnlocalizedName("herba_lancet_root");
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
                                                          .setCreativeTab(Herbarium.tab)
-                                                         .setUnlocalizedName("herba_long_ear_iris");
+                                                         .setUnlocalizedName("herba_tail_iris");
     public static final Block blockLotus = new BlockWaterFlower()
                                                    .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
                                                     .setCreativeTab(Herbarium.tab)
-                                                    .setUnlocalizedName("herba_nether");
+                                                    .setUnlocalizedName("herba_igneous_spear");
     public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPCIAL_BERRIES)
                                                              .setCreativeTab(Herbarium.tab)
                                                              .setUnlocalizedName("herba_tropical_berries");
@@ -235,15 +235,15 @@ public final class Herbarium
         // Flowers
         GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
         GameRegistry.registerBlock(blockBelladonna, "belladonna");
-        GameRegistry.registerBlock(blockBlueAnemone, "blue_anemone");
-        GameRegistry.registerBlock(blockBlueberry, "blueberry");
+        GameRegistry.registerBlock(blockBlueAnemone, "anemone");
+        GameRegistry.registerBlock(blockBlueberry, "blueberry_blossom");
         GameRegistry.registerBlock(blockButtercup, "buttercup");
-        GameRegistry.registerBlock(blockCave, "cave");
-        GameRegistry.registerBlock(blockDaisy, "daisy");
-        GameRegistry.registerBlock(blockFire, "fire");
-        GameRegistry.registerBlock(blockLongEarIris, "long_ear_iris");
+        GameRegistry.registerBlock(blockCave, "cavern_bloom");
+        GameRegistry.registerBlock(blockWinterLily, "winter_lily");
+        GameRegistry.registerBlock(blockFire, "lancet_root");
+        GameRegistry.registerBlock(blockLongEarIris, "tail_iris");
         GameRegistry.registerBlock(blockLotus, "lotus");
-        GameRegistry.registerBlock(blockNether, "nether");
+        GameRegistry.registerBlock(blockNether, "igneous_spear");
         GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
 
         // Misc

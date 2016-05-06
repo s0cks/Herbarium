@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:igneous_spear"
+    },
+    "inventory": {
+      "model": "herbarium:igneous_spear",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/igneous_spear"
+      }
+    }
+  }
+}

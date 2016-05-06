@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "herbarium:blocks/flowers/long_ear_iris"
-  }
-}

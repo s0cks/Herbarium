@@ -3,6 +3,12 @@
   "variants": {
     "normal": {
       "model": "herbarium:belladonna"
+    },
+    "inventory": {
+      "model": "herbarium:belladonna",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/belladonna"
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "herbarium:blocks/flowers/blueberry"
+    "cross": "herbarium:blocks/flowers/tail_iris"
   }
 }

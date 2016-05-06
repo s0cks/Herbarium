@@ -31,15 +31,15 @@ extends CommonProxy{
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
         registerRender(Herbarium.blockBelladonna, "belladonna");
-        registerRender(Herbarium.blockBlueAnemone, "blue_anemone");
-        registerRender(Herbarium.blockBlueberry, "blueberry");
+        registerRender(Herbarium.blockBlueAnemone, "anemone");
+        registerRender(Herbarium.blockBlueberry, "blueberry_blossom");
         registerRender(Herbarium.blockButtercup, "buttercup");
-        registerRender(Herbarium.blockCave, "cave");
-        registerRender(Herbarium.blockDaisy, "daisy");
-        registerRender(Herbarium.blockFire, "fire");
-        registerRender(Herbarium.blockLongEarIris, "long_ear_iris");
+        registerRender(Herbarium.blockCave, "cavern_bloom");
+        registerRender(Herbarium.blockWinterLily, "winter_lily");
+        registerRender(Herbarium.blockFire, "lancet_root");
+        registerRender(Herbarium.blockLongEarIris, "tail_iris");
         registerRender(Herbarium.blockLotus, "lotus");
-        registerRender(Herbarium.blockNether, "nether");
+        registerRender(Herbarium.blockNether, "igneous_spear");
         registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
         registerRender(Herbarium.blockCoil, "coil");
         registerRender(Herbarium.blockCrucible, "crucible");

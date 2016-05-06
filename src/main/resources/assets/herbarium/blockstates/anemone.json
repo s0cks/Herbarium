@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:anemone"
+    },
+    "inventory": {
+      "model": "herbarium:anemone",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/anemone"
+      }
+    }
+  }
+}

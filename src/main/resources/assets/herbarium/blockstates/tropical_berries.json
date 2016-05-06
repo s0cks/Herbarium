@@ -3,6 +3,12 @@
   "variants": {
     "normal": {
       "model": "herbarium:tropical_berries"
+    },
+    "inventory": {
+      "model": "herbarium:tropical_berries",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/tropical_berries"
+      }
     }
   }
 }

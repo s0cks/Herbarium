@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:cavern_bloom"
+    },
+    "inventory": {
+      "model": "herbarium:cavern_bloom",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/cavern_bloom"
+      }
+    }
+  }
+}

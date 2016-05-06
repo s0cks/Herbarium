@@ -3,6 +3,12 @@
   "variants": {
     "normal": {
       "model": "herbarium:alstromeria"
+    },
+    "inventory": {
+      "model": "herbarium:alstromeria",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/alstromeria"
+      }
     }
   }
 }

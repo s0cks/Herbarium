@@ -14,7 +14,7 @@ public final class BlockWaterFlower
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        Block top = worldIn.getBlockState(pos.up()).getBlock();
-        return top == Blocks.WATER;
+        Block bottom = worldIn.getBlockState(pos.down()).getBlock();
+        return bottom == Blocks.WATER;
     }
 }
