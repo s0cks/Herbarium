@@ -6,6 +6,7 @@ import herbarium.api.IFlowerManager;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.commentarium.IPage;
+import herbarium.api.commentarium.IPageGroup;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IAlleleManager;
@@ -15,15 +16,15 @@ import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
-import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockFlume;
 import herbarium.common.blocks.BlockHerbariumFlower;
+import herbarium.common.blocks.BlockJournal;
 import herbarium.common.blocks.BlockMortar;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
-import herbarium.common.blocks.BlockJournal;
+import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
@@ -32,6 +33,7 @@ import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.effects.EffectTracker;
 import herbarium.common.core.brew.effects.effect.EffectDebug;
 import herbarium.common.core.commentarium.PageBuilder;
+import herbarium.common.core.commentarium.PageGroups;
 import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
 import herbarium.common.core.commentarium.renderer.TextPageRenderer;
@@ -65,6 +67,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,7 +136,7 @@ public final class Herbarium
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_long_ear_iris");
     public static final Block blockLotus = new BlockWaterFlower()
-                                                   .setCreativeTab(CreativeTabs.BREWING)
+                                                   .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
                                                     .setCreativeTab(Herbarium.tab)
@@ -161,8 +164,8 @@ public final class Herbarium
                                                     .setCreativeTab(Herbarium.tab)
                                                     .setUnlocalizedName("herba_barrel");
     public static final Block blockJournal = new BlockJournal()
-                                                    .setCreativeTab(CreativeTabs.BREWING)
-                                                    .setUnlocalizedName("herba_journal");
+                                                     .setCreativeTab(Herbarium.tab)
+                                                     .setUnlocalizedName("herba_journal");
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
     @Mod.Instance("herbarium")
@@ -178,6 +181,7 @@ public final class Herbarium
     private final List<IEffect> effects = new LinkedList<>();
     private final List<IAllele> alleles = new LinkedList<>();
     private final List<ISpecies> species = new LinkedList<>();
+    private final List<IPageGroup> groups = new LinkedList<>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -193,10 +197,20 @@ public final class Herbarium
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
 
         this.register(new PageBuilder().setTitle("Commentarium")
+                                       .setGroup(PageGroups.FLOWERS)
                                        .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt")))
                                        .build());
         this.register(new PageBuilder().setTitle("Tropical Berries")
+                                       .setGroup(PageGroups.FLOWERS)
                                        .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md")))
+                                       .build());
+        this.register(new PageBuilder().setTitle("Crucible")
+                                        .setGroup(PageGroups.BLOCKS)
+                                        .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Crucible.txt")))
+                                        .build());
+        this.register(new PageBuilder().setTitle("Flume")
+                                       .setGroup(PageGroups.BLOCKS)
+                                       .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Flume.txt")))
                                        .build());
         this.register(new EffectDebug());
 
@@ -208,6 +222,8 @@ public final class Herbarium
         for (String str : ruins) {
             register(new Ruin(str));
         }
+
+        for(PageGroups group : PageGroups.values()) this.register(group);
 
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
@@ -313,8 +329,41 @@ public final class Herbarium
     }
 
     @Override
+    public IPageGroup getPageGroup(String uuid) {
+        for(IPageGroup group : this.groups){
+            if(group.uuid().equals(uuid)){
+                return group;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<IPageGroup> sortedGroups() {
+        this.groups.sort(new Comparator<IPageGroup>() {
+            @Override
+            public int compare(IPageGroup iPageGroup, IPageGroup t1) {
+                return Integer.compare(iPageGroup.ordinal(), t1.ordinal());
+            }
+        });
+        return Collections.unmodifiableList(this.groups);
+    }
+
+    @Override
     public void register(IPage page) {
         this.pages.add(page);
+    }
+
+    @Override
+    public void register(IPageGroup group) {
+        for(IPageGroup g : this.groups){
+            if(group.uuid().equals(g.uuid())){
+                return;
+            }
+        }
+
+        this.groups.add(group);
     }
 
     @Override

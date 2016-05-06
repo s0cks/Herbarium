@@ -6,4 +6,5 @@ public interface IPage{
     public String uuid();
     public String description();
     public IPageRenderer renderer();
+    public IPageGroup group();
 }
