@@ -2,32 +2,32 @@
 # Misc
 item.herba_commentarium.name=Herba Commentarium
 item.herba_page.name=Herba Commentarium Page
-item.herba_mortar_pestle.name=Mortal & Pestle
-item.herba_dust.name=Dust
+item.herba_pestle.name=Pestle
 
 # Blocks
 # Flowers
 tile.herba_alstromeria.name=Alstromeria
+tile.herba_anemone.name=Anemone
 tile.herba_belladonna.name=Belladonna
-tile.herba_blue_anemone.name=Blue Anemone
-tile.herba_blueberry.name=Blueberry
-tile.herba_cave.name=Cave Flower
-tile.herba_daisy.name=Daisy
+tile.herba_blueberry_blossom.name=Blueberry Blossom
 tile.herba_buttercup.name=Buttercup
-tile.herba_long_ear_iris.name=Long Ear Iris
-tile.herba_lotus.name=Lotus
-tile.herba_nether.name=Infernal Flower
+tile.herba_cavern_bloom.name=Cavern Bloom
+tile.herba_igneous_spear.name=Igneous Spear
+tile.herba_lancet_root.name=Lancet Root
+tile.herba_spring_lotus.name=Spring Lotus
+tile.herba_tail_iris.name=Tail Iris
 tile.herba_tropical_berries.name=Tropical Berries
-tile.herba_fire.name=Fire Flower
+tile.herba_winter_lily.name=Winter Lily
 
 # Misc
 tile.herba_coil.name=Condensation Coil
 tile.herba_crucible.name=Crucible
 tile.herba_flume.name=Vapor Flume
 tile.herba_pipe.name=Piping
+tile.herba_mortar.name=Mortar
 tile.herba_barrel.name=Barrel
 
 # Pages
-herbarium.page.blue_anemone=Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
-herbarium.page.commentarium=Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
-herbarium.page.fire_flower=Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
+herbarium.page.blue_anemone=**Lorem ipsum** dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
+herbarium.page.commentarium=**Lorem ipsum dolor sit amet**, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
+herbarium.page.fire_flower=Lorem **ipsum **dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
