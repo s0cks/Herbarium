@@ -7,9 +7,13 @@ import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.commentarium.IPage;
 import herbarium.api.commentarium.IPageManager;
+import herbarium.api.genetics.IAllele;
+import herbarium.api.genetics.IAlleleManager;
+import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
+import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
@@ -76,6 +80,7 @@ public final class Herbarium
                    IEffectManager,
                    IGuiHandler,
                    IRuinManager,
+                   IAlleleManager,
                    IFlowerManager{
     @Mod.Instance("herbarium")
     public static Herbarium instance;
@@ -159,6 +164,9 @@ public final class Herbarium
     public static final Block blockMortar = new BlockMortar()
             .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_mortar");
+    public static final Block blockBarrel = new BlockBarrel()
+            .setCreativeTab(CreativeTabs.BREWING)
+            .setUnlocalizedName("herba_barrel");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
@@ -167,6 +175,8 @@ public final class Herbarium
     private final List<IFlower> flowers = new LinkedList<>();
     private final List<IRuin> ruins = new LinkedList<>();
     private final List<IEffect> effects = new LinkedList<>();
+    private final List<IAllele> alleles = new LinkedList<>();
+    private final List<ISpecies> species = new LinkedList<>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -221,7 +231,7 @@ public final class Herbarium
         GameRegistry.registerBlock(blockFlume, "flume");
         GameRegistry.registerBlock(blockPipe, "pipe");
         GameRegistry.registerBlock(blockMortar, "mortar");
-
+        GameRegistry.registerBlock(blockBarrel, "barrel");
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
@@ -385,6 +395,50 @@ public final class Herbarium
         for(IEffect e : this.effects){
             if(e.uuid().equals(uuid)){
                 return e;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public void registerSpecies(ISpecies species) {
+        for(ISpecies s : this.species){
+            if(s.uuid().equals(species.uuid())){
+                return;
+            }
+        }
+
+        this.species.add(species);
+    }
+
+    @Override
+    public void registerAllele(IAllele allele) {
+        for(IAllele a : this.alleles){
+            if(a.uuid().equals(allele.uuid())){
+                return;
+            }
+        }
+
+        this.alleles.add(allele);
+    }
+
+    @Override
+    public ISpecies getSpecies(String uuid) {
+        for(ISpecies s : this.species){
+            if(s.uuid().equals(uuid)){
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public IAllele getAllele(String uuid) {
+        for(IAllele a : this.alleles){
+            if(a.uuid().equals(uuid)){
+                return a;
             }
         }
 

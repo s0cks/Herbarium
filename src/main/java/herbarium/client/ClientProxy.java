@@ -43,7 +43,7 @@ extends CommonProxy{
         registerRender(Herbarium.blockFlume, "flume");
         registerRender(Herbarium.blockPipe, "pipe");
         registerRender(Herbarium.blockMortar, "mortar");
-
+        registerRender(Herbarium.blockBarrel, "barrel");
         MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
     }
 
