@@ -41,6 +41,7 @@ extends CommonProxy{
         registerRender(Herbarium.blockCrucible, "crucible");
         registerRender(Herbarium.blockFlume, "flume");
         registerRender(Herbarium.blockPipe, "pipe");
+        registerRender(Herbarium.blockBarrel, "barrel");
 
         MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
     }

@@ -13,6 +13,7 @@ import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
 import herbarium.client.gui.GuiJournal;
+import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
@@ -154,6 +155,9 @@ public final class Herbarium
     public static final Block blockPipe = new BlockPipe()
             .setCreativeTab(CreativeTabs.BREWING)
             .setUnlocalizedName("herba_pipe");
+    public static final Block blockBarrel = new BlockBarrel()
+            .setCreativeTab(CreativeTabs.BREWING)
+            .setUnlocalizedName("herba_barrel");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
@@ -216,6 +220,7 @@ public final class Herbarium
         GameRegistry.registerBlock(blockCoil, "coil");
         GameRegistry.registerBlock(blockFlume, "flume");
         GameRegistry.registerBlock(blockPipe, "pipe");
+        GameRegistry.registerBlock(blockBarrel, "barrel");
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
