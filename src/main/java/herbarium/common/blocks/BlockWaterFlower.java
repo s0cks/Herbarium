@@ -9,12 +9,12 @@ import net.minecraft.world.World;
 public final class BlockWaterFlower
         extends BlockHerbariumFlower{
     public BlockWaterFlower(){
-        super(Flowers.SPRING_LOTUS);
+        super(Flowers.LOTUS);
     }
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         Block top = worldIn.getBlockState(pos.up()).getBlock();
-        return top == Blocks.WATERLILY;
+        return top == Blocks.WATER;
     }
 }

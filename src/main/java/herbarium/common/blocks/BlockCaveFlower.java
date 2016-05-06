@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class BlockCaveFlower
-extends BlockHerbariumFlower{
+        extends BlockHerbariumFlower{
     public BlockCaveFlower(){
         super(Flowers.CAVE);
     }
