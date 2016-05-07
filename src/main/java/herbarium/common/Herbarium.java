@@ -18,6 +18,7 @@ import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
 import herbarium.common.blocks.BlockCoil;
 import herbarium.common.blocks.BlockCrucible;
+import herbarium.common.blocks.BlockDebug;
 import herbarium.common.blocks.BlockFlume;
 import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockJournal;
@@ -166,6 +167,10 @@ public final class Herbarium
     public static final Block blockJournal = new BlockJournal()
                                                      .setCreativeTab(Herbarium.tab)
                                                      .setUnlocalizedName("herba_journal");
+    public static final Block blockDebug = new BlockDebug()
+            .setCreativeTab(Herbarium.tab)
+            .setUnlocalizedName("herba_debug");
+
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
     @Mod.Instance("herbarium")
@@ -254,6 +259,7 @@ public final class Herbarium
         GameRegistry.registerBlock(blockMortar, "mortar");
         GameRegistry.registerBlock(blockBarrel, "barrel");
         GameRegistry.registerBlock(blockJournal, "journal_block");
+        GameRegistry.registerBlock(blockDebug, "debug");
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");

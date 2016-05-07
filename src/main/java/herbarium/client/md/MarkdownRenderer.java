@@ -129,7 +129,10 @@ implements Visitor{
 
     @Override
     public void visit(ExpImageNode node) {
-
+        System.out.println("[1]Loading image: " + node.title);
+        MarkdownComponentImage image;
+        this.screen.register(image = new MarkdownComponentImage(node.url, new Point(this.x, this.y)));
+        this.y += image.getHeight() + this.yPad;
     }
 
     @Override
@@ -184,7 +187,6 @@ implements Visitor{
 
     @Override
     public void visit(RefImageNode node) {
-
     }
 
     @Override

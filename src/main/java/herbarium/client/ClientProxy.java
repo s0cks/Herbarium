@@ -6,7 +6,9 @@ import herbarium.common.Herbarium;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -54,7 +56,12 @@ extends CommonProxy{
 
     @Override
     public void registerColors(){
-
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                return 0xFF0000;
+            }
+        }, Herbarium.itemBrew);
     }
 
     private void registerRender(Block block, String id){
