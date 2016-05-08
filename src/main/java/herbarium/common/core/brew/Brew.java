@@ -25,7 +25,7 @@ implements IBrew{
 
     @Override
     public EnumBrewType computeBrewType() {
-        EnumBrewType lastType = EnumBrewType.POISON;
+        EnumBrewType lastType = EnumBrewType.VENOM;
         int lastCount = 0;
         for(EnumBrewType type : EnumBrewType.values()){
             int count = this.effectsFor(type);

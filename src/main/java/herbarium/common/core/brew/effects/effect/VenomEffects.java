@@ -4,6 +4,7 @@ import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.Herbarium;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +48,7 @@ implements IEffect {
 
     @Override
     public EnumBrewType type() {
-        return EnumBrewType.POISON;
+        return EnumBrewType.VENOM;
     }
 
     @Override public void onTick(EntityPlayer player) {}
@@ -55,6 +56,8 @@ implements IEffect {
     @Override public void onTimeout(EntityPlayer player) {}
     @Override public void onJump(EntityPlayer player) {}
     @Override public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState state){}
+    @Override public void onTargeted(EntityPlayer player, EntityLivingBase targeter){}
+    @Override public float breakSpeed(EntityPlayer player, float originalSpeed){ return originalSpeed; }
 
     @Override
     public long duration() {

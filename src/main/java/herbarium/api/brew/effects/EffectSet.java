@@ -7,9 +7,9 @@ public final class EffectSet{
 
     public static EffectSet of(IEffect poison, IEffect potion, IEffect alcoholic){
         EffectSet set = new EffectSet();
-        set.effects[EnumBrewType.POISON.ordinal()] = poison;
-        set.effects[EnumBrewType.POTION.ordinal()] = potion;
-        set.effects[EnumBrewType.ALCOHOLIC.ordinal()] = alcoholic;
+        set.effects[EnumBrewType.VENOM.ordinal()] = poison;
+        set.effects[EnumBrewType.REMEDY.ordinal()] = potion;
+        set.effects[EnumBrewType.BREW.ordinal()] = alcoholic;
         return set;
     }
 

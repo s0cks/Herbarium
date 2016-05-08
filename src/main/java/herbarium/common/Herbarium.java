@@ -354,7 +354,7 @@ public final class Herbarium
 
     @Override
     public List<IPageGroup> sortedGroups() {
-        this.groups.sort(new Comparator<IPageGroup>() {
+        Collections.sort(this.groups, new Comparator<IPageGroup>() {
             @Override
             public int compare(IPageGroup iPageGroup, IPageGroup t1) {
                 return Integer.compare(iPageGroup.ordinal(), t1.ordinal());

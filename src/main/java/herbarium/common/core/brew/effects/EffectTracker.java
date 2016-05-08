@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -118,6 +119,14 @@ implements IEffectTracker{
     }
 
     @SubscribeEvent
+    public void onBreakSpeed(PlayerEvent.BreakSpeed e){
+        if(!this.data.containsKey(e.getEntityPlayer())) return;
+        for(Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()){
+            e.setNewSpeed(entry.getKey().breakSpeed(e.getEntityPlayer(), e.getOriginalSpeed()));
+        }
+    }
+
+    @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent e){
         if(!this.data.containsKey(e.player)) return;
         PlayerEffectData data = this.data.get(e.player);
@@ -148,6 +157,17 @@ implements IEffectTracker{
             if(!this.data.containsKey(player)) return;
             for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
                 entry.getKey().onJump(player);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerTargeted(LivingSetAttackTargetEvent e){
+        if(e.getTarget() instanceof EntityPlayer){
+            EntityPlayer player = ((EntityPlayer) e.getTarget());
+            if(!this.data.containsKey(player)) return;
+            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
+                entry.getKey().onTargeted(player, e.getEntityLiving());
             }
         }
     }

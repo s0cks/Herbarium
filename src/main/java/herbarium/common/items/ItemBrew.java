@@ -6,7 +6,7 @@ import herbarium.api.brew.IBrew;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.core.NBTHelper;
 import herbarium.common.core.brew.Brew;
-import herbarium.common.core.brew.effects.effect.RemedyEffects;
+import herbarium.common.core.brew.effects.effect.BrewEffects;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -63,7 +63,7 @@ extends Item {
             HerbariumApi.EFFECT_TRACKER.syncEffects(playerIn);
         } else{
             Brew b = new Brew();
-            b.effects.add(RemedyEffects.LUCKY);
+            b.effects.add(BrewEffects.HASTE);
             setBrew(itemStackIn, b);
         }
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
