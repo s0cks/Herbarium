@@ -4,6 +4,20 @@ item.herba_commentarium.name=Herba Commentarium
 item.herba_page.name=Herba Commentarium Page
 item.herba_pestle.name=Pestle
 
+## Pastes
+item.herbarium.paste.alstromeria.name=Alstromeria Paste
+item.herbarium.paste.anemone.name=Anemone Paste
+item.herbarium.paste.belladonna.name=Belladonna Paste
+item.herbarium.paste.blueberry_blossom.name=Blueberry Blossom Paste
+item.herbarium.paste.buttercup.name=Buttercup Paste
+item.herbarium.paste.cavern_bloom.name=Cavern Bloom Paste
+item.herbarium.paste.igneous_spear.name=Igneous Spear Paste
+item.herbarium.paste.lancet_root.name=Lancet Root Paste
+item.herbarium.paste.spring_lotus.name=Spring Lotus Paste
+item.herbarium.paste.tail_iris.name=Tail Iris Paste
+item.herbarium.paste.tropical_berries.name=Tropical Berries Paste
+item.herbarium.paste.winter_lily.name=Winter Lily Paste
+
 # Blocks
 # Flowers
 tile.herba_alstromeria.name=Alstromeria

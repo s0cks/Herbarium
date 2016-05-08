@@ -131,6 +131,7 @@ implements IEffectTracker{
         if(!this.data.containsKey(e.player)) return;
         PlayerEffectData data = this.data.get(e.player);
         for(Map.Entry<IEffect, Long> entry : data.current.entrySet()){
+            if(entry.getKey() == null) continue;
             long current = Minecraft.getSystemTime();
             if((current - entry.getValue()) >= entry.getKey().duration()){
                 entry.getKey().onTimeout(e.player);

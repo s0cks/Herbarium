@@ -43,6 +43,7 @@ import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
+import herbarium.common.items.ItemPaste;
 import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityPipe;
@@ -113,6 +114,10 @@ public final class Herbarium
                                                 .setCreativeTab(Herbarium.tab)
                                                 .setUnlocalizedName("herba_brew")
                                                 .setMaxStackSize(1);
+    public static final Item itemPaste = new ItemPaste()
+                                                 .setCreativeTab(Herbarium.tab)
+                                                 .setUnlocalizedName("herba_paste");
+
     // Blocks
     // Flowers
     public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA)
@@ -134,8 +139,8 @@ public final class Herbarium
                                                   .setCreativeTab(Herbarium.tab)
                                                   .setUnlocalizedName("herba_cavern_bloom");
     public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.DAISY)
-                                                   .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_winter_lily");
+                                                        .setCreativeTab(Herbarium.tab)
+                                                        .setUnlocalizedName("herba_winter_lily");
     public static final Block blockFire = new BlockNetherFlower(Flowers.FIRE)
                                                   .setCreativeTab(Herbarium.tab)
                                                   .setUnlocalizedName("herba_lancet_root");
@@ -174,8 +179,8 @@ public final class Herbarium
                                                      .setCreativeTab(Herbarium.tab)
                                                      .setUnlocalizedName("herba_journal");
     public static final Block blockDebug = new BlockDebug()
-            .setCreativeTab(Herbarium.tab)
-            .setUnlocalizedName("herba_debug");
+                                                   .setCreativeTab(Herbarium.tab)
+                                                   .setUnlocalizedName("herba_debug");
 
     // GUIs
     public static final byte GUI_JOURNAL = 0x1;
@@ -209,7 +214,10 @@ public final class Herbarium
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
         HerbariumApi.GEM_TRACKER = this;
 
-        this.register(new PageBuilder().setTitle("Commentarium").setGroup(PageGroups.BLOCKS).setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md"))).build());
+        this.register(new PageBuilder().setTitle("Commentarium")
+                                       .setGroup(PageGroups.BLOCKS)
+                                       .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md")))
+                                       .build());
 
         String[] ruins = new String[]{
                 "basic",
@@ -219,10 +227,10 @@ public final class Herbarium
             register(new Ruin(str));
         }
 
-        for(PageGroups group : PageGroups.values()) this.register(group);
-        for(VenomEffects effect : VenomEffects.values()) this.register(effect);
-        for(BrewEffects effect : BrewEffects.values()) this.register(effect);
-        for(RemedyEffects effect : RemedyEffects.values()) this.register(effect);
+        for (PageGroups group : PageGroups.values()) this.register(group);
+        for (VenomEffects effect : VenomEffects.values()) this.register(effect);
+        for (BrewEffects effect : BrewEffects.values()) this.register(effect);
+        for (RemedyEffects effect : RemedyEffects.values()) this.register(effect);
 
         register(Blocks.DIAMOND_ORE);
         register(Blocks.EMERALD_ORE);
@@ -236,6 +244,7 @@ public final class Herbarium
         GameRegistry.registerItem(itemPage, "page");
         GameRegistry.registerItem(itemPestle, "pestle");
         GameRegistry.registerItem(itemBrew, "brew");
+        GameRegistry.registerItem(itemPaste, "paste");
 
         // Blocks
         // Flowers
@@ -343,8 +352,9 @@ public final class Herbarium
 
     @Override
     public IPageGroup getPageGroup(String uuid) {
-        for(IPageGroup group : this.groups){
-            if(group.uuid().equals(uuid)){
+        for (IPageGroup group : this.groups) {
+            if (group.uuid()
+                     .equals(uuid)) {
                 return group;
             }
         }
@@ -370,8 +380,9 @@ public final class Herbarium
 
     @Override
     public void register(IPageGroup group) {
-        for(IPageGroup g : this.groups){
-            if(group.uuid().equals(g.uuid())){
+        for (IPageGroup g : this.groups) {
+            if (group.uuid()
+                     .equals(g.uuid())) {
                 return;
             }
         }

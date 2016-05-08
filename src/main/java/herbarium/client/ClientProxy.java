@@ -5,6 +5,7 @@ import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
 import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
+import herbarium.common.items.ItemPaste;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -31,6 +32,10 @@ extends CommonProxy{
         registerRender(Herbarium.itemBrew, 0, "remedy");
         registerRender(Herbarium.itemBrew, 1, "spirit");
         registerRender(Herbarium.itemBrew, 2, "venom");
+
+        for(int i = 0; i < ItemPaste.names.length; i++){
+            registerRender(Herbarium.itemPaste, i, ItemPaste.names[i] + "_paste");
+        }
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
