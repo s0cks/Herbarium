@@ -25,7 +25,7 @@ implements IBrew{
 
     @Override
     public EnumBrewType computeBrewType() {
-        EnumBrewType lastType = EnumBrewType.POTION;
+        EnumBrewType lastType = EnumBrewType.POISON;
         int lastCount = 0;
         for(EnumBrewType type : EnumBrewType.values()){
             int count = this.effectsFor(type);
@@ -40,6 +40,7 @@ implements IBrew{
     private int effectsFor(EnumBrewType type){
         int count = 0;
         for(IEffect effect : this.effects){
+            if(effect == null) continue;
             if(effect.type().equals(type)){
                 count++;
             }

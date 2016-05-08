@@ -6,6 +6,7 @@ import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectTracker;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.net.PacketSyncEffects;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,7 +15,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.storage.IPlayerFileData;
 import net.minecraft.world.storage.SaveHandler;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -74,7 +77,21 @@ implements IEffectTracker{
     }
 
     @Override
-    public boolean hasEffect(EntityPlayer player) {
+    public boolean hasEffects(EntityPlayer player) {
+        return this.data.containsKey(player);
+    }
+
+    @Override
+    public boolean effectActive(EntityPlayer player, IEffect effect) {
+        if(effect == null) return false;
+        if(!this.data.containsKey(player)) return false;
+        for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
+            if(entry.getKey() == null) continue;
+            if(entry.getKey().uuid().equals(effect.uuid())){
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -112,6 +129,26 @@ implements IEffectTracker{
                 continue;
             }
             entry.getKey().onTick(e.player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerActiveBlock(PlayerInteractEvent.RightClickBlock e){
+        if(!this.data.containsKey(e.getEntityPlayer())) return;
+        for(Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()){
+            IBlockState state = e.getWorld().getBlockState(e.getPos());
+            entry.getKey().onActiveBlock(e.getEntityPlayer(), e.getPos(), state);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerJump(LivingEvent.LivingJumpEvent e){
+        if(e.getEntity() instanceof EntityPlayer){
+            EntityPlayer player = ((EntityPlayer) e.getEntity());
+            if(!this.data.containsKey(player)) return;
+            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
+                entry.getKey().onJump(player);
+            }
         }
     }
 

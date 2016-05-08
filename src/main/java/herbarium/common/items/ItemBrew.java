@@ -6,7 +6,7 @@ import herbarium.api.brew.IBrew;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.core.NBTHelper;
 import herbarium.common.core.brew.Brew;
-import herbarium.common.core.brew.effects.effect.EffectDebug;
+import herbarium.common.core.brew.effects.effect.RemedyEffects;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -63,7 +63,7 @@ extends Item {
             HerbariumApi.EFFECT_TRACKER.syncEffects(playerIn);
         } else{
             Brew b = new Brew();
-            b.effects.add(new EffectDebug());
+            b.effects.add(RemedyEffects.PROWLER_VISION);
             setBrew(itemStackIn, b);
         }
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
@@ -74,6 +74,7 @@ extends Item {
         IBrew brew = getBrew(stack);
         if(brew != null){
             for(IEffect effect : brew.effects()){
+                if(effect == null) continue;
                 tooltip.add(effect.uuid());
             }
         }

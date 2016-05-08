@@ -1,7 +1,9 @@
 package herbarium.api.brew.effects;
 
 import herbarium.api.brew.EnumBrewType;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 
 public interface IEffect{
     public String uuid();
@@ -9,5 +11,7 @@ public interface IEffect{
     public void onTick(EntityPlayer player);
     public void onDrink(EntityPlayer player);
     public void onTimeout(EntityPlayer player);
+    public void onJump(EntityPlayer player);
+    public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState b);
     public long duration();
 }

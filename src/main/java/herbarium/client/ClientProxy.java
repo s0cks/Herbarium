@@ -52,6 +52,7 @@ extends CommonProxy{
         registerRender(Herbarium.blockJournal, "journal_block");
 
         MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
+        MinecraftForge.EVENT_BUS.register(new ClientEffectHandler());
     }
 
     @Override

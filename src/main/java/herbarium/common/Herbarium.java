@@ -32,12 +32,13 @@ import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.effects.EffectTracker;
-import herbarium.common.core.brew.effects.effect.EffectDebug;
+import herbarium.common.core.brew.effects.effect.BrewEffects;
+import herbarium.common.core.brew.effects.effect.RemedyEffects;
+import herbarium.common.core.brew.effects.effect.VenomEffects;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageGroups;
 import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
-import herbarium.common.core.commentarium.renderer.TextPageRenderer;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
@@ -88,6 +89,7 @@ public final class Herbarium
                    IRuinManager,
                    IAlleleManager,
                    IFlowerManager {
+    public static final Random random = new Random();
     public static final CreativeTabs tab = new CreativeTabHerbarium();
 
     // Items
@@ -201,34 +203,20 @@ public final class Herbarium
         HerbariumApi.EFFECT_MANAGER = this;
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
 
-        this.register(new PageBuilder().setTitle("Commentarium")
-                                       .setGroup(PageGroups.FLOWERS)
-                                       .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.txt")))
-                                       .build());
-        this.register(new PageBuilder().setTitle("Tropical Berries")
-                                       .setGroup(PageGroups.FLOWERS)
-                                       .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/TropicalBerries.md")))
-                                       .build());
-        this.register(new PageBuilder().setTitle("Crucible")
-                                        .setGroup(PageGroups.BLOCKS)
-                                        .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Crucible.txt")))
-                                        .build());
-        this.register(new PageBuilder().setTitle("Flume")
-                                       .setGroup(PageGroups.BLOCKS)
-                                       .setRenderer(new TextPageRenderer(new ResourceLocation("herbarium", "pages/Flume.txt")))
-                                       .build());
-        this.register(new EffectDebug());
+        this.register(new PageBuilder().setTitle("Commentarium").setGroup(PageGroups.BLOCKS).setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md"))).build());
 
         String[] ruins = new String[]{
                 "basic",
                 "wooden"
         };
-
         for (String str : ruins) {
             register(new Ruin(str));
         }
 
         for(PageGroups group : PageGroups.values()) this.register(group);
+        for(VenomEffects effect : VenomEffects.values()) this.register(effect);
+        for(BrewEffects effect : BrewEffects.values()) this.register(effect);
+        for(RemedyEffects effect : RemedyEffects.values()) this.register(effect);
 
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
