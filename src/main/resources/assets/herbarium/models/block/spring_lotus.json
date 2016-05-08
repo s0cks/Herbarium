@@ -1,9 +1,9 @@
 {
     "ambientocclusion": false,
     "textures": {
-        "particle": "herbarium:blocks/flowers/lotus",
+        "particle": "herbarium:blocks/flowers/spring_lotus",
         "lilypad": "minecraft:blocks/waterlily",
-		"flower": "herbarium:blocks/flowers/lotus"
+		"flower": "herbarium:blocks/flowers/spring_lotus"
     },
     "elements": [
         {   "from": [ 0, 0.25, 0 ],
