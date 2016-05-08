@@ -4,11 +4,8 @@ import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.Herbarium;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -128,6 +125,8 @@ implements IEffect {
     @Override public void onJump(EntityPlayer player) {}
     @Override public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState state){}
     @Override public void onTargeted(EntityPlayer player, EntityLivingBase targeter){}
+    @Override public void onExplodeGas(EntityPlayer player, BlockPos pos){}
+    @Override public void onExplodeLiquid(EntityPlayer player, BlockPos pos){}
     @Override public float breakSpeed(EntityPlayer player, float originalSpeed){ return originalSpeed; }
 
     @Override

@@ -15,6 +15,8 @@ public interface IEffect{
     public void onJump(EntityPlayer player);
     public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState b);
     public void onTargeted(EntityPlayer player, EntityLivingBase targeter);
+    public void onExplodeGas(EntityPlayer tosser, BlockPos pos);
+    public void onExplodeLiquid(EntityPlayer tosser, BlockPos pos);
     public float breakSpeed(EntityPlayer player, float originalSpeed);
     public long duration();
 }

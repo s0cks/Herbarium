@@ -4,6 +4,7 @@ import herbarium.api.HerbariumApi;
 import herbarium.common.Herbarium;
 import herbarium.common.HerbariumConfig;
 import herbarium.common.core.brew.effects.effect.RemedyEffects;
+import herbarium.common.core.brew.effects.effect.SpiritEffects;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -18,7 +19,7 @@ public final class ClientEffectHandler {
     @SubscribeEvent
     public void doXRayTracking(RenderWorldLastEvent e){
         EntityPlayer player = Herbarium.proxy.getClient().thePlayer;
-        if(HerbariumApi.EFFECT_TRACKER.effectActive(player, RemedyEffects.LUCKY)){
+        if(HerbariumApi.EFFECT_TRACKER.effectActive(player, SpiritEffects.LUCKY)){
             GL11.glPushMatrix();
             RenderHelper.translateToEntityCoords(player, e.getPartialTicks());
             GL11.glDisable(GL11.GL_TEXTURE_2D);

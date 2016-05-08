@@ -2,10 +2,11 @@ package herbarium.common.core.brew.effects.effect;
 
 import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
+import herbarium.common.Herbarium;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -34,7 +35,14 @@ implements IEffect{
             return originalSpeed * 2.0F;
         }
     },
-    MENACING(TimeUnit.MINUTES.toMillis(3)), //Mobs ignore you
+    MENACING(TimeUnit.MINUTES.toMillis(3)){
+        @Override
+        public void onTargeted(EntityPlayer player, EntityLivingBase targeter) {
+            if((targeter instanceof EntityMob) && Herbarium.random.nextBoolean()){
+                ((EntityMob) targeter).setAttackTarget(null);
+            }
+        }
+    }, //Mobs ignore you
     ROBUST(TimeUnit.MINUTES.toMillis(3)), //Inflict bleeding (DoT), more knockback, more crits
     WATER_WALKING(TimeUnit.MINUTES.toMillis(3)), //Walking on water
     FIRE_RESISTANCE(TimeUnit.MINUTES.toMillis(3)), //Fire Resistance, more vulnerable to coldness
@@ -67,6 +75,8 @@ implements IEffect{
     @Override public void onJump(EntityPlayer player) {}
     @Override public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState state){}
     @Override public void onTargeted(EntityPlayer player, EntityLivingBase targeter){}
+    @Override public void onExplodeGas(EntityPlayer player, BlockPos pos){}
+    @Override public void onExplodeLiquid(EntityPlayer player, BlockPos pos){}
     @Override public float breakSpeed(EntityPlayer player, float originalSpeed){ return originalSpeed; }
 
     @Override
