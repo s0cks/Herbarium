@@ -6,4 +6,6 @@ public interface IPage{
     public String description();
     public IPageRenderer renderer();
     public IPageGroup group();
+    public boolean flipped();
+    public void flip();
 }

@@ -36,14 +36,22 @@ extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
         IPage page = getPage(itemStackIn);
-        if(page != null & !worldIn.isRemote){
-            HerbariumApi.PAGE_TRACKER.learn(playerIn, page);
-            playerIn.inventory.getCurrentItem().stackSize--;
-            double x = playerIn.posX + worldIn.rand.nextInt(150);
-            double z = playerIn.posZ + worldIn.rand.nextInt(150);
-            BlockPos pos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
-            RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(worldIn.rand), worldIn, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
-            playerIn.addChatComponentMessage(new TextComponentString("Spawned Ruin @" + pos));
+        if(!playerIn.isSneaking()){
+            if(page != null & !worldIn.isRemote){
+                HerbariumApi.PAGE_TRACKER.learn(playerIn, page);
+                playerIn.inventory.getCurrentItem().stackSize--;
+                double x = playerIn.posX + worldIn.rand.nextInt(150);
+                double z = playerIn.posZ + worldIn.rand.nextInt(150);
+                BlockPos pos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
+                RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(worldIn.rand), worldIn, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
+                playerIn.addChatComponentMessage(new TextComponentString("Spawned Ruin @" + pos));
+            }
+        } else{
+            if(page != null){
+                //TODO: Fix sounds?
+                // page.flip();
+                // worldIn.playSound(playerIn, playerIn.getPosition(), HerbariumSounds.pageFlip, SoundCategory.AMBIENT, 1.0F, 1.0F);
+            }
         }
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
     }

@@ -10,6 +10,7 @@ implements IPage {
     private final String title;
     private final IPageRenderer renderer;
     private final IPageGroup group;
+    private boolean flipped = false;
 
     protected Page(PageBuilder builder){
         this.title = builder.title;
@@ -40,6 +41,16 @@ implements IPage {
     @Override
     public IPageGroup group() {
         return this.group;
+    }
+
+    @Override
+    public boolean flipped() {
+        return this.flipped;
+    }
+
+    @Override
+    public void flip() {
+        this.flipped = !this.flipped;
     }
 
     @Override

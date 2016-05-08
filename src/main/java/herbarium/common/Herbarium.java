@@ -271,6 +271,8 @@ public final class Herbarium
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
 
+        HerbariumSounds.init();
+
         proxy.registerRenders();
     }
 
