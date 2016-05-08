@@ -142,7 +142,7 @@ public final class Herbarium
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_tail_iris");
-    public static final Block blockLotus = new BlockWaterFlower()
+    public static final Block blockLotus = new BlockHerbariumFlower/*BlockWaterFlower*/(Flowers.LOTUS)
                                                    .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)

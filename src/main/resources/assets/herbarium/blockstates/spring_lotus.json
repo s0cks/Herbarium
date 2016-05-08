@@ -1,0 +1,14 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "normal": {
+      "model": "herbarium:spring_lotus"
+    },
+    "inventory": {
+      "model": "herbarium:spring_lotus",
+      "textures": {
+        "cross": "herbarium:blocks/flowers/spring_lotus"
+      }
+    }
+  }
+}
