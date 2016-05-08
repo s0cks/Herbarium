@@ -1,12 +1,23 @@
-[
-  [
-    "XXXXX",
-    "XXTXX",
-    "XXXXX"
+{
+  "name": "Basic",
+  "template": [
+    [
+      "WWWWW",
+      "WWWWW",
+      "WWWWW"
+    ],
+    [
+      "WWWWW",
+      "WWTWW",
+      "WWWWW"
+    ],
+    [
+      "WWWWW",
+      "WWWWW",
+      "WWWWW"
+    ]
   ],
-  [
-    "XXXXX",
-    "XXXXX",
-    "XXXXX"
-  ]
-]
+  "context": {
+    "W": "minecraft:log"
+  }
+}

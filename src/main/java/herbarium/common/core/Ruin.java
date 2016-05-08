@@ -3,18 +3,21 @@ package herbarium.common.core;
 import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinContext;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class Ruin
-implements IRuin {
+implements IRuin,
+           IRuinContext{
     private final String name;
+    private final String[][] template;
+    private final Map<String, String> context = new HashMap<>();
 
-    public Ruin(String name){
+    public Ruin(String name, String[][] template) {
         this.name = name;
+        this.template = template;
     }
 
     @Override
@@ -23,33 +26,27 @@ implements IRuin {
     }
 
     @Override
-    public ResourceLocation template() {
+    public ResourceLocation resource() {
         return new ResourceLocation("herbarium", "ruins/" + this.name.toLowerCase() + ".json");
     }
 
     @Override
-    public IRuinContext context() {
-        return new RuinContext();
+    public String[][] template(){
+        return this.template;
     }
 
-    private static final class RuinContext
-    implements IRuinContext{
-        private final Map<Character, Block> map = new HashMap<>();
+    @Override
+    public IRuinContext context() {
+        return this;
+    }
 
-        public RuinContext(){
-            this.define('X', Blocks.STONE);
-            this.define('R', Blocks.REDSTONE_BLOCK);
-            this.define('W', Blocks.PLANKS);
-        }
+    @Override
+    public Block map(char sym) {
+        return Block.getBlockFromName(this.context.get(String.valueOf(sym)));
+    }
 
-        @Override
-        public Block map(char sym) {
-            return this.map.get(sym);
-        }
-
-        @Override
-        public void define(char sym, Block block) {
-            this.map.put(sym, block);
-        }
+    @Override
+    public void define(char sym, Block block) {
+        this.context.put(String.valueOf(sym), block.getRegistryName().getResourceDomain() + ":" + block.getRegistryName().getResourcePath());
     }
 }

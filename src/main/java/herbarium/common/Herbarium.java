@@ -1,5 +1,6 @@
 package herbarium.common;
 
+import com.google.gson.Gson;
 import herbarium.api.HerbariumApi;
 import herbarium.api.IFlower;
 import herbarium.api.IFlowerManager;
@@ -34,8 +35,8 @@ import herbarium.common.core.KeyHandler;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.effects.EffectTracker;
-import herbarium.common.core.brew.effects.effect.SpiritEffects;
 import herbarium.common.core.brew.effects.effect.RemedyEffects;
+import herbarium.common.core.brew.effects.effect.SpiritEffects;
 import herbarium.common.core.brew.effects.effect.VenomEffects;
 import herbarium.common.core.commentarium.PageBuilder;
 import herbarium.common.core.commentarium.PageGroups;
@@ -73,6 +74,8 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -96,6 +99,7 @@ public final class Herbarium
                    IGemOreTracker,
                    IFlowerManager {
     public static final Random random = new Random();
+    public static final Gson gson = new Gson();
     public static final CreativeTabs tab = new CreativeTabHerbarium();
 
     // Items
@@ -220,14 +224,6 @@ public final class Herbarium
                                        .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md")))
                                        .build());
 
-        String[] ruins = new String[]{
-                "basic",
-                "wooden"
-        };
-        for (String str : ruins) {
-            register(new Ruin(str));
-        }
-
         for (PageGroups group : PageGroups.values()) this.register(group);
         for (VenomEffects effect : VenomEffects.values()) this.register(effect);
         for (SpiritEffects effect : SpiritEffects.values()) this.register(effect);
@@ -278,11 +274,24 @@ public final class Herbarium
         proxy.registerRenders();
     }
 
+    private void registerRuin(ResourceLocation loc){
+        try(InputStream in = proxy.getClient().getResourceManager().getResource(loc).getInputStream()){
+            this.register(gson.fromJson(new InputStreamReader(in), Ruin.class));
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
 
         proxy.registerColors();
+
+        String[] ruins = new String[]{
+            "basic"
+        };
+        for(String ruin : ruins) this.registerRuin(new ResourceLocation("herbarium", "ruins/" + ruin + ".json"));
 
         Flowers.init();
     }
