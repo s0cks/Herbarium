@@ -3,12 +3,14 @@ package herbarium.client;
 import herbarium.client.render.RenderItemPageFP;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
+import herbarium.common.blocks.BlockWaterFlower;
+import herbarium.common.items.ItemBrew;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -26,9 +28,9 @@ extends CommonProxy{
         registerRender(Herbarium.itemJournal, "journal");
         registerRender(Herbarium.itemPage, "page");
         registerRender(Herbarium.itemPestle, "pestle");
-        registerRender(Herbarium.itemBrew, 0, "brew_remedy");
-        registerRender(Herbarium.itemBrew, 1, "brew_spirit");
-        registerRender(Herbarium.itemBrew, 2, "brew_venom");
+        registerRender(Herbarium.itemBrew, 0, "remedy");
+        registerRender(Herbarium.itemBrew, 1, "spirit");
+        registerRender(Herbarium.itemBrew, 2, "venom");
 
         // Blocks
         registerRender(Herbarium.blockAlstromeria, "alstromeria");
@@ -57,12 +59,16 @@ extends CommonProxy{
 
     @Override
     public void registerColors(){
-        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-            @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                return 0xFF0000;
-            }
-        }, Herbarium.itemBrew);
+        registerColor(new ItemBrew.BrewColorizer(), Herbarium.itemBrew);
+        registerColor(new BlockWaterFlower.SpringLotusColorizer(), Herbarium.blockLotus);
+    }
+
+    private void registerColor(IItemColor color, Item item){
+        this.getClient().getItemColors().registerItemColorHandler(color, item);
+    }
+
+    private void registerColor(IBlockColor color, Block block){
+        this.getClient().getBlockColors().registerBlockColorHandler(color, block);
     }
 
     private void registerRender(Block block, String id){

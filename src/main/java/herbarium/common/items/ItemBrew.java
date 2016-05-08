@@ -7,6 +7,7 @@ import herbarium.api.brew.effects.IEffect;
 import herbarium.common.core.NBTHelper;
 import herbarium.common.core.brew.Brew;
 import herbarium.common.core.brew.effects.effect.BrewEffects;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -84,6 +85,22 @@ extends Item {
     public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
         for(int i = 0; i < EnumBrewType.values().length; i++){
             subItems.add(new ItemStack(itemIn, 1, i));
+        }
+    }
+
+    public static final class BrewColorizer
+    implements IItemColor{
+        @Override
+        public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+            IBrew brew = ItemBrew.getBrew(stack);
+            if(brew != null && tintIndex == 1){
+                switch(brew.computeBrewType()){
+                    case REMEDY: return 0xFF0000;
+                    case VENOM: return 0x00FF00;
+                    case BREW: return 0xF79400;
+                }
+            }
+            return 0xFFFFFF;
         }
     }
 }
