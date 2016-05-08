@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class BlockWaterFlower
-        extends BlockHerbariumFlower{
+extends BlockHerbariumFlower{
     public BlockWaterFlower(){
         super(Flowers.NETHER);
     }
@@ -17,5 +17,4 @@ public final class BlockWaterFlower
         Block bottom = worldIn.getBlockState(pos.down()).getBlock();
         return bottom == Blocks.WATER;
     }
-
 }
