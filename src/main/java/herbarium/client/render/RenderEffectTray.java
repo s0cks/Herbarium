@@ -116,10 +116,12 @@ public final class RenderEffectTray
                   .endVertex();
                 tess.draw();
 
-                GlStateManager.pushMatrix();
-                int textX = (int) (this.trayPosX + 20);
-                mc.fontRendererObj.drawString(effect.toString(), textX, y + 4, 0x808080);
-                GlStateManager.popMatrix();
+                if(this.showing){
+                    GlStateManager.pushMatrix();
+                    int textX = (int) (this.trayPosX + 20);
+                    mc.fontRendererObj.drawString(effect.toString(), textX, y + 4, 0x808080);
+                    GlStateManager.popMatrix();
+                }
 
                 y += 20;
             }

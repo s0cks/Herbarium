@@ -4,6 +4,7 @@ import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.Herbarium;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +47,23 @@ implements IEffect{
         }
     }, //Mobs ignore you
     ROBUST(TimeUnit.MINUTES.toMillis(3)), //Inflict bleeding (DoT), more knockback, more crits
-    WATER_WALKING(TimeUnit.MINUTES.toMillis(3)), //Walking on water
+    WATER_WALKING(TimeUnit.MINUTES.toMillis(3)){
+        @Override
+        public void onTick(EntityPlayer player) {
+            BlockPos below = player.getPosition().down();
+            World world = player.getEntityWorld();
+            if(world.getBlockState(below).getBlock().getMaterial(world.getBlockState(below)).equals(Material.WATER)){
+                if(player.motionY < 0 && player.getEntityBoundingBox().minY < (player.posY - player.getYOffset())){
+                    player.motionY = 0;
+                    player.fallDistance = 0;
+                    player.onGround = true;
+                    if(player.isSneaking()){
+                        player.motionY -= 0.1F;
+                    }
+                }
+            }
+        }
+    }, //Walking on water
     FIRE_RESISTANCE(TimeUnit.MINUTES.toMillis(3)), //Fire Resistance, more vulnerable to coldness
     PROWLER_VISION(TimeUnit.MINUTES.toMillis(10)), //See nearby mobs with an outline, mobs notice you more early
     SWIFT_HANDS(TimeUnit.MINUTES.toMillis(10)), //Less cooldown on attacks, less defense

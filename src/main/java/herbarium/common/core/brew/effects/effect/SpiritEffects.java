@@ -99,7 +99,12 @@ implements IEffect {
     //Drunk Side Effects
     FLIPPED_VISION(TimeUnit.MINUTES.toMillis(3)), //Flips your vision
     VOMIT(TimeUnit.MINUTES.toMillis(3)), //Lose a chunk of your hunger
-    ORIENTATION_LOSS(TimeUnit.MINUTES.toMillis(3)), //You move slower
+    ORIENTATION_LOSS(TimeUnit.MINUTES.toMillis(3)){
+        @Override
+        public void onTick(EntityPlayer player) {
+            player.moveForward *= 0.5F;
+        }
+    }, //You move slower
     PUZZLED(TimeUnit.MINUTES.toMillis(3)), //Damage dealt and damage received is lowered
     CHARISMATIC(TimeUnit.MINUTES.toMillis(10)), //Better deals with villagers
     NAUSEA(TimeUnit.MINUTES.toMillis(3)); //The world rotates
