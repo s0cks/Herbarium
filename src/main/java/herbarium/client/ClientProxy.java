@@ -40,7 +40,7 @@ extends CommonProxy{
         registerRender(Herbarium.blockWinterLily, "winter_lily");
         registerRender(Herbarium.blockFire, "lancet_root");
         registerRender(Herbarium.blockLongEarIris, "tail_iris");
-        registerRender(Herbarium.blockLotus, "lotus");
+        registerRender(Herbarium.blockLotus, "spring_lotus");
         registerRender(Herbarium.blockNether, "igneous_spear");
         registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
         registerRender(Herbarium.blockCoil, "coil");

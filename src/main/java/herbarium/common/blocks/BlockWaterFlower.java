@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public final class BlockWaterFlower
         extends BlockHerbariumFlower{
     public BlockWaterFlower(){
-        super(Flowers.LOTUS);
+        super(Flowers.NETHER);
     }
 
     @Override
@@ -17,4 +17,5 @@ public final class BlockWaterFlower
         Block bottom = worldIn.getBlockState(pos.down()).getBlock();
         return bottom == Blocks.WATER;
     }
+
 }

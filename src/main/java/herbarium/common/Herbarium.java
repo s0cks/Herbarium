@@ -142,7 +142,7 @@ public final class Herbarium
     public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_tail_iris");
-    public static final Block blockLotus = new BlockHerbariumFlower/*BlockWaterFlower*/(Flowers.LOTUS)
+    public static final Block blockLotus = new BlockHerbariumFlower(Flowers.LOTUS)
                                                    .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_lotus");
     public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
@@ -248,7 +248,7 @@ public final class Herbarium
         GameRegistry.registerBlock(blockWinterLily, "winter_lily");
         GameRegistry.registerBlock(blockFire, "lancet_root");
         GameRegistry.registerBlock(blockLongEarIris, "tail_iris");
-        GameRegistry.registerBlock(blockLotus, "lotus");
+        GameRegistry.registerBlock(blockLotus, "spring_lotus");
         GameRegistry.registerBlock(blockNether, "igneous_spear");
         GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
 
