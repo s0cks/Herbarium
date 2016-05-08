@@ -27,17 +27,22 @@ implements IEffect{
                 }
             }
         }
-    },
-    PROWLER_VISION(TimeUnit.MINUTES.toMillis(3)),
-    LUCKY(TimeUnit.MINUTES.toMillis(10)),
-    ARTHROPOD_MASTER(TimeUnit.MINUTES.toMillis(5)){
+    }, //Fertilizing action is 2x strong
+    HASTE(TimeUnit.MINUTES.toMillis(10)){ //More block breaking,
         @Override
-        public void onTargeted(EntityPlayer player, EntityLivingBase targeter) {
-            if(targeter instanceof EntitySpider){
-                ((EntitySpider) targeter).setAttackTarget(null);
-            }
+        public float breakSpeed(EntityPlayer player, float originalSpeed) {
+            return originalSpeed * 2.0F;
         }
-    };
+    },
+    MENACING(TimeUnit.MINUTES.toMillis(3)), //Mobs ignore you
+    ROBUST(TimeUnit.MINUTES.toMillis(3)), //Inflict bleeding (DoT), more knockback, more crits
+    WATER_WALKING(TimeUnit.MINUTES.toMillis(3)), //Walking on water
+    FIRE_RESISTANCE(TimeUnit.MINUTES.toMillis(3)), //Fire Resistance, more vulnerable to coldness
+    PROWLER_VISION(TimeUnit.MINUTES.toMillis(10)), //See nearby mobs with an outline, mobs notice you more early
+    SWIFT_HANDS(TimeUnit.MINUTES.toMillis(10)), //Less cooldown on attacks, less defense
+    UNSEEN(TimeUnit.MINUTES.toMillis(10)), //Invincibility (better than vanilla), no walking sound, highly more vulnerable
+    LIGHTWEIGHT(TimeUnit.MINUTES.toMillis(3)), //More resistant to falls, fast speed, more vulnerable to explosions/knockback, doesnt trigger tripwire/plates
+    IRON_SKIN(TimeUnit.MINUTES.toMillis(3)); //You get damaged less but you move a tad slower
 
     private final long duration;
 

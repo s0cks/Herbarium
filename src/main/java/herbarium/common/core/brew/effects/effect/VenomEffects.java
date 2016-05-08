@@ -14,26 +14,18 @@ import java.util.concurrent.TimeUnit;
 
 public enum VenomEffects
 implements IEffect {
-    HOTFOOT(TimeUnit.SECONDS.toMillis(30)){
-        @Override
-        public void onTick(EntityPlayer player) {
-            World world = player.getEntityWorld();
-            BlockPos pos = getBehind(player);
-            if(world.isAirBlock(pos) && Herbarium.random.nextBoolean() && player.onGround){
-                world.setBlockState(pos, Blocks.FIRE.getDefaultState());
-            }
-        }
+    LEVITATION(TimeUnit.MINUTES.toMillis(3)), //Lifts entities into air
+    IGNITION(TimeUnit.MINUTES.toMillis(3)), //Sets entities on fire, gives them swiftness
+    BLINDNESS(TimeUnit.MINUTES.toMillis(3)), //Blinds entities, makes them prone to crit
+    CHILLED(TimeUnit.MINUTES.toMillis(3)), //Gives DoT, slows entities down,
+    POISON(TimeUnit.MINUTES.toMillis(3)), //Poisons players, induces hunger
+    ELECTROLYZED(TimeUnit.MINUTES.toMillis(3)), //Slows the players attack speed, causes them to randomly stop for few seconds
+    MARKED(TimeUnit.MINUTES.toMillis(3)), //Marks the entity longer than PROWLER, decreases armour
+    HEAVY(TimeUnit.MINUTES.toMillis(3)), //Players fall more quickly, increased fall damage, higher resistance
+    HURLING(TimeUnit.MINUTES.toMillis(3)), //Entities are hurled around
+    SCARED(TimeUnit.MINUTES.toMillis(3)), //Backs away from caster, decreased damage towards them
+    DEATH_CLOCK(TimeUnit.MINUTES.toMillis(3)); //Entity will be damaged after time
 
-        private BlockPos getBehind(EntityPlayer player){
-            switch(player.getHorizontalFacing()){
-                case WEST: return player.getPosition().east();
-                case EAST: return player.getPosition().west();
-                case SOUTH: return player.getPosition().north();
-                case NORTH: return player.getPosition().south();
-                default: return player.getPosition();
-            }
-        }
-    };
 
     private final long duration;
 
