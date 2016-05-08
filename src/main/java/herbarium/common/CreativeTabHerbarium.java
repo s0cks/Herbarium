@@ -11,6 +11,6 @@ extends CreativeTabs{
 
     @Override
     public Item getTabIconItem() {
-        return Item.getItemFromBlock(Herbarium.blockLotus);
+        return Herbarium.itemJournal;
     }
 }
