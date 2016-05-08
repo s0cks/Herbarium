@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.concurrent.TimeUnit;
 
-public enum BrewEffects
+public enum SpiritEffects
 implements IEffect {
     HASTE(TimeUnit.MINUTES.toMillis(10)){
         @Override
@@ -20,7 +20,7 @@ implements IEffect {
 
     private final long duration;
 
-    BrewEffects(long duration){
+    SpiritEffects(long duration){
         this.duration = duration;
     }
 
@@ -31,7 +31,7 @@ implements IEffect {
 
     @Override
     public EnumBrewType type() {
-        return EnumBrewType.BREW;
+        return EnumBrewType.SPIRIT;
     }
 
     @Override public void onTick(EntityPlayer player) {}

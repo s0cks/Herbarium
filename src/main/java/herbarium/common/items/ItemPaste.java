@@ -23,6 +23,19 @@ extends Item {
         "winter_lily"
     };
 
+    public static final byte alstromeria = 0x0;
+    public static final byte anemone = 0x1;
+    public static final byte belladonna = 0x2;
+    public static final byte blueberry_blossom = 0x3;
+    public static final byte buttercup = 0x4;
+    public static final byte cavern_bloom = 0x5;
+    public static final byte igneous_spear = 0x7;
+    public static final byte lancet_root = 0x8;
+    public static final byte spring_lotus = 0x9;
+    public static final byte tail_iris = 0xA;
+    public static final byte tropical_berries = 0xB;
+    public static final byte winter_lily = 0xC;
+
     public ItemPaste(){
         this.setHasSubtypes(true);
         this.setMaxDamage(0);

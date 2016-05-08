@@ -9,7 +9,7 @@ public final class EffectSet{
         EffectSet set = new EffectSet();
         set.effects[EnumBrewType.VENOM.ordinal()] = poison;
         set.effects[EnumBrewType.REMEDY.ordinal()] = potion;
-        set.effects[EnumBrewType.BREW.ordinal()] = alcoholic;
+        set.effects[EnumBrewType.SPIRIT.ordinal()] = alcoholic;
         return set;
     }
 

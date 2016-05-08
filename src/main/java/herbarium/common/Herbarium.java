@@ -33,7 +33,7 @@ import herbarium.common.core.Flowers;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.effects.EffectTracker;
-import herbarium.common.core.brew.effects.effect.BrewEffects;
+import herbarium.common.core.brew.effects.effect.SpiritEffects;
 import herbarium.common.core.brew.effects.effect.RemedyEffects;
 import herbarium.common.core.brew.effects.effect.VenomEffects;
 import herbarium.common.core.commentarium.PageBuilder;
@@ -229,7 +229,7 @@ public final class Herbarium
 
         for (PageGroups group : PageGroups.values()) this.register(group);
         for (VenomEffects effect : VenomEffects.values()) this.register(effect);
-        for (BrewEffects effect : BrewEffects.values()) this.register(effect);
+        for (SpiritEffects effect : SpiritEffects.values()) this.register(effect);
         for (RemedyEffects effect : RemedyEffects.values()) this.register(effect);
 
         register(Blocks.DIAMOND_ORE);
