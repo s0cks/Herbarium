@@ -6,20 +6,6 @@
 - [ ] 5:Finish 3 paths of Brewing : Remedy, Poison, Brew
 
 ### 1: Plants
- - [ ] Overworld Flowers *
-   - [ ] Alstromeria: plains, forest, forest_hills
-   - [ ] Anemone: ocean, river, beaches, deep_ocean
-   - [ ] Belladonna: swampland, roofed_forest
-   - [ ] Blueberry Blossom: forest, forest_hills, birch_forest, birch_forest_hills
-   - [ ] Buttercup: plains, extreme_hills, smaller_extreme_hills, extreme_hills_with_trees
-   - [ ] Cavern Bloom: extreme_hills, smaller_extreme_hills, extreme_hills_with_trees
-   - [ ] Lancet Root: mesa, mesa_rock, mesa_clear_rock, desert, desert_hills, savanna, savanna_rock
-   - [ ] Spring Lotus: forest, forest_hills
-   - [ ] Tail Iris: jungle, jungle_hills, jungle_edge
-   - [ ] Tropical Berries: jungle, jungle_hills, jungle_edge
-   - [ ] Winter Lily: taiga, taiga_cold, taiga_cold_hills, frozen_ocean, frozen_river, ice_flats, ice_mountains, taiga_hills
- - [ ] Nether Flowers
-   - [ ] Igneous Spear: hell
  - [ ] End Flowers
  - [ ] Biome Specifications
  - [ ] Mortar and Pestle Model *
@@ -29,7 +15,6 @@
    - [ ] Combine essences in a crucible to make an elixir that can be distilled
    - [ ] Grinding sound 
    - [ ] Pestle has a good amount of durability (2x stone sword)
- - [ ] Plant Paste *
  - [ ] Allocate effects to all plants *
    - [ ] Vanilla and modded effects
  
