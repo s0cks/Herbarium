@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -103,9 +104,11 @@ implements IEffect {
     CHARISMATIC(TimeUnit.MINUTES.toMillis(10)), //Better deals with villagers
     NAUSEA(TimeUnit.MINUTES.toMillis(3)); //The world rotates
 
+    private final ResourceLocation icon;
     private final long duration;
 
-    SpiritEffects(long duration){
+    SpiritEffects(long duration) {
+        this.icon = new ResourceLocation("herbarium", "textures/effects/" + this.name().toLowerCase() + ".png");
         this.duration = duration;
     }
 
@@ -132,5 +135,10 @@ implements IEffect {
     @Override
     public long duration() {
         return this.duration;
+    }
+
+    @Override
+    public ResourceLocation icon() {
+        return this.icon;
     }
 }

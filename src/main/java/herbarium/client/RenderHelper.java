@@ -29,6 +29,30 @@ public final class RenderHelper{
         color(color, 255);
     }
 
+    public static void renderColoredQuad(int x, int y, int width, int height, int color){
+        Tessellator tess = Tessellator.getInstance();
+        VertexBuffer vb = tess.getBuffer();
+
+        int r = (color >> 16 & 0xFF);
+        int g = (color >> 8 & 0xFF);
+        int b = (color & 0xFF);
+
+        vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        vb.pos(x, y, 1.0)
+                .color(r, g, b, 255)
+                .endVertex();
+        vb.pos(x, y + height, 1.0)
+                .color(r, g, b, 255)
+                .endVertex();
+        vb.pos(x + width, y + height, 1.0)
+                .color(r, g, b, 255)
+                .endVertex();
+        vb.pos(x + width, y, 1.0)
+                .color(r, g, b, 255)
+                .endVertex();
+        tess.draw();
+    }
+
     public static void renderWireframe(BlockPos pos, int color){
         GL11.glPushMatrix();
         GL11.glDepthMask(false);

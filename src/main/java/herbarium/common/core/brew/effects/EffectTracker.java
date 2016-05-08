@@ -118,6 +118,12 @@ implements IEffectTracker{
         HerbariumNetwork.INSTANCE.sendTo(new PacketSyncEffects(getData(player)), ((EntityPlayerMP) player));
     }
 
+    @Override
+    public void clearEffects(EntityPlayer player) {
+        if(!this.data.containsKey(player)) return;
+        this.data.get(player).current.clear();
+    }
+
     @SubscribeEvent
     public void onBreakSpeed(PlayerEvent.BreakSpeed e){
         if(!this.data.containsKey(e.getEntityPlayer())) return;

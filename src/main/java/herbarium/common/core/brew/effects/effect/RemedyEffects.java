@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
@@ -52,10 +53,12 @@ implements IEffect{
     LIGHTWEIGHT(TimeUnit.MINUTES.toMillis(3)), //More resistant to falls, fast speed, more vulnerable to explosions/knockback, doesnt trigger tripwire/plates
     IRON_SKIN(TimeUnit.MINUTES.toMillis(3)); //You get damaged less but you move a tad slower
 
+    private final ResourceLocation icon;
     private final long duration;
 
     RemedyEffects(long duration) {
         this.duration = duration;
+        this.icon = new ResourceLocation("herbarium", "textures/effects/" + this.name().toLowerCase() + ".png");
     }
 
 
@@ -82,5 +85,10 @@ implements IEffect{
     @Override
     public long duration() {
         return this.duration;
+    }
+
+    @Override
+    public ResourceLocation icon() {
+        return this.icon;
     }
 }

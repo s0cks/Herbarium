@@ -52,6 +52,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     compile 'org.pegdown:pegdown:1.6.0'
+    compile 'com.dorkbox:TweenEngine:7.11'
 }
 
 processResources

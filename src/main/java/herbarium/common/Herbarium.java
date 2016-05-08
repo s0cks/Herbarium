@@ -30,6 +30,7 @@ import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.Flowers;
+import herbarium.common.core.KeyHandler;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.brew.effects.EffectTracker;
@@ -293,6 +294,7 @@ public final class Herbarium
         MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
         MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
         MinecraftForge.EVENT_BUS.register(new RuinGenerator());
+        MinecraftForge.EVENT_BUS.register(new KeyHandler());
 
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockAlstromeria, Biomes.PLAINS, Biomes.RIVER, Biomes.FOREST_HILLS));
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockBlueAnemone, Biomes.OCEAN, Biomes.RIVER, Biomes.DEEP_OCEAN, Biomes.BEACH));
@@ -305,6 +307,8 @@ public final class Herbarium
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockWinterLily, Biomes.TAIGA, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.FROZEN_OCEAN, Biomes.FROZEN_RIVER, Biomes.MUTATED_ICE_FLATS, Biomes.ICE_MOUNTAINS, Biomes.TAIGA_HILLS));
 
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
+
+        proxy.registerRenderEffectTray();
     }
 
     @Mod.EventHandler
@@ -329,6 +333,24 @@ public final class Herbarium
                     }
                 }
                 HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
+            }
+        });
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "effects_clear";
+            }
+
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "effects_clear";
+            }
+
+            @Override
+            public void execute(MinecraftServer server, ICommandSender sender, String[] args)
+            throws CommandException {
+                HerbariumApi.EFFECT_TRACKER.clearEffects(((EntityPlayer) sender));
+                HerbariumApi.EFFECT_TRACKER.syncEffects(((EntityPlayer) sender));
             }
         });
     }

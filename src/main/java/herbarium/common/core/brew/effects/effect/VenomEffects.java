@@ -5,6 +5,7 @@ import herbarium.api.brew.effects.IEffect;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.concurrent.TimeUnit;
@@ -23,11 +24,12 @@ implements IEffect {
     SCARED(TimeUnit.MINUTES.toMillis(3)), //Backs away from caster, decreased damage towards them
     DEATH_CLOCK(TimeUnit.MINUTES.toMillis(3)); //Entity will be damaged after time
 
-
+    private final ResourceLocation icon;
     private final long duration;
 
     VenomEffects(long duration) {
         this.duration = duration;
+        this.icon = new ResourceLocation("herbarium", "textures/effects/" + this.name().toLowerCase() + ".png");
     }
 
     @Override
@@ -53,5 +55,10 @@ implements IEffect {
     @Override
     public long duration() {
         return this.duration;
+    }
+
+    @Override
+    public ResourceLocation icon() {
+        return this.icon;
     }
 }

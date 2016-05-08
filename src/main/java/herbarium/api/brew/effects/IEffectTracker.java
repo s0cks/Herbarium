@@ -10,4 +10,5 @@ public interface IEffectTracker{
     public List<IEffect> getEffects(EntityPlayer player);
     public void setEffects(EntityPlayer player, List<IEffect> effects);
     public void syncEffects(EntityPlayer player);
+    public void clearEffects(EntityPlayer player);
 }

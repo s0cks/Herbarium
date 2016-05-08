@@ -1,5 +1,6 @@
 package herbarium.client;
 
+import herbarium.client.render.RenderEffectTray;
 import herbarium.client.render.RenderItemPageFP;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
@@ -18,6 +19,13 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 public final class ClientProxy
 extends CommonProxy{
+    private RenderEffectTray renderEffectTray;
+
+    @Override
+    public RenderEffectTray renderEffectTray() {
+        return this.renderEffectTray;
+    }
+
     @Override
     public Minecraft getClient(){
         return FMLClientHandler.instance().getClient();
@@ -60,6 +68,11 @@ extends CommonProxy{
 
         MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
         MinecraftForge.EVENT_BUS.register(new ClientEffectHandler());
+    }
+
+    @Override
+    public void registerRenderEffectTray(){
+        MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
     }
 
     @Override
