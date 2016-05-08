@@ -3,6 +3,7 @@ package herbarium.common;
 import herbarium.api.HerbariumApi;
 import herbarium.api.IFlower;
 import herbarium.api.IFlowerManager;
+import herbarium.api.IGemOreTracker;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.commentarium.IPage;
@@ -46,12 +47,14 @@ import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -88,6 +91,7 @@ public final class Herbarium
                    IGuiHandler,
                    IRuinManager,
                    IAlleleManager,
+                   IGemOreTracker,
                    IFlowerManager {
     public static final Random random = new Random();
     public static final CreativeTabs tab = new CreativeTabHerbarium();
@@ -189,6 +193,7 @@ public final class Herbarium
     private final List<IAllele> alleles = new LinkedList<>();
     private final List<ISpecies> species = new LinkedList<>();
     private final List<IPageGroup> groups = new LinkedList<>();
+    private final List<Block> gems = new LinkedList<>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -202,6 +207,7 @@ public final class Herbarium
         HerbariumApi.RUIN_MANAGER = this;
         HerbariumApi.EFFECT_MANAGER = this;
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
+        HerbariumApi.GEM_TRACKER = this;
 
         this.register(new PageBuilder().setTitle("Commentarium").setGroup(PageGroups.BLOCKS).setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md"))).build());
 
@@ -217,6 +223,13 @@ public final class Herbarium
         for(VenomEffects effect : VenomEffects.values()) this.register(effect);
         for(BrewEffects effect : BrewEffects.values()) this.register(effect);
         for(RemedyEffects effect : RemedyEffects.values()) this.register(effect);
+
+        register(Blocks.DIAMOND_ORE);
+        register(Blocks.EMERALD_ORE);
+        register(Blocks.QUARTZ_ORE);
+        register(Blocks.LAPIS_ORE);
+        register(Blocks.REDSTONE_ORE);
+        register(Blocks.LIT_REDSTONE_ORE);
 
         // Items
         GameRegistry.registerItem(itemJournal, "journal");
@@ -510,5 +523,15 @@ public final class Herbarium
         }
 
         return null;
+    }
+
+    @Override
+    public boolean isGem(IBlockState state) {
+        return this.gems.contains(state.getBlock());
+    }
+
+    @Override
+    public void register(Block block) {
+        this.gems.add(block);
     }
 }

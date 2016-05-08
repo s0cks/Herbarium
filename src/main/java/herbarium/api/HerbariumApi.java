@@ -26,4 +26,7 @@ public final class HerbariumApi{
     // Genetics
     public static IAlleleManager ALLELE_MANAGER;
     public static ISpecies SPECIES_FLOWER;
+
+    // Misc
+    public static IGemOreTracker GEM_TRACKER;
 }

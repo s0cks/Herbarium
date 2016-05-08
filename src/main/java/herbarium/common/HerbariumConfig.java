@@ -10,6 +10,7 @@ public final class HerbariumConfig{
 
     // Effects
     public static Property PROWLER_VISION_RADIUS;
+    public static Property LUCKY_RADIUS;
 
     private static Configuration CONFIG;
 
@@ -22,6 +23,7 @@ public final class HerbariumConfig{
 
         // Effects
         PROWLER_VISION_RADIUS = cfg.get("effects", "prowlerVisionRadius", 12);
+        LUCKY_RADIUS = cfg.get("effects", "luckyRadius", 12);
     }
 
     public static void save(){

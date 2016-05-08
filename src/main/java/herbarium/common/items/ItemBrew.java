@@ -63,7 +63,7 @@ extends Item {
             HerbariumApi.EFFECT_TRACKER.syncEffects(playerIn);
         } else{
             Brew b = new Brew();
-            b.effects.add(RemedyEffects.PROWLER_VISION);
+            b.effects.add(RemedyEffects.LUCKY);
             setBrew(itemStackIn, b);
         }
         return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);

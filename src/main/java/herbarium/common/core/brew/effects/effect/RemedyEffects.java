@@ -26,8 +26,8 @@ implements IEffect{
             }
         }
     },
-    PROWLER_VISION(TimeUnit.MINUTES.toMillis(3)){
-    };
+    PROWLER_VISION(TimeUnit.MINUTES.toMillis(3)),
+    LUCKY(TimeUnit.MINUTES.toMillis(10));
 
     private final long duration;
 
