@@ -2,13 +2,17 @@ package herbarium.client;
 
 import herbarium.client.render.RenderEffectTray;
 import herbarium.client.render.RenderItemPageFP;
+import herbarium.client.render.tile.RenderTileMortar;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
 import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemPaste;
+import herbarium.common.tiles.TileEntityMortar;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.renderer.block.model.ModelManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -16,6 +20,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public final class ClientProxy
 extends CommonProxy{
@@ -71,8 +76,23 @@ extends CommonProxy{
     }
 
     @Override
-    public void registerRenderEffectTray(){
+    public ModelManager modelManager() {
+        return this.dispatcher()
+                .getBlockModelShapes()
+                .getModelManager();
+    }
+
+    @Override
+    public BlockRendererDispatcher dispatcher() {
+        return this.getClient()
+                .getBlockRendererDispatcher();
+    }
+
+    @Override
+    public void init(){
         MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMortar.class, new RenderTileMortar());
     }
 
     @Override

@@ -48,6 +48,7 @@ import herbarium.common.items.ItemPage;
 import herbarium.common.items.ItemPaste;
 import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
+import herbarium.common.tiles.TileEntityMortar;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -270,6 +271,7 @@ public final class Herbarium
 
         // Tiles
         GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
+        GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
 
         HerbariumSounds.init();
 
@@ -319,7 +321,7 @@ public final class Herbarium
 
         MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
 
-        proxy.registerRenderEffectTray();
+        proxy.init();
     }
 
     @Mod.EventHandler
@@ -577,5 +579,9 @@ public final class Herbarium
     @Override
     public void register(Block block) {
         this.gems.add(block);
+    }
+
+    public static int nextInt(int low, int high){
+        return random.nextInt(high - low) + low;
     }
 }
