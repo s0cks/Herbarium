@@ -1,14 +1,20 @@
 package herbarium.common.blocks;
 
 import herbarium.common.Herbarium;
-import net.minecraft.block.BlockFalling;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.IBlockAccess;
+
+import java.util.Random;
 
 public final class BlockJournal
-        extends BlockFalling{
+extends Block {
+    private final AxisAlignedBB box = new AxisAlignedBB(0.275, 0.0, 0.275, 0.725, 0.2, 0.725);
+
     public BlockJournal(){
         super(Material.CLOTH);
     }
@@ -24,7 +30,12 @@ public final class BlockJournal
     }
 
     @Override
-    public void onEndFalling(World worldIn, BlockPos pos) {
-        worldIn.setBlockState(pos, Herbarium.blockJournal.getDefaultState());
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return this.box;
+    }
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return Herbarium.itemJournal;
     }
 }
