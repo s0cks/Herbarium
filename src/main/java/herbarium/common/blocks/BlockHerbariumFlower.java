@@ -9,10 +9,13 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockHerbariumFlower
 extends Block{
+    private final AxisAlignedBB box = new AxisAlignedBB(0.25, 0.0, 0.25, 0.75, 0.75, 0.75);
+
     public final IFlower flower;
 
     public BlockHerbariumFlower(IFlower flower){
@@ -30,6 +33,11 @@ extends Block{
         Block bottom = worldIn.getBlockState(pos.down()).getBlock();
         return bottom == Blocks.DIRT
             || bottom == Blocks.GRASS;
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return this.box;
     }
 
     @Override
