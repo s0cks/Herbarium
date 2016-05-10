@@ -2,8 +2,6 @@ package herbarium.common;
 
 import com.google.gson.Gson;
 import herbarium.api.HerbariumApi;
-import herbarium.api.IFlower;
-import herbarium.api.IFlowerManager;
 import herbarium.api.IGemOreTracker;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
@@ -12,6 +10,7 @@ import herbarium.api.commentarium.IPageGroup;
 import herbarium.api.commentarium.IPageManager;
 import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IAlleleManager;
+import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
@@ -30,7 +29,6 @@ import herbarium.common.blocks.BlockPipe;
 import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
-import herbarium.common.core.Flowers;
 import herbarium.common.core.KeyHandler;
 import herbarium.common.core.Ruin;
 import herbarium.common.core.RuinGenerator;
@@ -89,7 +87,7 @@ import java.util.Set;
         modid = "herbarium",
         name = "Herbarium",
         version = "0.0.0.0",
-        dependencies = "required-after:Forge@[1.8.9-11.15.1.1722,)"
+        dependencies = "required-after:Forge@[1.9-12.16.1.1887,)"
 )
 public final class Herbarium
         implements IPageManager,
@@ -97,8 +95,7 @@ public final class Herbarium
                    IGuiHandler,
                    IRuinManager,
                    IAlleleManager,
-                   IGemOreTracker,
-                   IFlowerManager {
+                   IGemOreTracker {
     public static final Random random = new Random();
     public static final Gson gson = new Gson();
     public static final CreativeTabs tab = new CreativeTabHerbarium();
@@ -126,40 +123,40 @@ public final class Herbarium
 
     // Blocks
     // Flowers
-    public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA)
+    public static final Block blockAlstromeria = new BlockHerbariumFlower()
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_alstromeria");
-    public static final Block blockBelladonna = new BlockHerbariumFlower(Flowers.BELLADONNA)
+    public static final Block blockBelladonna = new BlockHerbariumFlower()
                                                         .setCreativeTab(Herbarium.tab)
                                                         .setUnlocalizedName("herba_belladonna");
-    public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE)
+    public static final Block blockBlueAnemone = new BlockHerbariumFlower()
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_anemone");
-    public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY)
+    public static final Block blockBlueberry = new BlockHerbariumFlower()
                                                        .setCreativeTab(Herbarium.tab)
                                                        .setUnlocalizedName("herba_blueberry_blossom");
-    public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP)
+    public static final Block blockButtercup = new BlockHerbariumFlower()
                                                        .setCreativeTab(Herbarium.tab)
                                                        .setUnlocalizedName("herba_buttercup");
     public static final Block blockCave = new BlockCaveFlower()
                                                   .setCreativeTab(Herbarium.tab)
                                                   .setUnlocalizedName("herba_cavern_bloom");
-    public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.DAISY)
+    public static final Block blockWinterLily = new BlockHerbariumFlower()
                                                         .setCreativeTab(Herbarium.tab)
                                                         .setUnlocalizedName("herba_winter_lily");
-    public static final Block blockFire = new BlockNetherFlower(Flowers.FIRE)
+    public static final Block blockFire = new BlockNetherFlower()
                                                   .setCreativeTab(Herbarium.tab)
                                                   .setUnlocalizedName("herba_lancet_root");
-    public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.LONG_EAR_IRIS)
+    public static final Block blockLongEarIris = new BlockHerbariumFlower()
                                                          .setCreativeTab(Herbarium.tab)
                                                          .setUnlocalizedName("herba_tail_iris");
     public static final Block blockLotus = new BlockWaterFlower()
                                                    .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_lotus");
-    public static final Block blockNether = new BlockNetherFlower(Flowers.NETHER)
+    public static final Block blockNether = new BlockNetherFlower()
                                                     .setCreativeTab(Herbarium.tab)
                                                     .setUnlocalizedName("herba_igneous_spear");
-    public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPCIAL_BERRIES)
+    public static final Block blockTropicalBerries = new BlockHerbariumFlower()
                                                              .setCreativeTab(Herbarium.tab)
                                                              .setUnlocalizedName("herba_tropical_berries");
     // Misc
@@ -198,7 +195,6 @@ public final class Herbarium
     )
     public static CommonProxy proxy;
     private final Set<IPage> pages = new HashSet<>();
-    private final List<IFlower> flowers = new LinkedList<>();
     private final List<IRuin> ruins = new LinkedList<>();
     private final List<IEffect> effects = new LinkedList<>();
     private final List<IAllele> alleles = new LinkedList<>();
@@ -214,7 +210,6 @@ public final class Herbarium
 
         HerbariumApi.PAGE_MANAGER = this;
         HerbariumApi.PAGE_TRACKER = new PageTracker();
-        HerbariumApi.FLOWER_MANAGER = this;
         HerbariumApi.RUIN_MANAGER = this;
         HerbariumApi.EFFECT_MANAGER = this;
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
@@ -296,8 +291,6 @@ public final class Herbarium
             "basic"
         };
         for(String ruin : ruins) this.registerRuin(new ResourceLocation("herbarium", "ruins/" + ruin + ".json"));
-
-        Flowers.init();
     }
 
     @Mod.EventHandler
@@ -426,30 +419,6 @@ public final class Herbarium
     }
 
     @Override
-    public IFlower getFlower(String uuid) {
-        for (IFlower f : this.flowers) {
-            if (f.uuid()
-                 .equals(uuid)) {
-                return f;
-            }
-        }
-
-        return null;
-    }
-
-    @Override
-    public void register(IFlower flower) {
-        for (IFlower f : this.flowers) {
-            if (f.uuid()
-                 .equals(flower.uuid())) {
-                return;
-            }
-        }
-
-        this.flowers.add(flower);
-    }
-
-    @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return null;
     }
@@ -536,7 +505,7 @@ public final class Herbarium
     }
 
     @Override
-    public void registerAllele(IAllele allele) {
+    public void registerAllele(IAllele allele, IChromosomeType type) {
         for (IAllele a : this.alleles) {
             if (a.uuid()
                  .equals(allele.uuid())) {
@@ -579,9 +548,5 @@ public final class Herbarium
     @Override
     public void register(Block block) {
         this.gems.add(block);
-    }
-
-    public static int nextInt(int low, int high){
-        return random.nextInt(high - low) + low;
     }
 }

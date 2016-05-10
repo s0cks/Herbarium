@@ -9,15 +9,30 @@ import herbarium.api.genetics.IGenome;
 import herbarium.api.genetics.ISpecies;
 import herbarium.api.genetics.alleles.IAlleleSpecies;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 import java.util.Arrays;
 
-public final class Genome
+public class Genome
 implements IGenome {
     private final IChromosome[] chromosomes;
 
     public Genome(IChromosome[] chromosomes){
         this.chromosomes = chromosomes;
+    }
+
+    public Genome(NBTTagCompound comp){
+        NBTTagList chromosomesNBT = comp.getTagList("Chromosomes", 10);
+        this.chromosomes = new IChromosome[species().defaultTemplate().length];
+
+        for(int i = 0; i < chromosomesNBT.tagCount(); i++){
+            NBTTagCompound chromosomeNBT = chromosomesNBT.getCompoundTagAt(i);
+            byte ordinal = chromosomeNBT.getByte("Ordinal");
+            if(ordinal >= 0 && ordinal < this.chromosomes.length){
+                Chromosome chromosome = new Chromosome(chromosomeNBT);
+                this.chromosomes[ordinal] = chromosome;
+            }
+        }
     }
 
     @Override

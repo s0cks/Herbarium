@@ -1,7 +1,7 @@
 package herbarium.common.tiles;
 
 import herbarium.api.brew.piping.IPipeConnector;
-import herbarium.common.core.PipeController;
+import herbarium.common.core.brew.piping.PipeController;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 

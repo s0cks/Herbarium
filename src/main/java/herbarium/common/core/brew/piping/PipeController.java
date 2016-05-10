@@ -1,4 +1,4 @@
-package herbarium.common.core;
+package herbarium.common.core.brew.piping;
 
 import herbarium.api.brew.piping.IPipeConnector;
 import herbarium.api.brew.piping.PipeConnection;

@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class Species
+public abstract class Species
 implements ISpecies {
     private final Map<String, IAllele[]> templates = new HashMap<>();
 

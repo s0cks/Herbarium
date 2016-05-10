@@ -17,16 +17,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
-
 public final class RenderTileMortar
 extends TileEntitySpecialRenderer<TileEntityMortar>{
-    private static final Color c = new Color(0x004E10);
     private static final ModelResourceLocation modelLoc = new ModelResourceLocation("herbarium:mortar", "inventory");
 
     @Override
     public void renderTileEntityAt(TileEntityMortar te, double x, double y, double z, float partialTicks, int destroyStage) {
         GlStateManager.pushMatrix();
+
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
         Herbarium.proxy.getClient().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
@@ -48,9 +46,11 @@ extends TileEntitySpecialRenderer<TileEntityMortar>{
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-            float red = c.getRed();
-            float green = c.getGreen();
-            float blue = c.getBlue();
+            int c = 0x00FF00;
+
+            int red = (c >> 16 & 0xFF);
+            int green = (c >> 8 & 0xFF);
+            int blue = (c & 0xFF);
 
             Tessellator tess = Tessellator.getInstance();
             VertexBuffer renderer = tess.getBuffer();
@@ -68,19 +68,19 @@ extends TileEntitySpecialRenderer<TileEntityMortar>{
 
             renderer.pos(0, 0.5, 0)
                     .tex(u1, v1)
-                    .color(red, green, blue, 1.0F)
+                    .color(red, green, blue, 255)
                     .endVertex();
             renderer.pos(0, 0.5, 1)
                     .tex(u1, v2)
-                    .color(red, green, blue, 1.0F)
+                    .color(red, green, blue, 255)
                     .endVertex();
             renderer.pos(1, 0.5, 1)
                     .tex(u2, v2)
-                    .color(red, green, blue, 1.0F)
+                    .color(red, green, blue, 255)
                     .endVertex();
             renderer.pos(1, 0.5, 0)
                     .tex(u2, v1)
-                    .color(red, green, blue, 1.0F)
+                    .color(red, green, blue, 255)
                     .endVertex();
             tess.draw();
 
