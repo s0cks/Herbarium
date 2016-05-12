@@ -84,6 +84,8 @@
 "display": {
     "gui": {
         "rotation": [ 22.5, 22.5, 0 ],
+        "translation": [ 0, 1.5, 0 ],
+        "scale": [ 0.75, 0.75, 0.75 ]
     }
 }
 }
