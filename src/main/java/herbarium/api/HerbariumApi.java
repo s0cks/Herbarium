@@ -7,6 +7,8 @@ import herbarium.api.commentarium.IPageTracker;
 import herbarium.api.genetics.IAlleleManager;
 import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuinManager;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.util.EnumHelper;
 
 public final class HerbariumApi{
     // Pages
@@ -29,4 +31,7 @@ public final class HerbariumApi{
 
     // Misc
     public static IGemOreTracker GEM_TRACKER;
+
+    public static final Item.ToolMaterial PESTLE_MATERIAL =
+            EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
 }
