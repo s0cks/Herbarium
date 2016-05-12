@@ -11,44 +11,43 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
-import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public final class MarkdownComponentImage
 extends AbstractMarkdownComponent{
     private final String url;
-    private ResourceLocation texture;
-    private int width;
-    private int height;
+    private final Rectangle bounds;
+    private final BufferedImage image;
     private boolean init;
+    private ResourceLocation texture;
 
-    public MarkdownComponentImage(String url, Point p){
-        super(p);
+    public MarkdownComponentImage(String url){
         this.url = url;
-    }
-
-    public int getHeight(){
-        return this.height;
+        try(InputStream is = Herbarium.proxy.getClient().getResourceManager().getResource(new ResourceLocation("herbarium", "textures/images/" + url)).getInputStream()){
+            this.image = ImageIO.read(is);
+            this.bounds = new Rectangle(0, 0, this.image.getWidth(), this.image.getHeight());
+        } catch(Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     private void init(){
         if(this.init) return;
         Minecraft mc = Herbarium.proxy.getClient();
-        try(InputStream stream = mc.getResourceManager().getResource(new ResourceLocation("herbarium", "textures/images/" + this.url)).getInputStream()) {
-            BufferedImage image = ImageIO.read(stream);
-            this.width = image.getWidth();
-            this.height = image.getHeight();
-            this.texture = mc.getTextureManager().getDynamicTextureLocation(this.url.substring(this.url.lastIndexOf("/") + 1, this.url.lastIndexOf(".")), new DynamicTexture(image));
-        } catch(Exception e){
-            throw new RuntimeException("Exception loading: herbarium:textures/images/" + this.url, e);
-        }
+        this.texture = mc.getTextureManager().getDynamicTextureLocation(this.url.substring(this.url.lastIndexOf("/") + 1, this.url.lastIndexOf(".")), new DynamicTexture(image));
         this.init = true;
     }
 
     @Override
-    public boolean contains(int x, int y) {
-        return false;
+    public Rectangle getGeometry() {
+        return this.bounds;
+    }
+
+    @Override
+    public void setGeometry(int x, int y, int width, int height) {
+        this.bounds.setBounds(x, y, width, height);
     }
 
     @Override
@@ -63,16 +62,16 @@ extends AbstractMarkdownComponent{
         Tessellator tess = Tessellator.getInstance();
         VertexBuffer vb = tess.getBuffer();
         vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-        vb.pos(x, y, 0)
+        vb.pos(x + this.bounds.x, y + this.bounds.y, 0)
                 .tex(0.0, 0.0)
                 .endVertex();
-        vb.pos(x, y + this.height, 0.0)
+        vb.pos(x + this.bounds.x, y + this.bounds.y + this.bounds.height, 0.0)
                 .tex(0.0, 1.0)
                 .endVertex();
-        vb.pos(x + this.width, y + this.height, 0.0)
+        vb.pos(x + this.bounds.x + this.bounds.width, y + this.bounds.y + this.bounds.height, 0.0)
                 .tex(1.0, 1.0)
                 .endVertex();
-        vb.pos(x + this.width, y, 0.0)
+        vb.pos(x + this.bounds.x + this.bounds.width, y + this.bounds.y, 0.0)
                 .tex(1.0, 0.0)
                 .endVertex();
         tess.draw();

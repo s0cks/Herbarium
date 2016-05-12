@@ -6,27 +6,10 @@ import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 
 public abstract class AbstractMarkdownComponent
 implements IMarkdownComponent{
-    protected final Point position;
-
-    protected AbstractMarkdownComponent(Point position) {
-        this.position = position;
-    }
-
-    @Override
-    public int x() {
-        return this.position.x;
-    }
-
-    @Override
-    public int y() {
-        return this.position.y;
-    }
-
     protected void drawColoredQuad(int x, int y, int width, int height, int color){
         int red = (color >> 24 & 0xFF);
         int green = (color >> 16 & 0xFF);

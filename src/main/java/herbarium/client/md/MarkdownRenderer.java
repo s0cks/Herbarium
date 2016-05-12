@@ -49,24 +49,19 @@ import org.pegdown.ast.Visitor;
 import org.pegdown.ast.WikiLinkNode;
 import org.pegdown.plugins.PegDownPlugins;
 
-import java.awt.Point;
 import java.io.InputStream;
 
 public final class MarkdownRenderer
 implements Visitor{
     private final IMarkdownScreen screen;
-    private final int yPad;
-    private int x;
-    private int y;
 
-    public MarkdownRenderer(IMarkdownScreen screen, int yPad){
+    public MarkdownRenderer(IMarkdownScreen screen){
         this.screen = screen;
-        this.yPad = yPad;
     }
 
     public static MarkdownComponentContainer render(ResourceLocation loc){
         MarkdownComponentContainer container = new MarkdownComponentContainer();
-        (new MarkdownRenderer(container, 10)).render(Herbarium.proxy.getClient(), loc);
+        (new MarkdownRenderer(container)).render(Herbarium.proxy.getClient(), loc);
         return container;
     }
 
@@ -129,10 +124,8 @@ implements Visitor{
 
     @Override
     public void visit(ExpImageNode node) {
-        System.out.println("[1]Loading image: " + node.title);
         MarkdownComponentImage image;
-        this.screen.register(image = new MarkdownComponentImage(node.url, new Point(this.x, this.y)));
-        this.y += image.getHeight() + this.yPad;
+        this.screen.register(image = new MarkdownComponentImage(node.url));
     }
 
     @Override
@@ -266,9 +259,7 @@ implements Visitor{
 
     @Override
     public void visit(TextNode node) {
-        MarkdownComponentText comp = new MarkdownComponentText(node.getText(), new Point(this.x, this.y));
-        this.y += comp.getHeight() + this.yPad;
-        this.screen.register(comp);
+
     }
 
     @Override
