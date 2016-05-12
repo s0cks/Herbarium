@@ -99,5 +99,10 @@
         "south": { "uv": [ 8, 0, 15, 0.5 ], "texture": "#texture" }
     }
 }
-]
+],
+"display": {
+    "gui": {
+        "rotation": [ 22.5, 22.5, 0 ],
+    }
+}
 }

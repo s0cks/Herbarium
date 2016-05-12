@@ -294,5 +294,10 @@
         "east":  { "uv": [ 4, 6, 5, 7 ], "texture": "#main", "cullface": "down" }
     }
 }
-]
+],
+"display": {
+    "gui": {
+        "rotation": [ 22.5, 22.5, 0 ],
+    }
+}
 }

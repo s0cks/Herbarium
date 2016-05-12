@@ -85,5 +85,12 @@
         "east":  { "uv": [ 11, 3, 12, 4 ], "texture": "#texture" }
     }
 }
-]
+],
+"display": {
+    "gui": {
+        "rotation": [ 22.5, 22.5, 0 ],
+        "translation": [ 0, 3.5, 0 ],
+        "scale": [ 1, 1, 1 ]
+    }
+}
 }
