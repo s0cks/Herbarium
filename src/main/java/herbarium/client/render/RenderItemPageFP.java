@@ -84,7 +84,7 @@ public final class RenderItemPageFP{
             IPage page = ItemPage.getPage(p.getHeldItem(EnumHand.MAIN_HAND));
             if(page != null){
                 GlStateManager.scale(0.5F, 0.5F, 0.5F);
-                GlStateManager.translate(-5.0F, 10.0F, -1.0F);
+                GlStateManager.translate(0.0F, 5.0F, -1.0F);
                 page.renderer().render(e.getPartialTicks());
             }
 

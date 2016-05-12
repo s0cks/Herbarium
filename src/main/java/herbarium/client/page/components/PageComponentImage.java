@@ -1,4 +1,4 @@
-package herbarium.client.md;
+package herbarium.client.page.components;
 
 import herbarium.common.Herbarium;
 import net.minecraft.client.Minecraft;
@@ -15,15 +15,15 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
-public final class MarkdownComponentImage
-extends AbstractMarkdownComponent{
+public final class PageComponentImage
+        extends AbstractPageComponent {
     private final String url;
     private final Rectangle bounds;
     private final BufferedImage image;
     private boolean init;
     private ResourceLocation texture;
 
-    public MarkdownComponentImage(String url){
+    public PageComponentImage(String url){
         this.url = url;
         try(InputStream is = Herbarium.proxy.getClient().getResourceManager().getResource(new ResourceLocation("herbarium", "textures/images/" + url)).getInputStream()){
             this.image = ImageIO.read(is);

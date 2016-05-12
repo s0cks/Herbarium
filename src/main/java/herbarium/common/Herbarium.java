@@ -1,6 +1,7 @@
 package herbarium.common;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import herbarium.api.HerbariumApi;
 import herbarium.api.IGemOreTracker;
 import herbarium.api.brew.effects.IEffect;
@@ -36,10 +37,9 @@ import herbarium.common.core.brew.effects.EffectTracker;
 import herbarium.common.core.brew.effects.effect.RemedyEffects;
 import herbarium.common.core.brew.effects.effect.SpiritEffects;
 import herbarium.common.core.brew.effects.effect.VenomEffects;
-import herbarium.common.core.commentarium.PageBuilder;
+import herbarium.common.core.commentarium.JsonPageDeserializer;
 import herbarium.common.core.commentarium.PageGroups;
 import herbarium.common.core.commentarium.PageTracker;
-import herbarium.common.core.commentarium.renderer.MarkdownPageRenderer;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
@@ -97,7 +97,9 @@ public final class Herbarium
                    IAlleleManager,
                    IGemOreTracker {
     public static final Random random = new Random();
-    public static final Gson gson = new Gson();
+    public static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
+            .create();
     public static final CreativeTabs tab = new CreativeTabHerbarium();
 
     // Items
@@ -215,11 +217,6 @@ public final class Herbarium
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
         HerbariumApi.GEM_TRACKER = this;
 
-        this.register(new PageBuilder().setTitle("Commentarium")
-                                       .setGroup(PageGroups.BLOCKS)
-                                       .setRenderer(new MarkdownPageRenderer(new ResourceLocation("herbarium", "pages/Commentarium.md")))
-                                       .build());
-
         for (PageGroups group : PageGroups.values()) this.register(group);
         for (VenomEffects effect : VenomEffects.values()) this.register(effect);
         for (SpiritEffects effect : SpiritEffects.values()) this.register(effect);
@@ -291,6 +288,17 @@ public final class Herbarium
             "basic"
         };
         for(String ruin : ruins) this.registerRuin(new ResourceLocation("herbarium", "ruins/" + ruin + ".json"));
+
+        String[] pages = new String[]{
+            "Commentarium"
+        };
+        for(String page : pages) {
+            try(InputStream is = Herbarium.proxy.getClient().getResourceManager().getResource(new ResourceLocation("herbarium", "pages/" + page + ".json")).getInputStream()){
+                this.register(Herbarium.gson.fromJson(new InputStreamReader(is), IPage.class));
+            } catch(Exception ex){
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     @Mod.EventHandler

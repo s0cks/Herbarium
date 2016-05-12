@@ -10,7 +10,8 @@ import java.util.List;
 public enum PageGroups
 implements IPageGroup{
     FLOWERS("Flowers"),
-    BLOCKS("Blocks");
+    BLOCKS("Blocks"),
+    EFFECTS("Effects");
 
     private final String name;
 

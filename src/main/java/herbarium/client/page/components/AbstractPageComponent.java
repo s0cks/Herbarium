@@ -1,5 +1,6 @@
-package herbarium.client.md;
+package herbarium.client.page.components;
 
+import herbarium.client.page.IPageComponent;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -8,8 +9,8 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.Rectangle;
 
-public abstract class AbstractMarkdownComponent
-implements IMarkdownComponent{
+public abstract class AbstractPageComponent
+        implements IPageComponent {
     protected void drawColoredQuad(int x, int y, int width, int height, int color){
         int red = (color >> 24 & 0xFF);
         int green = (color >> 16 & 0xFF);

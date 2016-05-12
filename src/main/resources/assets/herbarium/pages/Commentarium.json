@@ -1,0 +1,35 @@
+{
+  "title": "Commentarium",
+  "group": "Effects",
+  "layout": {
+    "name": "grid",
+    "rows": 3,
+    "columns": 2
+  },
+  "components": [
+    {
+      "type": "image",
+      "ref": "journal.png"
+    },
+    {
+      "type": "image",
+      "ref": "journal.png"
+    },
+    {
+      "type": "image",
+      "ref": "journal.png"
+    },
+    {
+      "type": "image",
+      "ref": "journal.png"
+    },
+    {
+      "type": "image",
+      "ref": "journal.png"
+    },
+    {
+      "type": "image",
+      "ref": "journal.png"
+    }
+  ]
+}

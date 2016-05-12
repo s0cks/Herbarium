@@ -1,18 +1,21 @@
-package herbarium.client.md;
+package herbarium.client.page;
+
+import herbarium.client.page.IPageScreen;
+import herbarium.client.page.IPageComponent;
 
 import java.awt.Dimension;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public final class MarkdownComponentContainer
-implements IMarkdownScreen,
-           Iterable<IMarkdownComponent>{
+public final class PageComponentContainer
+        implements IPageScreen,
+                   Iterable<IPageComponent>{
     private final Dimension size;
 
-    private final List<IMarkdownComponent> components = new LinkedList<>();
+    private final List<IPageComponent> components = new LinkedList<>();
 
-    public MarkdownComponentContainer(int width, int height){
+    public PageComponentContainer(int width, int height){
         this.size = new Dimension(width, height);
     }
 
@@ -28,17 +31,17 @@ implements IMarkdownScreen,
         return this.components.size();
     }
 
-    public IMarkdownComponent componentAt(int i){
+    public IPageComponent componentAt(int i){
         return this.components.get(i);
     }
 
     @Override
-    public void register(IMarkdownComponent comp) {
+    public void register(IPageComponent comp) {
         this.components.add(comp);
     }
 
     @Override
-    public Iterator<IMarkdownComponent> iterator() {
+    public Iterator<IPageComponent> iterator() {
         return this.components.iterator();
     }
 }

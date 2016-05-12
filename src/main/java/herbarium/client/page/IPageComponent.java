@@ -1,8 +1,8 @@
-package herbarium.client.md;
+package herbarium.client.page;
 
 import java.awt.Rectangle;
 
-public interface IMarkdownComponent{
+public interface IPageComponent {
     public Rectangle getGeometry();
     public void setGeometry(int x, int y, int width, int height);
     public void onScrollDown();
