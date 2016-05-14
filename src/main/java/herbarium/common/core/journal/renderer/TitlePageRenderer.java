@@ -11,7 +11,7 @@ implements IJournalPageRenderer{
   public void render(int x, int y, float partial, boolean left) {
     GlStateManager.pushMatrix();
     Minecraft mc = Herbarium.proxy.getClient();
-    mc.fontRendererObj.drawString("Herbarium", x, y, 0x000000);
+    mc.fontRendererObj.drawString("Herbarium", x + 45, y, 0x000000);
     GlStateManager.popMatrix();
   }
 }

@@ -1,90 +1,53 @@
 package herbarium.client.font;
 
-import com.google.common.collect.ImmutableMap;
 import herbarium.api.IHerbariumFontRenderer;
 import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-
-import java.awt.Point;
 
 @Deprecated
 public final class HerbariumFontRenderer
     implements IHerbariumFontRenderer {
-  private static final ImmutableMap<Character, Point> charMap;
   private static final ResourceLocation font = new ResourceLocation("herbarium", "textures/gui/font.png");
-
-  static {
-    ImmutableMap.Builder<Character, Point> builder = ImmutableMap.builder();
-    int x = 0;
-    int y = 0;
-    char current = 'A';
-    do {
-      builder.put(current, new Point(x, y));
-      x += 8;
-      if (x >= 128) {
-        x = 0;
-        y += 8;
-      }
-      current++;
-    } while (current <= 'Z');
-
-    current = 'a';
-    y = 16;
-    x = 0;
-    do {
-      builder.put(current, new Point(x, y));
-      x += 8;
-      if (x >= 128) {
-        x = 0;
-        y += 8;
-      }
-      current++;
-    } while (current <= 'z');
-
-    charMap = builder.build();
-  }
 
   private int posX;
   private int posY;
 
   @Override
   public void drawString(String str, int x, int y, int color) {
+    float red = (float)(color >> 16 & 255) / 255.0F;
+    float blue = (float)(color >> 8 & 255) / 255.0F;
+    float green = (float)(color & 255) / 255.0F;
     this.posX = x;
     this.posY = y;
     GlStateManager.pushMatrix();
+    GlStateManager.color(red, green, blue, 1.0F);
+    GlStateManager.enableAlpha();
     for (int i = 0; i < str.length(); i++) {
       this.posX += this.renderChar(str.charAt(i));
     }
+    GlStateManager.disableAlpha();
     GlStateManager.popMatrix();
   }
 
   private float renderChar(char ch) {
     Herbarium.proxy.getClient().renderEngine.bindTexture(font);
-    Point p = charMap.get(ch);
-    if (p != null) {
-      Tessellator tess = Tessellator.getInstance();
-      VertexBuffer vb = tess.getBuffer();
 
-      vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-      vb.pos(this.posX, this.posY, 0.0F)
-        .tex(p.x, p.y)
-        .endVertex();
-      vb.pos(this.posX, this.posY + 8, 0.0F)
-        .tex(p.x, p.y + 8)
-        .endVertex();
-      vb.pos(this.posX + 8, this.posY + 8, 0.0F)
-        .tex(p.x + 8, p.y + 8)
-        .endVertex();
-      vb.pos(this.posX + 8, this.posY, 0.0F)
-        .tex(p.x + 8, p.y)
-        .endVertex();
-      tess.draw();
-    }
+    int i = ch % 16 * 8;
+    int j = ch / 16 * 8;
+    int l = 8;
+    float f = (float) l - 0.01F;
+    GlStateManager.glBegin(5);
+    GlStateManager.glTexCoord2f((float) i / 128.0F, (float) j / 128.0F);
+    GlStateManager.glVertex3f(this.posX, this.posY, 0.0F);
+    GlStateManager.glTexCoord2f((float) i / 128.0F, ((float) j + 7.99F) / 128.0F);
+    GlStateManager.glVertex3f(this.posX, this.posY + 7.99F, 0.0F);
+    GlStateManager.glTexCoord2f(((float) i + f - 1.0F) / 128.0F, (float) j / 128.0F);
+    GlStateManager.glVertex3f(this.posX + f - 1.0F, this.posY, 0.0F);
+    GlStateManager.glTexCoord2f(((float) i + f - 1.0F) / 128.0F, ((float) j + 7.99F) / 128.0F);
+    GlStateManager.glVertex3f(this.posX + f - 1.0F, this.posY + 7.99F, 0.0F);
+    GlStateManager.glEnd();
+
     return 8;
   }
 }

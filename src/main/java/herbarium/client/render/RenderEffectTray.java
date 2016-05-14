@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
@@ -26,9 +25,8 @@ public final class RenderEffectTray
     implements TweenAccessor<RenderEffectTray> {
   private static final byte ANGLE = 0x0;
   private static final byte OPACITY = 0x1;
-  private static final ResourceLocation mc_gui = new ResourceLocation("textures/gui/icons.png");
 
-  private final TweenManager manager = new TweenManager().syncOnStart();
+  private final TweenManager manager = new TweenManager();
 
   private boolean showing = false;
   private float angle;
@@ -42,7 +40,7 @@ public final class RenderEffectTray
     if (this.showing) return;
     this.showing = true;
     Timeline.createParallel()
-            .push(Tween.to(this, ANGLE, this, 1.0F)
+            .push(Tween.to(this, ANGLE, this, 0.75F)
                        .ease(TweenEquations.Linear)
                        .target(360.0F))
             .push(Tween.to(this, OPACITY, this, 1.0F)
@@ -55,7 +53,7 @@ public final class RenderEffectTray
     if (!this.showing) return;
     this.showing = false;
     Timeline.createParallel()
-            .push(Tween.to(this, ANGLE, this, 1.0F)
+            .push(Tween.to(this, ANGLE, this, 0.75F)
                        .ease(TweenEquations.Linear)
                        .target(0.0F))
             .push(Tween.to(this, OPACITY, this, 1.0F)
@@ -75,26 +73,18 @@ public final class RenderEffectTray
     int y = (sr.getScaledHeight() - 60) / 2;
 
     GlStateManager.pushMatrix();
-    GL11.glEnable(GL11.GL_LINE_SMOOTH);
-    GL11.glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
-    GL11.glLineWidth(16.0F);
     RenderHelper.renderArc(x + 30, y + 30, 30, 0.0F, this.angle);
     GlStateManager.popMatrix();
-    if (e.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-      GlStateManager.pushMatrix();
-      GlStateManager.enableBlend();
-      GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
+    if (e.getType() == RenderGameOverlayEvent.ElementType.CROSSHAIRS) {
       List<IEffect> effects = HerbariumApi.EFFECT_TRACKER.getEffects(mc.thePlayer);
       if (effects == null || effects.isEmpty()) {
-        GL11.glDisable(GL11.GL_LINE_SMOOTH);
-        GlStateManager.disableBlend();
-        GlStateManager.popMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         return;
       }
 
       GlStateManager.pushMatrix();
+      GlStateManager.enableBlend();
+      GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
       Tessellator tess = Tessellator.getInstance();
       VertexBuffer vb = tess.getBuffer();
 
@@ -126,12 +116,8 @@ public final class RenderEffectTray
         tess.draw();
       }
 
-      GlStateManager.popMatrix();
-
-      GL11.glDisable(GL11.GL_LINE_SMOOTH);
       GlStateManager.disableBlend();
       GlStateManager.popMatrix();
-      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     }
   }
 

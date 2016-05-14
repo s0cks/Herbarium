@@ -1,6 +1,7 @@
 package herbarium.common.core.journal.renderer;
 
 import herbarium.api.commentarium.journal.IJournalPageRenderer;
+import herbarium.client.RomanNumerals;
 import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
@@ -9,8 +10,8 @@ public final class ChapterHeaderRenderer
 implements IJournalPageRenderer {
   private final String header;
 
-  public ChapterHeaderRenderer(String chapter){
-    this.header = I18n.translateToLocal(chapter);
+  public ChapterHeaderRenderer(String chapter, int ordinal){
+    this.header = RomanNumerals.get(ordinal) + ": " + I18n.translateToLocal(chapter);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package herbarium.client.page.components;
 
+import herbarium.api.HerbariumApi;
 import herbarium.client.page.IPageComponent;
-import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -46,7 +46,7 @@ public abstract class AbstractPageComponent
   }
 
   protected void drawString(String text, int x, int y, int color) {
-    Herbarium.proxy.getClient().fontRendererObj
+    HerbariumApi.FONT_RENDERER
         .drawString(text, x, y, color);
   }
 

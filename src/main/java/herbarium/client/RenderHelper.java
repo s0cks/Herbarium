@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 
 public final class RenderHelper {
   public static final float TAU = (float) (Math.PI * 2.0F);
+  public static final int MAX_CIRCLE_SEGMENTS = 30;
 
   private RenderHelper() {}
 
@@ -33,7 +34,7 @@ public final class RenderHelper {
     color(color, 255);
   }
 
-  public static void renderColoredQuad(Rectangle rect, int color){
+  public static void renderColoredQuad(Rectangle rect, int color) {
     renderColoredQuad(rect.x, rect.y, rect.width, rect.height, color);
   }
 
@@ -68,6 +69,19 @@ public final class RenderHelper {
       GL11.glVertex2f(
           (float) (x + (radius * Math.cos(i * TAU / 20.0F))),
           (float) (y + (radius * Math.sin(i * TAU / 20.0F)))
+      );
+    }
+    GL11.glEnd();
+  }
+
+  public static void renderSemiCircle(float x, float y, float radius, float percentile) {
+    int numSegments = (int) (((percentile * 100) * MAX_CIRCLE_SEGMENTS) / 100);
+    GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+    GL11.glVertex2f(x, y);
+    for(int i = 0; i <= numSegments; i++){
+      GL11.glVertex2f(
+          ((float) (x + (radius * Math.cos(i * TAU / MAX_CIRCLE_SEGMENTS)))),
+          ((float) (y + (radius * Math.sin(i * TAU / MAX_CIRCLE_SEGMENTS))))
       );
     }
     GL11.glEnd();
