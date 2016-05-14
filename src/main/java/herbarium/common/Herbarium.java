@@ -222,8 +222,6 @@ public final class Herbarium
   @Mod.EventHandler
   public void preInit(FMLPreInitializationEvent e) {
     HerbariumConfig.init(new Configuration(e.getSuggestedConfigurationFile()));
-    System.setProperty("awt.useSystemAAFontSettings", "off");
-    System.setProperty("swing.aatext", "false");
 
     HerbariumApi.PAGE_MANAGER = this;
     HerbariumApi.PAGE_TRACKER = new PageTracker();
