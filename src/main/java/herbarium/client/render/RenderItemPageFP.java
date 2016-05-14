@@ -6,6 +6,7 @@ import herbarium.common.items.ItemPage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -13,7 +14,6 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.lwjgl.opengl.GL11;
@@ -28,6 +28,7 @@ public final class RenderItemPageFP {
     if (mc.thePlayer.getHeldItem(EnumHand.MAIN_HAND)
                     .getItem() instanceof ItemPage && mc.thePlayer.getHeldItemOffhand() == null && mc.gameSettings.thirdPersonView == 0) {
       e.setCanceled(true);
+      GlStateManager.pushMatrix();
 
       Tessellator tess = Tessellator.getInstance();
       VertexBuffer rend = tess.getBuffer();
@@ -86,22 +87,16 @@ public final class RenderItemPageFP {
 
       IPage page = ItemPage.getPage(p.getHeldItem(EnumHand.MAIN_HAND));
       if (page != null) {
-        GlStateManager.scale(0.5F, 0.5F, 0.5F);
-        GlStateManager.translate(0.0F, 5.0F, -1.0F);
+        GlStateManager.scale(0.7F, 0.7F, 0.7F);
+        GlStateManager.translate(-12.0F, -11.0F, -1.0F);
         page.renderer()
             .render(e.getPartialTicks());
       }
 
       GlStateManager.popMatrix();
       GlStateManager.disableRescaleNormal();
+      GlStateManager.popMatrix();
     }
-  }
-
-  private float cos(float pitch) {
-    float f = 1.0F * pitch / 45.0F + 0.1F;
-    f = MathHelper.clamp_float(f, 0.0F, 1.0F);
-    f = -MathHelper.cos((float) (f * Math.PI)) * 0.5F + 0.5F;
-    return f;
   }
 
   private void renderRightArm(EntityPlayerSP player, RenderPlayer render) {
@@ -110,7 +105,17 @@ public final class RenderItemPageFP {
     GlStateManager.rotate(64.0F, 1.0F, 0.0F, 0.0F);
     GlStateManager.rotate(-62.0F, 0.0F, 0.0F, 1.0F);
     GlStateManager.translate(0.25F, -0.85F, 0.75F);
-    render.renderRightArm(player);
+    ModelPlayer model = render.getMainModel();
+    GlStateManager.enableLighting();
+    GlStateManager.color(1.0F, 1.0F, 1.0F);
+    model.swingProgress = 0.0F;
+    model.isSneak = false;
+    model.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+    model.bipedRightArm.rotateAngleX = 0.0F;
+    model.bipedRightArm.render(0.0625F);
+    model.bipedRightArmwear.rotateAngleX = 0.0F;
+    model.bipedRightArmwear.render(0.0625F);
+    GlStateManager.disableLighting();
     GlStateManager.popMatrix();
   }
 
@@ -120,7 +125,17 @@ public final class RenderItemPageFP {
     GlStateManager.rotate(45.0F, 1.0F, 0.0F, 0.0F);
     GlStateManager.rotate(41.0F, 0.0F, 0.0F, 1.0F);
     GlStateManager.translate(-0.3F, -1.1F, 0.45F);
-    render.renderLeftArm(player);
+    ModelPlayer model = render.getMainModel();
+    GlStateManager.enableLighting();
+    GlStateManager.color(1.0F, 1.0F, 1.0F);
+    model.isSneak = false;
+    model.swingProgress = 0.0F;
+    model.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+    model.bipedLeftArm.rotateAngleX = 0.0F;
+    model.bipedLeftArm.render(0.0625F);
+    model.bipedLeftArmwear.rotateAngleX = 0.0F;
+    model.bipedLeftArmwear.render(0.0625F);
+    GlStateManager.disableLighting();
     GlStateManager.popMatrix();
   }
 
@@ -140,9 +155,5 @@ public final class RenderItemPageFP {
 
   private Minecraft client() {
     return Herbarium.proxy.getClient();
-  }
-
-  private void renderPage() {
-
   }
 }

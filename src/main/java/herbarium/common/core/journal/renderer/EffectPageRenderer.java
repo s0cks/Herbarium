@@ -7,11 +7,19 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.opengl.GL11;
 
 public final class EffectPageRenderer
     implements IJournalPageRenderer{
+  private static final ResourceLocation leftOverlay = new ResourceLocation("herbarium",
+                                                                         "textures/gui/entry_overlay_left" +
+                                                                                     ".png");
+  private static final ResourceLocation rightOverlay = new ResourceLocation("herbarium",
+                                                                        "textures/gui/entry_overlay_right" +
+                                                                                      ".png");
+
   private final IEffect[] effects;
 
   public EffectPageRenderer(IEffect[] effects){
@@ -32,6 +40,37 @@ public final class EffectPageRenderer
 
         if(left){
           GlStateManager.translate(-30, -25, 0.0F);
+
+          GlStateManager.pushMatrix();
+          GlStateManager.scale(5.0F, 5.0F, 5.0F);
+          GlStateManager.enableBlend();
+          GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+          Herbarium.proxy.getClient().renderEngine.bindTexture(leftOverlay);
+
+          Tessellator tess = Tessellator.getInstance();
+          VertexBuffer vb = tess.getBuffer();
+
+          vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+          vb.pos(0, 0, 1.0F)
+            .tex(0, 0)
+            .color(1.0F, 1.0F, 1.0F, 1.0F)
+            .endVertex();
+          vb.pos(0, 0 + 93, 1.0F)
+            .tex(0, 1)
+            .color(1.0F, 1.0F, 1.0F, 1.0F)
+            .endVertex();
+          vb.pos(0 + 190, 0 + 93, 1.0F)
+            .tex(1, 1)
+            .color(1.0F, 1.0F, 1.0F, 1.0F)
+            .endVertex();
+          vb.pos(0 + 190, 0, 1.0F)
+            .tex(1, 0)
+            .color(1.0F, 1.0F, 1.0F, 1.0F)
+            .endVertex();
+
+          tess.draw();
+          GlStateManager.disableBlend();
+          GlStateManager.popMatrix();
         } else{
           GlStateManager.translate(-65, -25, 0.0F);
         }

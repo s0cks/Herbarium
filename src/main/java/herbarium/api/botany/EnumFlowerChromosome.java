@@ -1,5 +1,6 @@
-package herbarium.api;
+package herbarium.api.botany;
 
+import herbarium.api.HerbariumApi;
 import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
@@ -22,6 +23,6 @@ public enum EnumFlowerChromosome
 
   @Override
   public ISpecies species() {
-    return HerbariumApi.SPECIES_FLOWER;
+    return HerbariumApi.FLOWER_SPECIES;
   }
 }

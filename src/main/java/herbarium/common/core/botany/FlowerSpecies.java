@@ -27,11 +27,16 @@ public final class FlowerSpecies
 
   @Override
   public IFlower templateAsIndividual(IAllele[] template) {
-    return null;
+    return new Flower(templateAsGenome(template));
   }
 
   @Override
   public IFlowerGenome templateAsGenome(IAllele[] template) {
-    return null;
+    return new FlowerGenome(templateAsChromosomes(template));
+  }
+
+  @Override
+  public IAllele[] defaultTemplate() {
+    return Flowers.ALSTROMERIA.template();
   }
 }

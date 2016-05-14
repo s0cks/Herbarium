@@ -3,13 +3,17 @@ package herbarium.common.core.botany;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import herbarium.api.EnumFlowerChromosome;
+import herbarium.api.botany.EnumFlowerChromosome;
+import herbarium.api.HerbariumApi;
 import herbarium.api.botany.IAlleleFlowerSpecies;
 import herbarium.api.botany.IFlowerGenome;
 import herbarium.api.genetics.IChromosome;
+import herbarium.api.genetics.ISpecies;
 import herbarium.common.core.genetics.Genome;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public final class FlowerGenome
@@ -34,9 +38,19 @@ public final class FlowerGenome
     super(comp);
   }
 
-  public static FlowerGenome fromNBT(NBTTagCompound comp) {
+  public static FlowerGenome fromNBT(final NBTTagCompound comp) {
     if (comp == null) return null;
-    return ark.getUnchecked(comp);
+    try {
+      return ark.get(comp, new Callable<FlowerGenome>(){
+        @Override
+        public FlowerGenome call()
+        throws Exception {
+          return new FlowerGenome(comp);
+        }
+      });
+    } catch (ExecutionException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
@@ -47,5 +61,10 @@ public final class FlowerGenome
   @Override
   public IAlleleFlowerSpecies secondary() {
     return ((IAlleleFlowerSpecies) this.inactiveAllele(EnumFlowerChromosome.SPECIES));
+  }
+
+  @Override
+  public ISpecies species() {
+    return HerbariumApi.FLOWER_SPECIES;
   }
 }

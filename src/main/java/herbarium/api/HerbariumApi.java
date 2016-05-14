@@ -1,12 +1,13 @@
 package herbarium.api;
 
+import herbarium.api.botany.IFlowerFactory;
+import herbarium.api.botany.IFlowerSpecies;
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.brew.effects.IEffectTracker;
 import herbarium.api.commentarium.journal.IJournalFactory;
 import herbarium.api.commentarium.pages.IPageManager;
 import herbarium.api.commentarium.pages.IPageTracker;
 import herbarium.api.genetics.IAlleleManager;
-import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuinManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
@@ -26,7 +27,8 @@ public final class HerbariumApi {
   public static IEffectManager EFFECT_MANAGER;
   // Genetics
   public static IAlleleManager ALLELE_MANAGER;
-  public static ISpecies SPECIES_FLOWER;
+  public static IFlowerSpecies FLOWER_SPECIES;
+  public static IFlowerFactory FLOWER_FACTORY;
   // Misc
   public static IGemOreTracker GEM_TRACKER;
   public static IHerbariumFontRenderer FONT_RENDERER;

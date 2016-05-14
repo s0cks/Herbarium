@@ -4,8 +4,11 @@ import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IChromosome;
 import herbarium.api.genetics.IMutation;
 import herbarium.api.genetics.ISpecies;
+import herbarium.common.Herbarium;
 import net.minecraft.item.ItemStack;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +34,13 @@ public abstract class Species
 
   @Override
   public IChromosome[] templateAsChromosomes(IAllele[] template) {
-    return new IChromosome[0];
+    Chromosome[] chromosomes = new Chromosome[template.length];
+    for(int i = 0; i < template.length; i++){
+      if(template[i] != null){
+        chromosomes[i] = new Chromosome(template[i]);
+      }
+    }
+    return chromosomes;
   }
 
   @Override
@@ -48,16 +57,15 @@ public abstract class Species
 
   @Override
   public IAllele[] getTemplate(String ident) {
-    return new IAllele[0];
-  }
-
-  @Override
-  public IAllele[] defaultTemplate() {
-    return new IAllele[0];
+    IAllele[] template = this.templates.get(ident);
+    if(template == null) return null;
+    return Arrays.copyOf(template, template.length);
   }
 
   @Override
   public IAllele[] randomTemplate() {
-    return new IAllele[0];
+    Collection<IAllele[]> templates = this.templates.values();
+    IAllele[][] array = templates.toArray(new IAllele[templates.size()][]);
+    return array[Herbarium.random.nextInt(templates.size())];
   }
 }

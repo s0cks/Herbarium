@@ -73,6 +73,7 @@ public final class RenderEffectTray
     int y = (sr.getScaledHeight() - 60) / 2;
 
     GlStateManager.pushMatrix();
+    GlStateManager.color(0.0F, 0.0F, 0.0F, 1.0F);
     RenderHelper.renderArc(x + 30, y + 30, 30, 0.0F, this.angle);
     GlStateManager.popMatrix();
 

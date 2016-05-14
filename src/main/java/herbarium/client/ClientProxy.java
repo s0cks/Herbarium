@@ -97,7 +97,7 @@ public final class ClientProxy
 
   @Override
   public void init() {
-    MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
+    // MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
 
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMortar.class, new RenderTileMortar());
   }

@@ -1,19 +1,17 @@
 package herbarium.common.core.genetics;
 
-import herbarium.api.EnumFlowerChromosome;
-import herbarium.api.HerbariumApi;
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IChromosome;
 import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.IGenome;
-import herbarium.api.genetics.ISpecies;
 import herbarium.api.genetics.alleles.IAlleleSpecies;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import java.util.Arrays;
 
-public class Genome
+public abstract class Genome
     implements IGenome {
   private final IChromosome[] chromosomes;
 
@@ -61,17 +59,14 @@ public class Genome
   }
 
   @Override
-  public ISpecies species() {
-    return HerbariumApi.SPECIES_FLOWER;
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound comp) {
-
-  }
-
-  @Override
   public void writeToNBT(NBTTagCompound comp) {
-
+    NBTTagList chromosomesList = new NBTTagList();
+    for(int i = 0; i < this.chromosomes.length; i++){
+      NBTTagCompound chromosomeComp = new NBTTagCompound();
+      chromosomeComp.setByte("Ordinal", (byte) i);
+      this.chromosomes[i].writeToNBT(chromosomeComp);
+      chromosomesList.appendTag(chromosomeComp);
+    }
+    comp.setTag("Chromosomes", chromosomesList);
   }
 }

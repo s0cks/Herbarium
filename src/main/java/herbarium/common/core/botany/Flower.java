@@ -12,15 +12,19 @@ public class Flower
 
   public Flower(NBTTagCompound comp) {
     if (comp.hasKey("Genome")) {
-      this.genome = FlowerGenome.fromNBT(comp.getCompoundTag("Genome"));
+      this.genome = new FlowerGenome(comp.getCompoundTag("Genome"));
     } else {
-      this.genome = null;
+      this.genome = Flowers.ALSTROMERIA.genome();
     }
+  }
+
+  public Flower(IFlowerGenome genome){
+    this.genome = genome;
   }
 
   @Override
   public IFlowerGenome genome() {
-    return null;
+    return this.genome;
   }
 
   @Override
@@ -29,12 +33,9 @@ public class Flower
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound comp) {
-
-  }
-
-  @Override
   public void writeToNBT(NBTTagCompound comp) {
-
+    NBTTagCompound genomeComp = new NBTTagCompound();
+    this.genome.writeToNBT(genomeComp);
+    comp.setTag("Genome", genomeComp);
   }
 }

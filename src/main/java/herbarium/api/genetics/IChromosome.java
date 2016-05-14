@@ -1,9 +1,8 @@
 package herbarium.api.genetics;
 
-import herbarium.api.INBTSavable;
+import net.minecraft.nbt.NBTTagCompound;
 
-public interface IChromosome
-    extends INBTSavable {
+public interface IChromosome{
   public IAllele primary();
 
   public IAllele secondary();
@@ -11,4 +10,6 @@ public interface IChromosome
   public IAllele inactive();
 
   public IAllele active();
+
+  public void writeToNBT(NBTTagCompound comp);
 }

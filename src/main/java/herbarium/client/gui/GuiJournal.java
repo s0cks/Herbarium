@@ -2,7 +2,6 @@ package herbarium.client.gui;
 
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.journal.IJournal;
-import herbarium.api.commentarium.journal.IJournalPage;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,8 +19,6 @@ public final class GuiJournal
   private static final int YSIZE = 93;
 
   private final IJournal journal;
-  private int guiLeft;
-  private int guiTop;
 
   public GuiJournal(EntityPlayer player) {
     this.journal = HerbariumApi.JOURNAL_FACTORY.create(player);
@@ -29,23 +26,17 @@ public final class GuiJournal
 
   @Override
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+    GlStateManager.pushMatrix();
+    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    int guiLeft = this.width / 2 - XSIZE / 2;
+    int guiTop = this.height / 2 - YSIZE / 2;
+
     this.mc.renderEngine.bindTexture(texture);
-    GlStateManager.scale(3.0F, 3.0F, 3.0F);
-    this.drawTexturedModalRect(this.guiLeft - XSIZE - 15, this.guiTop - YSIZE - 25, 0, 0, XSIZE, YSIZE);
-    GlStateManager.scale(0.4F, 0.4F, 0.4F);
+    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0,
+                               XSIZE,
+                               YSIZE);
 
-    int x = this.guiLeft + XSIZE - 145;
-    int y = this.guiTop - 80;
-
-    IJournalPage left = journal.left();
-    if(left != null){
-      left.delegate().render(this.guiLeft - 120, y, partialTicks, true);
-    }
-
-    IJournalPage right = journal.right();
-    if(right != null){
-      right.delegate().render(x, y, partialTicks, false);
-    }
+    GlStateManager.popMatrix();
   }
 
   @Override
@@ -56,7 +47,11 @@ public final class GuiJournal
 
   @Override
   public void initGui() {
-    this.guiLeft = (this.width - XSIZE) / 2;
-    this.guiTop = (this.height - YSIZE) / 2;
+
+  }
+
+  @Override
+  public boolean doesGuiPauseGame() {
+    return true;
   }
 }

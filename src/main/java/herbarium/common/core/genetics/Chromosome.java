@@ -64,12 +64,6 @@ public final class Chromosome
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound comp) {
-    this.primary = HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(PRIMARY_TAG));
-    this.secondary = HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(SECONDARY_TAG));
-  }
-
-  @Override
   public void writeToNBT(NBTTagCompound comp) {
     comp.setString(PRIMARY_TAG, this.primary.uuid());
     comp.setString(SECONDARY_TAG, this.secondary.uuid());

@@ -1,5 +1,6 @@
 package herbarium.common.blocks;
 
+import herbarium.api.botany.IFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -10,6 +11,10 @@ import net.minecraft.world.World;
 
 public final class BlockWaterFlower
     extends BlockHerbariumFlower {
+  public BlockWaterFlower(IFlower flower){
+    super(flower);
+  }
+
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
     Block bottom = worldIn.getBlockState(pos.down())
