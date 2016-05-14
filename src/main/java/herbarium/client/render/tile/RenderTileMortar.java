@@ -1,13 +1,11 @@
 package herbarium.client.render.tile;
 
+import herbarium.client.RenderHelper;
 import herbarium.common.Herbarium;
 import herbarium.common.tiles.TileEntityMortar;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -38,7 +36,7 @@ public final class RenderTileMortar
     if (current != null) {
       GlStateManager.pushMatrix();
       GlStateManager.translate(x + 0.5F, y + 0.5F, z + 0.5F);
-      this.renderItem(current);
+      RenderHelper.renderItem(current);
       GlStateManager.popMatrix();
     }
 
@@ -94,27 +92,6 @@ public final class RenderTileMortar
       GlStateManager.popMatrix();
     }
 
-    GlStateManager.popMatrix();
-  }
-
-  private void renderItem(ItemStack stack) {
-    GlStateManager.pushMatrix();
-    GlStateManager.disableLighting();
-    GlStateManager.scale(0.5F, 0.5F, 0.5F);
-
-    RenderItem renderItem = Herbarium.proxy.getClient()
-                                           .getRenderItem();
-    if (!renderItem.shouldRenderItemIn3D(stack)) {
-      GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-    }
-
-    GlStateManager.pushAttrib();
-    RenderHelper.enableStandardItemLighting();
-    renderItem.renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
-    RenderHelper.disableStandardItemLighting();
-    GlStateManager.popAttrib();
-
-    GlStateManager.enableLighting();
     GlStateManager.popMatrix();
   }
 }

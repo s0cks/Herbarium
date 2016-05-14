@@ -103,7 +103,7 @@ public final class Herbarium
                IRuinManager,
                IAlleleManager,
                IGemOreTracker {
-  static{
+  static {
     HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
     HerbariumApi.ALLELE_MANAGER = new AlleleManager();
     HerbariumApi.FLOWER_SPECIES = new FlowerSpecies();

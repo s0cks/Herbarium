@@ -7,7 +7,6 @@ import herbarium.api.botany.IAlleleFlowerSpeciesBuilder;
 import herbarium.api.botany.IFlower;
 import herbarium.api.botany.IFlowerGenome;
 import herbarium.api.genetics.IAllele;
-import herbarium.common.core.brew.effects.effect.RemedyEffects;
 import herbarium.common.core.genetics.alleles.AlleleHelper;
 
 import java.util.Arrays;
@@ -22,7 +21,6 @@ implements IFlowerDefinition{
 
     @Override
     protected void setAlleles(IAllele[] template) {
-      AlleleHelper.set(template, EnumFlowerChromosome.EFFECT, RemedyEffects.GREEN_THUMB);
     }
 
     @Override

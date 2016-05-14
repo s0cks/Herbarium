@@ -6,8 +6,7 @@ import herbarium.api.genetics.ISpecies;
 
 public enum EnumFlowerChromosome
     implements IChromosomeType {
-  SPECIES,
-  EFFECT;
+  SPECIES;
 
   @Override
   public ISpecies species() {
