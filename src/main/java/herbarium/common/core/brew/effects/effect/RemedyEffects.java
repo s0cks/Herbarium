@@ -1,5 +1,7 @@
 package herbarium.common.core.brew.effects.effect;
 
+import herbarium.api.HerbariumApi;
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.botany.IAlleleFlowerEffect;
 import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
@@ -89,6 +91,7 @@ public enum RemedyEffects
     this.dominant = dominant;
     this.icon = new ResourceLocation("herbarium", "textures/effects/" + this.name()
                                                                             .toLowerCase() + ".png");
+    HerbariumApi.ALLELE_MANAGER.registerAllele(this, EnumFlowerChromosome.EFFECT);
   }
 
   @Override

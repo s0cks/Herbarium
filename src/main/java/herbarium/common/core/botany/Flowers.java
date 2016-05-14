@@ -1,7 +1,7 @@
 package herbarium.common.core.botany;
 
-import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.HerbariumApi;
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.botany.IAlleleFlowerSpecies;
 import herbarium.api.botany.IAlleleFlowerSpeciesBuilder;
 import herbarium.api.botany.IFlower;
@@ -21,7 +21,6 @@ implements IFlowerDefinition{
 
     @Override
     protected void setAlleles(IAllele[] template) {
-
     }
 
     @Override
@@ -233,6 +232,7 @@ implements IFlowerDefinition{
   private void init(){
     this.template = this.branch.template();
     AlleleHelper.set(this.template, EnumFlowerChromosome.SPECIES, this.species);
+    this.setAlleles(template);
     this.genome = HerbariumApi.FLOWER_SPECIES.templateAsGenome(this.template);
     HerbariumApi.FLOWER_SPECIES.registerTemplate(template[0].uuid(), template);
   }

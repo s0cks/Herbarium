@@ -1,5 +1,6 @@
 package herbarium.common.blocks;
 
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.botany.IFlower;
 import herbarium.api.genetics.IChromosome;
 import herbarium.common.core.botany.Flower;
@@ -93,6 +94,7 @@ public class BlockHerbariumFlower
     IFlower flower = new Flower(stack.getTagCompound());
     tooltip.add("Primary: " + flower.genome().primary().uuid());
     tooltip.add("Secondary: " + flower.genome().secondary().uuid());
+    tooltip.add("Effect " + flower.genome().activeAllele(EnumFlowerChromosome.EFFECT).uuid());
   }
 
   @Override
