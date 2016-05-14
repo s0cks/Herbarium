@@ -6,10 +6,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class BlockCaveFlower
-        extends BlockHerbariumFlower{
-    @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        Block top = worldIn.getBlockState(pos.up()).getBlock();
-        return top == Blocks.STONE;
-    }
+    extends BlockHerbariumFlower {
+  @Override
+  public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+    Block top = worldIn.getBlockState(pos.up())
+                       .getBlock();
+    return top == Blocks.STONE;
+  }
 }

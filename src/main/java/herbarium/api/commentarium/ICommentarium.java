@@ -5,6 +5,6 @@ import herbarium.api.INBTSavable;
 import java.util.Set;
 
 public interface ICommentarium
-extends INBTSavable{
-    public Set<IPage> collected();
+    extends INBTSavable {
+  public Set<IPage> collected();
 }

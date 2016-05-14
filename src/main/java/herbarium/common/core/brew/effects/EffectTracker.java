@@ -36,235 +36,252 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public final class EffectTracker
-implements IEffectTracker{
-    public static final class PlayerEffectData
-    implements INBTSavable{
-        private static final String CURRENT_TAG = "Current";
+    implements IEffectTracker {
+  private final Lock lock = new ReentrantLock();
+  private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
 
-        private final Map<IEffect, Long> current = new ConcurrentHashMap<>();
+  public void setData(EntityPlayer player, PlayerEffectData data) {
+    this.data.put(player, data);
+  }
 
-        @Override
-        public void readFromNBT(NBTTagCompound comp) {
-            this.current.clear();
+  public PlayerEffectData getData(EntityPlayer player) {
+    return this.data.get(player);
+  }
 
-            if(comp.hasKey(CURRENT_TAG)){
-                NBTTagList effects = comp.getTagList(CURRENT_TAG, 10);
-                for(int i = 0; i < effects.tagCount(); i++){
-                    NBTTagCompound effectComp = effects.getCompoundTagAt(i);
-                    this.current.put(HerbariumApi.EFFECT_MANAGER.getEffect(effectComp.getString("Effect")), effectComp.getLong("Start"));
-                }
-            }
+  @Override
+  public boolean hasEffects(EntityPlayer player) {
+    return this.data.containsKey(player);
+  }
+
+  @Override
+  public boolean effectActive(EntityPlayer player, IEffect effect) {
+    try {
+      lock.lock();
+      if (effect == null) return false;
+      if (!this.data.containsKey(player)) return false;
+      for (Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()) {
+        if (entry.getKey() == null) continue;
+        if (entry.getKey()
+                 .uuid()
+                 .equals(effect.uuid())) {
+          return true;
         }
+      }
 
-        @Override
-        public void writeToNBT(NBTTagCompound comp) {
-            NBTTagList effects = new NBTTagList();
-            for(Map.Entry<IEffect, Long> entry : this.current.entrySet()){
-                NBTTagCompound effectComp = new NBTTagCompound();
-                effectComp.setString("Effect", entry.getKey().uuid());
-                effectComp.setLong("Start", entry.getValue());
-                effects.appendTag(effectComp);
-            }
-            comp.setTag(CURRENT_TAG, effects);
+      return false;
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  @Override
+  public List<IEffect> getEffects(EntityPlayer player) {
+    try {
+      this.lock.lock();
+      if (!this.data.containsKey(player)) return null;
+      return new LinkedList<>(this.data.get(player).current.keySet());
+    } finally {
+      this.lock.unlock();
+    }
+  }
+
+  @Override
+  public void setEffects(EntityPlayer player, List<IEffect> effects) {
+    try {
+      this.lock.lock();
+      if (!this.data.containsKey(player)) this.data.put(player, new PlayerEffectData());
+      PlayerEffectData ped = this.data.get(player);
+      ped.current.clear();
+      for (IEffect effect : effects) {
+        effect.onDrink(player);
+        ped.current.put(effect, Minecraft.getSystemTime());
+      }
+    } finally {
+      this.lock.unlock();
+    }
+  }
+
+  @Override
+  public void syncEffects(EntityPlayer player) {
+    HerbariumNetwork.INSTANCE.sendTo(new PacketSyncEffects(getData(player)), ((EntityPlayerMP) player));
+  }
+
+  @Override
+  public void clearEffects(EntityPlayer player) {
+    try {
+      this.lock.lock();
+      if (!this.data.containsKey(player)) return;
+      this.data.get(player).current.clear();
+    } finally {
+      this.lock.unlock();
+    }
+  }
+
+  @SubscribeEvent
+  public void onBreakSpeed(PlayerEvent.BreakSpeed e) {
+    if (!this.data.containsKey(e.getEntityPlayer())) return;
+    for (Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()) {
+      e.setNewSpeed(entry.getKey()
+                         .breakSpeed(e.getEntityPlayer(), e.getOriginalSpeed()));
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerTick(TickEvent.PlayerTickEvent e) {
+    if (!this.data.containsKey(e.player)) return;
+    PlayerEffectData data = this.data.get(e.player);
+    for (Map.Entry<IEffect, Long> entry : data.current.entrySet()) {
+      if (entry.getKey() == null) continue;
+      long current = Minecraft.getSystemTime();
+      if ((current - entry.getValue()) >= entry.getKey()
+                                               .duration()) {
+        entry.getKey()
+             .onTimeout(e.player);
+        data.current.remove(entry.getKey());
+        continue;
+      }
+      entry.getKey()
+           .onTick(e.player);
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerActiveBlock(PlayerInteractEvent.RightClickBlock e) {
+    if (!this.data.containsKey(e.getEntityPlayer())) return;
+    for (Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()) {
+      IBlockState state = e.getWorld()
+                           .getBlockState(e.getPos());
+      entry.getKey()
+           .onActiveBlock(e.getEntityPlayer(), e.getPos(), state);
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerJump(LivingEvent.LivingJumpEvent e) {
+    if (e.getEntity() instanceof EntityPlayer) {
+      EntityPlayer player = ((EntityPlayer) e.getEntity());
+      if (!this.data.containsKey(player)) return;
+      for (Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()) {
+        entry.getKey()
+             .onJump(player);
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerTargeted(LivingSetAttackTargetEvent e) {
+    if (e.getTarget() instanceof EntityPlayer) {
+      EntityPlayer player = ((EntityPlayer) e.getTarget());
+      if (!this.data.containsKey(player)) return;
+      for (Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()) {
+        entry.getKey()
+             .onTargeted(player, e.getEntityLiving());
+      }
+    }
+  }
+
+  @SubscribeEvent
+  public void onPlayerLoad(PlayerEvent.LoadFromFile e) {
+    this.loadPlayerEffectData(e.getEntityPlayer());
+  }
+
+  @SubscribeEvent
+  public void onPlayerSave(PlayerEvent.SaveToFile e) {
+    this.savePlayerEffectData(e.getEntityPlayer());
+  }
+
+  @SubscribeEvent
+  public void onPlayerLogIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent e) {
+    if (FMLCommonHandler.instance()
+                        .getEffectiveSide() == Side.SERVER) {
+      this.syncEffects(e.player);
+    }
+  }
+
+  private void loadPlayerEffectData(EntityPlayer player) {
+    IPlayerFileData nbtManager = FMLCommonHandler.instance()
+                                                 .getMinecraftServerInstance()
+                                                 .worldServerForDimension(0)
+                                                 .getSaveHandler()
+                                                 .getPlayerNBTManager();
+    SaveHandler handler = ((SaveHandler) nbtManager);
+    File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, handler, "playersDirectory", "field_75771_c");
+    File file = new File(dir, player.getName() + ".effects");
+    NBTTagCompound comp = this.load(file);
+    PlayerEffectData data = new PlayerEffectData();
+    data.readFromNBT(comp);
+    this.data.put(player, data);
+  }
+
+  private void savePlayerEffectData(EntityPlayer player) {
+    IPlayerFileData nbtManager = FMLCommonHandler.instance()
+                                                 .getMinecraftServerInstance()
+                                                 .worldServerForDimension(0)
+                                                 .getSaveHandler()
+                                                 .getPlayerNBTManager();
+    SaveHandler handler = ((SaveHandler) nbtManager);
+    File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, handler, "playersDirectory", "field_75771_c");
+    File file = new File(dir, player.getName() + ".effects");
+    NBTTagCompound comp = new NBTTagCompound();
+    this.data.get(player)
+             .writeToNBT(comp);
+    this.save(comp, file);
+  }
+
+  private NBTTagCompound load(File file) {
+    try {
+      NBTTagCompound comp = new NBTTagCompound();
+      if (file != null && file.exists()) {
+        try (FileInputStream fis = new FileInputStream(file)) {
+          comp = CompressedStreamTools.readCompressed(fis);
         }
+      }
+      return comp;
+    } catch (Exception ex) {
+      ex.printStackTrace(System.err);
+      return new NBTTagCompound();
     }
+  }
 
-    private final Lock lock = new ReentrantLock();
-    private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
-
-    public void setData(EntityPlayer player, PlayerEffectData data){
-        this.data.put(player, data);
+  private void save(NBTTagCompound comp, File file) {
+    try (FileOutputStream fos = new FileOutputStream(file)) {
+      file.createNewFile();
+      CompressedStreamTools.writeCompressed(comp, fos);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
+  }
 
-    public PlayerEffectData getData(EntityPlayer player){
-        return this.data.get(player);
+  public static final class PlayerEffectData
+      implements INBTSavable {
+    private static final String CURRENT_TAG = "Current";
+
+    private final Map<IEffect, Long> current = new ConcurrentHashMap<>();
+
+    @Override
+    public void readFromNBT(NBTTagCompound comp) {
+      this.current.clear();
+
+      if (comp.hasKey(CURRENT_TAG)) {
+        NBTTagList effects = comp.getTagList(CURRENT_TAG, 10);
+        for (int i = 0; i < effects.tagCount(); i++) {
+          NBTTagCompound effectComp = effects.getCompoundTagAt(i);
+          this.current.put(HerbariumApi.EFFECT_MANAGER.getEffect(effectComp.getString("Effect")), effectComp.getLong("Start"));
+        }
+      }
     }
 
     @Override
-    public boolean hasEffects(EntityPlayer player) {
-        return this.data.containsKey(player);
+    public void writeToNBT(NBTTagCompound comp) {
+      NBTTagList effects = new NBTTagList();
+      for (Map.Entry<IEffect, Long> entry : this.current.entrySet()) {
+        NBTTagCompound effectComp = new NBTTagCompound();
+        effectComp.setString("Effect", entry.getKey()
+                                            .uuid());
+        effectComp.setLong("Start", entry.getValue());
+        effects.appendTag(effectComp);
+      }
+      comp.setTag(CURRENT_TAG, effects);
     }
-
-    @Override
-    public boolean effectActive(EntityPlayer player, IEffect effect) {
-        try{
-            lock.lock();
-            if(effect == null) return false;
-            if(!this.data.containsKey(player)) return false;
-            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
-                if(entry.getKey() == null) continue;
-                if(entry.getKey().uuid().equals(effect.uuid())){
-                    return true;
-                }
-            }
-
-            return false;
-        } finally{
-            lock.unlock();
-        }
-    }
-
-    @Override
-    public List<IEffect> getEffects(EntityPlayer player) {
-        try{
-            this.lock.lock();
-            if(!this.data.containsKey(player)) return null;
-            return new LinkedList<>(this.data.get(player).current.keySet());
-        } finally{
-            this.lock.unlock();
-        }
-    }
-
-    @Override
-    public void setEffects(EntityPlayer player, List<IEffect> effects) {
-        try{
-            this.lock.lock();
-            if(!this.data.containsKey(player)) this.data.put(player, new PlayerEffectData());
-            PlayerEffectData ped = this.data.get(player);
-            ped.current.clear();
-            for(IEffect effect : effects){
-                effect.onDrink(player);
-                ped.current.put(effect, Minecraft.getSystemTime());
-            }
-        } finally{
-            this.lock.unlock();
-        }
-    }
-
-    @Override
-    public void syncEffects(EntityPlayer player) {
-        HerbariumNetwork.INSTANCE.sendTo(new PacketSyncEffects(getData(player)), ((EntityPlayerMP) player));
-    }
-
-    @Override
-    public void clearEffects(EntityPlayer player) {
-        try{
-            this.lock.lock();
-            if(!this.data.containsKey(player)) return;
-            this.data.get(player).current.clear();
-        } finally{
-            this.lock.unlock();
-        }
-    }
-
-    @SubscribeEvent
-    public void onBreakSpeed(PlayerEvent.BreakSpeed e){
-        if(!this.data.containsKey(e.getEntityPlayer())) return;
-        for(Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()){
-            e.setNewSpeed(entry.getKey().breakSpeed(e.getEntityPlayer(), e.getOriginalSpeed()));
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent e){
-        if(!this.data.containsKey(e.player)) return;
-        PlayerEffectData data = this.data.get(e.player);
-        for(Map.Entry<IEffect, Long> entry : data.current.entrySet()){
-            if(entry.getKey() == null) continue;
-            long current = Minecraft.getSystemTime();
-            if((current - entry.getValue()) >= entry.getKey().duration()){
-                entry.getKey().onTimeout(e.player);
-                data.current.remove(entry.getKey());
-                continue;
-            }
-            entry.getKey().onTick(e.player);
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerActiveBlock(PlayerInteractEvent.RightClickBlock e){
-        if(!this.data.containsKey(e.getEntityPlayer())) return;
-        for(Map.Entry<IEffect, Long> entry : this.data.get(e.getEntityPlayer()).current.entrySet()){
-            IBlockState state = e.getWorld().getBlockState(e.getPos());
-            entry.getKey().onActiveBlock(e.getEntityPlayer(), e.getPos(), state);
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerJump(LivingEvent.LivingJumpEvent e){
-        if(e.getEntity() instanceof EntityPlayer){
-            EntityPlayer player = ((EntityPlayer) e.getEntity());
-            if(!this.data.containsKey(player)) return;
-            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
-                entry.getKey().onJump(player);
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerTargeted(LivingSetAttackTargetEvent e){
-        if(e.getTarget() instanceof EntityPlayer){
-            EntityPlayer player = ((EntityPlayer) e.getTarget());
-            if(!this.data.containsKey(player)) return;
-            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
-                entry.getKey().onTargeted(player, e.getEntityLiving());
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerLoad(PlayerEvent.LoadFromFile e){
-        this.loadPlayerEffectData(e.getEntityPlayer());
-    }
-
-    @SubscribeEvent
-    public void onPlayerSave(PlayerEvent.SaveToFile e){
-        this.savePlayerEffectData(e.getEntityPlayer());
-    }
-
-    @SubscribeEvent
-    public void onPlayerLogIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent e){
-        if(FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER){
-            this.syncEffects(e.player);
-        }
-    }
-
-    private void loadPlayerEffectData(EntityPlayer player){
-        IPlayerFileData nbtManager = FMLCommonHandler.instance().getMinecraftServerInstance()
-                                              .worldServerForDimension(0)
-                                              .getSaveHandler().getPlayerNBTManager();
-        SaveHandler handler = ((SaveHandler) nbtManager);
-        File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, handler, "playersDirectory", "field_75771_c");
-        File file = new File(dir, player.getName() + ".effects");
-        NBTTagCompound comp = this.load(file);
-        PlayerEffectData data = new PlayerEffectData();
-        data.readFromNBT(comp);
-        this.data.put(player, data);
-    }
-
-    private void savePlayerEffectData(EntityPlayer player){
-        IPlayerFileData nbtManager = FMLCommonHandler.instance().getMinecraftServerInstance()
-                                                     .worldServerForDimension(0)
-                                                     .getSaveHandler().getPlayerNBTManager();
-        SaveHandler handler = ((SaveHandler) nbtManager);
-        File dir = ObfuscationReflectionHelper.getPrivateValue(SaveHandler.class, handler, "playersDirectory", "field_75771_c");
-        File file = new File(dir, player.getName() + ".effects");
-        NBTTagCompound comp = new NBTTagCompound();
-        this.data.get(player).writeToNBT(comp);
-        this.save(comp, file);
-    }
-
-    private NBTTagCompound load(File file){
-        try{
-            NBTTagCompound comp = new NBTTagCompound();
-            if(file != null && file.exists()){
-                try(FileInputStream fis = new FileInputStream(file)){
-                    comp = CompressedStreamTools.readCompressed(fis);
-                }
-            }
-            return comp;
-        } catch(Exception ex){
-            ex.printStackTrace(System.err);
-            return new NBTTagCompound();
-        }
-    }
-
-    private void save(NBTTagCompound comp, File file){
-        try(FileOutputStream fos = new FileOutputStream(file)){
-            file.createNewFile();
-            CompressedStreamTools.writeCompressed(comp, fos);
-        } catch(Exception e){
-            throw new RuntimeException(e);
-        }
-    }
+  }
 }

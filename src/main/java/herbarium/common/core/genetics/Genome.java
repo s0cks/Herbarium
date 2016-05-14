@@ -14,64 +14,64 @@ import net.minecraft.nbt.NBTTagList;
 import java.util.Arrays;
 
 public class Genome
-implements IGenome {
-    private final IChromosome[] chromosomes;
+    implements IGenome {
+  private final IChromosome[] chromosomes;
 
-    public Genome(IChromosome[] chromosomes){
-        this.chromosomes = chromosomes;
+  public Genome(IChromosome[] chromosomes) {
+    this.chromosomes = chromosomes;
+  }
+
+  public Genome(NBTTagCompound comp) {
+    NBTTagList chromosomesNBT = comp.getTagList("Chromosomes", 10);
+    this.chromosomes = new IChromosome[species().defaultTemplate().length];
+
+    for (int i = 0; i < chromosomesNBT.tagCount(); i++) {
+      NBTTagCompound chromosomeNBT = chromosomesNBT.getCompoundTagAt(i);
+      byte ordinal = chromosomeNBT.getByte("Ordinal");
+      if (ordinal >= 0 && ordinal < this.chromosomes.length) {
+        Chromosome chromosome = new Chromosome(chromosomeNBT);
+        this.chromosomes[ordinal] = chromosome;
+      }
     }
+  }
 
-    public Genome(NBTTagCompound comp){
-        NBTTagList chromosomesNBT = comp.getTagList("Chromosomes", 10);
-        this.chromosomes = new IChromosome[species().defaultTemplate().length];
+  @Override
+  public IAlleleSpecies primary() {
+    return ((IAlleleSpecies) this.activeAllele(EnumFlowerChromosome.SPECIES));
+  }
 
-        for(int i = 0; i < chromosomesNBT.tagCount(); i++){
-            NBTTagCompound chromosomeNBT = chromosomesNBT.getCompoundTagAt(i);
-            byte ordinal = chromosomeNBT.getByte("Ordinal");
-            if(ordinal >= 0 && ordinal < this.chromosomes.length){
-                Chromosome chromosome = new Chromosome(chromosomeNBT);
-                this.chromosomes[ordinal] = chromosome;
-            }
-        }
-    }
+  @Override
+  public IAlleleSpecies secondary() {
+    return ((IAlleleSpecies) this.inactiveAllele(EnumFlowerChromosome.SPECIES));
+  }
 
-    @Override
-    public IAlleleSpecies primary() {
-        return ((IAlleleSpecies) this.activeAllele(EnumFlowerChromosome.SPECIES));
-    }
+  @Override
+  public IAllele activeAllele(IChromosomeType type) {
+    return this.chromosomes[type.ordinal()].active();
+  }
 
-    @Override
-    public IAlleleSpecies secondary() {
-        return ((IAlleleSpecies) this.inactiveAllele(EnumFlowerChromosome.SPECIES));
-    }
+  @Override
+  public IAllele inactiveAllele(IChromosomeType type) {
+    return this.chromosomes[type.ordinal()].inactive();
+  }
 
-    @Override
-    public IAllele activeAllele(IChromosomeType type) {
-        return this.chromosomes[type.ordinal()].active();
-    }
+  @Override
+  public IChromosome[] chromosomes() {
+    return Arrays.copyOf(this.chromosomes, this.chromosomes.length);
+  }
 
-    @Override
-    public IAllele inactiveAllele(IChromosomeType type) {
-        return this.chromosomes[type.ordinal()].inactive();
-    }
+  @Override
+  public ISpecies species() {
+    return HerbariumApi.SPECIES_FLOWER;
+  }
 
-    @Override
-    public IChromosome[] chromosomes() {
-        return Arrays.copyOf(this.chromosomes, this.chromosomes.length);
-    }
+  @Override
+  public void readFromNBT(NBTTagCompound comp) {
 
-    @Override
-    public ISpecies species() {
-        return HerbariumApi.SPECIES_FLOWER;
-    }
+  }
 
-    @Override
-    public void readFromNBT(NBTTagCompound comp) {
+  @Override
+  public void writeToNBT(NBTTagCompound comp) {
 
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound comp) {
-
-    }
+  }
 }

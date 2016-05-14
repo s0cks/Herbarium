@@ -6,7 +6,8 @@ import herbarium.api.brew.effects.IEffect;
 import java.util.List;
 
 public interface IBrew
-extends INBTSavable{
-    public List<IEffect> effects();
-    public EnumBrewType computeBrewType();
+    extends INBTSavable {
+  public List<IEffect> effects();
+
+  public EnumBrewType computeBrewType();
 }

@@ -1,5 +1,5 @@
 package herbarium.client.page;
 
 public interface IPageLayout {
-    public void layout(PageComponentContainer container);
+  public void layout(PageComponentContainer container);
 }

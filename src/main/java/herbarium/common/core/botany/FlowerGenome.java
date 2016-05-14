@@ -13,39 +13,39 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.concurrent.TimeUnit;
 
 public final class FlowerGenome
-        extends Genome
-        implements IFlowerGenome {
-    private static final LoadingCache<NBTTagCompound, FlowerGenome> ark = CacheBuilder.newBuilder()
-                                                                                      .maximumSize(128)
-                                                                                      .expireAfterAccess(1, TimeUnit.MINUTES)
-                                                                                      .build(new CacheLoader<NBTTagCompound, FlowerGenome>() {
-                                                                                          @Override
-                                                                                          public FlowerGenome load(NBTTagCompound key)
-                                                                                          throws Exception {
-                                                                                              return new FlowerGenome(key);
-                                                                                          }
-                                                                                      });
+    extends Genome
+    implements IFlowerGenome {
+  private static final LoadingCache<NBTTagCompound, FlowerGenome> ark = CacheBuilder.newBuilder()
+                                                                                    .maximumSize(128)
+                                                                                    .expireAfterAccess(1, TimeUnit.MINUTES)
+                                                                                    .build(new CacheLoader<NBTTagCompound, FlowerGenome>() {
+                                                                                      @Override
+                                                                                      public FlowerGenome load(NBTTagCompound key)
+                                                                                      throws Exception {
+                                                                                        return new FlowerGenome(key);
+                                                                                      }
+                                                                                    });
 
-    public static FlowerGenome fromNBT(NBTTagCompound comp) {
-        if (comp == null) return null;
-        return ark.getUnchecked(comp);
-    }
+  public FlowerGenome(IChromosome[] chromosomes) {
+    super(chromosomes);
+  }
 
-    public FlowerGenome(IChromosome[] chromosomes) {
-        super(chromosomes);
-    }
+  public FlowerGenome(NBTTagCompound comp) {
+    super(comp);
+  }
 
-    public FlowerGenome(NBTTagCompound comp) {
-        super(comp);
-    }
+  public static FlowerGenome fromNBT(NBTTagCompound comp) {
+    if (comp == null) return null;
+    return ark.getUnchecked(comp);
+  }
 
-    @Override
-    public IAlleleFlowerSpecies primary() {
-        return ((IAlleleFlowerSpecies) this.activeAllele(EnumFlowerChromosome.SPECIES));
-    }
+  @Override
+  public IAlleleFlowerSpecies primary() {
+    return ((IAlleleFlowerSpecies) this.activeAllele(EnumFlowerChromosome.SPECIES));
+  }
 
-    @Override
-    public IAlleleFlowerSpecies secondary() {
-        return ((IAlleleFlowerSpecies) this.inactiveAllele(EnumFlowerChromosome.SPECIES));
-    }
+  @Override
+  public IAlleleFlowerSpecies secondary() {
+    return ((IAlleleFlowerSpecies) this.inactiveAllele(EnumFlowerChromosome.SPECIES));
+  }
 }

@@ -1,7 +1,7 @@
 package herbarium.api.brew;
 
-public enum EnumBrewType{
-    VENOM,
-    REMEDY,
-    SPIRIT;
+public enum EnumBrewType {
+  VENOM,
+  REMEDY,
+  SPIRIT;
 }

@@ -10,29 +10,24 @@ import herbarium.api.ruins.IRuinManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 
-public final class HerbariumApi{
-    // Pages
-    public static IPageManager PAGE_MANAGER;
-    public static IPageTracker PAGE_TRACKER;
-
-    // Flowers
-    public static IFlowerManager FLOWER_MANAGER;
-
-    // Ruins
-    public static IRuinManager RUIN_MANAGER;
-
-    // Effects
-    public static IEffectTracker EFFECT_TRACKER;
-    public static IEffectManager EFFECT_MANAGER;
-
-    // Genetics
-    public static IAlleleManager ALLELE_MANAGER;
-    public static ISpecies SPECIES_FLOWER;
-
-    // Misc
-    public static IGemOreTracker GEM_TRACKER;
-    @Deprecated  public static IHerbariumFontRenderer FONT_RENDERER;
-
-    public static final Item.ToolMaterial PESTLE_MATERIAL =
-            EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
+public final class HerbariumApi {
+  public static final Item.ToolMaterial PESTLE_MATERIAL =
+      EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
+  // Pages
+  public static IPageManager PAGE_MANAGER;
+  public static IPageTracker PAGE_TRACKER;
+  // Flowers
+  public static IFlowerManager FLOWER_MANAGER;
+  // Ruins
+  public static IRuinManager RUIN_MANAGER;
+  // Effects
+  public static IEffectTracker EFFECT_TRACKER;
+  public static IEffectManager EFFECT_MANAGER;
+  // Genetics
+  public static IAlleleManager ALLELE_MANAGER;
+  public static ISpecies SPECIES_FLOWER;
+  // Misc
+  public static IGemOreTracker GEM_TRACKER;
+  @Deprecated
+  public static IHerbariumFontRenderer FONT_RENDERER;
 }

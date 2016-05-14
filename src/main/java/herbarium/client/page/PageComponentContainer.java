@@ -1,47 +1,44 @@
 package herbarium.client.page;
 
-import herbarium.client.page.IPageScreen;
-import herbarium.client.page.IPageComponent;
-
 import java.awt.Dimension;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public final class PageComponentContainer
-        implements IPageScreen,
-                   Iterable<IPageComponent>{
-    private final Dimension size;
+    implements IPageScreen,
+               Iterable<IPageComponent> {
+  private final Dimension size;
 
-    private final List<IPageComponent> components = new LinkedList<>();
+  private final List<IPageComponent> components = new LinkedList<>();
 
-    public PageComponentContainer(int width, int height){
-        this.size = new Dimension(width, height);
-    }
+  public PageComponentContainer(int width, int height) {
+    this.size = new Dimension(width, height);
+  }
 
-    public int getWidth(){
-        return this.size.width;
-    }
+  public int getWidth() {
+    return this.size.width;
+  }
 
-    public int getHeight(){
-        return this.size.height;
-    }
+  public int getHeight() {
+    return this.size.height;
+  }
 
-    public int componentCount(){
-        return this.components.size();
-    }
+  public int componentCount() {
+    return this.components.size();
+  }
 
-    public IPageComponent componentAt(int i){
-        return this.components.get(i);
-    }
+  public IPageComponent componentAt(int i) {
+    return this.components.get(i);
+  }
 
-    @Override
-    public void register(IPageComponent comp) {
-        this.components.add(comp);
-    }
+  @Override
+  public void register(IPageComponent comp) {
+    this.components.add(comp);
+  }
 
-    @Override
-    public Iterator<IPageComponent> iterator() {
-        return this.components.iterator();
-    }
+  @Override
+  public Iterator<IPageComponent> iterator() {
+    return this.components.iterator();
+  }
 }

@@ -23,101 +23,106 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public final class ClientProxy
-extends CommonProxy{
-    private RenderEffectTray renderEffectTray;
+    extends CommonProxy {
+  private RenderEffectTray renderEffectTray;
 
-    @Override
-    public RenderEffectTray renderEffectTray() {
-        return this.renderEffectTray;
+  @Override
+  public ModelManager modelManager() {
+    return this.dispatcher()
+               .getBlockModelShapes()
+               .getModelManager();
+  }
+
+  @Override
+  public BlockRendererDispatcher dispatcher() {
+    return this.getClient()
+               .getBlockRendererDispatcher();
+  }
+
+  @Override
+  public void registerRenders() {
+    // Items
+    registerRender(Herbarium.itemJournal, "journal");
+    registerRender(Herbarium.itemPage, "page");
+    registerRender(Herbarium.itemPestle, "pestle");
+    registerRender(Herbarium.itemBrew, 0, "remedy");
+    registerRender(Herbarium.itemBrew, 1, "spirit");
+    registerRender(Herbarium.itemBrew, 2, "venom");
+
+    for (int i = 0; i < ItemPaste.names.length; i++) {
+      registerRender(Herbarium.itemPaste, i, ItemPaste.names[i] + "_paste");
     }
 
-    @Override
-    public Minecraft getClient(){
-        return FMLClientHandler.instance().getClient();
-    }
+    // Blocks
+    registerRender(Herbarium.blockAlstromeria, "alstromeria");
+    registerRender(Herbarium.blockBelladonna, "belladonna");
+    registerRender(Herbarium.blockBlueAnemone, "anemone");
+    registerRender(Herbarium.blockBlueberry, "blueberry_blossom");
+    registerRender(Herbarium.blockButtercup, "buttercup");
+    registerRender(Herbarium.blockCave, "cavern_bloom");
+    registerRender(Herbarium.blockWinterLily, "winter_lily");
+    registerRender(Herbarium.blockFire, "lancet_root");
+    registerRender(Herbarium.blockLongEarIris, "tail_iris");
+    registerRender(Herbarium.blockLotus, "spring_lotus");
+    registerRender(Herbarium.blockNether, "igneous_spear");
+    registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
+    registerRender(Herbarium.blockCoil, "coil");
+    registerRender(Herbarium.blockCrucible, "crucible");
+    registerRender(Herbarium.blockFlume, "flume");
+    registerRender(Herbarium.blockPipe, "pipe");
+    registerRender(Herbarium.blockMortar, "mortar");
+    registerRender(Herbarium.blockBarrel, "barrel");
+    registerRender(Herbarium.blockJournal, "journal_block");
 
-    @Override
-    public void registerRenders(){
-        // Items
-        registerRender(Herbarium.itemJournal, "journal");
-        registerRender(Herbarium.itemPage, "page");
-        registerRender(Herbarium.itemPestle, "pestle");
-        registerRender(Herbarium.itemBrew, 0, "remedy");
-        registerRender(Herbarium.itemBrew, 1, "spirit");
-        registerRender(Herbarium.itemBrew, 2, "venom");
+    MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
+    MinecraftForge.EVENT_BUS.register(new ClientEffectHandler());
+  }
 
-        for(int i = 0; i < ItemPaste.names.length; i++){
-            registerRender(Herbarium.itemPaste, i, ItemPaste.names[i] + "_paste");
-        }
+  @Override
+  public void registerColors() {
+    registerColor(new ItemBrew.BrewColorizer(), Herbarium.itemBrew);
+    registerColor(new BlockWaterFlower.SpringLotusColorizer(), Herbarium.blockLotus);
+  }
 
-        // Blocks
-        registerRender(Herbarium.blockAlstromeria, "alstromeria");
-        registerRender(Herbarium.blockBelladonna, "belladonna");
-        registerRender(Herbarium.blockBlueAnemone, "anemone");
-        registerRender(Herbarium.blockBlueberry, "blueberry_blossom");
-        registerRender(Herbarium.blockButtercup, "buttercup");
-        registerRender(Herbarium.blockCave, "cavern_bloom");
-        registerRender(Herbarium.blockWinterLily, "winter_lily");
-        registerRender(Herbarium.blockFire, "lancet_root");
-        registerRender(Herbarium.blockLongEarIris, "tail_iris");
-        registerRender(Herbarium.blockLotus, "spring_lotus");
-        registerRender(Herbarium.blockNether, "igneous_spear");
-        registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
-        registerRender(Herbarium.blockCoil, "coil");
-        registerRender(Herbarium.blockCrucible, "crucible");
-        registerRender(Herbarium.blockFlume, "flume");
-        registerRender(Herbarium.blockPipe, "pipe");
-        registerRender(Herbarium.blockMortar, "mortar");
-        registerRender(Herbarium.blockBarrel, "barrel");
-        registerRender(Herbarium.blockJournal, "journal_block");
+  @Override
+  public Minecraft getClient() {
+    return FMLClientHandler.instance()
+                           .getClient();
+  }
 
-        MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
-        MinecraftForge.EVENT_BUS.register(new ClientEffectHandler());
-    }
+  @Override
+  public RenderEffectTray renderEffectTray() {
+    return this.renderEffectTray;
+  }
 
-    @Override
-    public ModelManager modelManager() {
-        return this.dispatcher()
-                .getBlockModelShapes()
-                .getModelManager();
-    }
+  @Override
+  public void init() {
+    MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
 
-    @Override
-    public BlockRendererDispatcher dispatcher() {
-        return this.getClient()
-                .getBlockRendererDispatcher();
-    }
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMortar.class, new RenderTileMortar());
+  }
 
-    @Override
-    public void init(){
-        MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
+  private void registerColor(IItemColor color, Item item) {
+    this.getClient()
+        .getItemColors()
+        .registerItemColorHandler(color, item);
+  }
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMortar.class, new RenderTileMortar());
-    }
+  private void registerColor(IBlockColor color, Block block) {
+    this.getClient()
+        .getBlockColors()
+        .registerBlockColorHandler(color, block);
+  }
 
-    @Override
-    public void registerColors(){
-        registerColor(new ItemBrew.BrewColorizer(), Herbarium.itemBrew);
-        registerColor(new BlockWaterFlower.SpringLotusColorizer(), Herbarium.blockLotus);
-    }
+  private void registerRender(Block block, String id) {
+    registerRender(Item.getItemFromBlock(block), id);
+  }
 
-    private void registerColor(IItemColor color, Item item){
-        this.getClient().getItemColors().registerItemColorHandler(color, item);
-    }
+  private void registerRender(Item item, int meta, String id) {
+    ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation("herbarium:" + id, "inventory"));
+  }
 
-    private void registerColor(IBlockColor color, Block block){
-        this.getClient().getBlockColors().registerBlockColorHandler(color, block);
-    }
-
-    private void registerRender(Block block, String id){
-        registerRender(Item.getItemFromBlock(block), id);
-    }
-
-    private void registerRender(Item item, int meta, String id){
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation("herbarium:" + id, "inventory"));
-    }
-
-    private void registerRender(Item item, String id){
-    	ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("herbarium:" + id, "inventory"));
-    }
+  private void registerRender(Item item, String id) {
+    ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("herbarium:" + id, "inventory"));
+  }
 }

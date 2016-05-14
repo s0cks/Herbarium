@@ -17,58 +17,58 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class BlockMortar
-extends BlockContainer{
-    private final AxisAlignedBB box = new AxisAlignedBB(0.15, 0.0, 0.15, 0.85, 0.45, 0.85);
+    extends BlockContainer {
+  private final AxisAlignedBB box = new AxisAlignedBB(0.15, 0.0, 0.15, 0.85, 0.45, 0.85);
 
-    public BlockMortar(){
-        super(Material.ROCK);
+  public BlockMortar() {
+    super(Material.ROCK);
+  }
+
+  @Override
+  public boolean isNormalCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
+  public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+    return this.box;
+  }
+
+  @Override
+  public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
+  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
+    TileEntityMortar mortar = ((TileEntityMortar) worldIn.getTileEntity(pos));
+    if (stack == null && playerIn.isSneaking()) {
+      //TODO: Drop mortar plants
+      return false;
+    } else if (stack == null) {
+      return false;
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
+    if (stack.getItem() instanceof ItemBlock) {
+      ItemBlock ib = ((ItemBlock) stack.getItem());
+      if (ib.getBlock() instanceof BlockHerbariumFlower) {
+        mortar.setCurrentItem(stack);
+        mortar.update();
+        playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, stack.stackSize);
+        return true;
+      }
+    } else if (stack.getItem() instanceof IPestle) {
+      mortar.mush();
+      mortar.update();
+      return true;
     }
 
-    @Override
-    public boolean isNormalCube(IBlockState state) {
-        return false;
-    }
+    return false;
+  }
 
-    @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityMortar();
-    }
-
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return this.box;
-    }
-
-    @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-        ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
-        TileEntityMortar mortar = ((TileEntityMortar) worldIn.getTileEntity(pos));
-        if(stack == null && playerIn.isSneaking()){
-            //TODO: Drop mortar plants
-            return false;
-        } else if(stack == null){
-            return false;
-        }
-
-        if(stack.getItem() instanceof ItemBlock){
-            ItemBlock ib = ((ItemBlock) stack.getItem());
-            if(ib.getBlock() instanceof BlockHerbariumFlower){
-                mortar.setCurrentItem(stack);
-                mortar.update();
-                playerIn.inventory.decrStackSize(playerIn.inventory.currentItem, stack.stackSize);
-                return true;
-            }
-        } else if(stack.getItem() instanceof IPestle){
-            mortar.mush();
-            mortar.update();
-            return true;
-        }
-
-        return false;
-    }
+  @Override
+  public TileEntity createNewTileEntity(World worldIn, int meta) {
+    return new TileEntityMortar();
+  }
 }

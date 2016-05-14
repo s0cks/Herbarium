@@ -6,12 +6,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class BlockNetherFlower
-extends BlockHerbariumFlower{
+    extends BlockHerbariumFlower {
 
-    @Override
-    public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        Block bottom = worldIn.getBlockState(pos.down())
-                              .getBlock();
-        return bottom == Blocks.SOUL_SAND;
-    }
+  @Override
+  public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+    Block bottom = worldIn.getBlockState(pos.down())
+                          .getBlock();
+    return bottom == Blocks.SOUL_SAND;
+  }
 }
