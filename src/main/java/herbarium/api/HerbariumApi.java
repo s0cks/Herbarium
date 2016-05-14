@@ -2,8 +2,9 @@ package herbarium.api;
 
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.brew.effects.IEffectTracker;
-import herbarium.api.commentarium.IPageManager;
-import herbarium.api.commentarium.IPageTracker;
+import herbarium.api.commentarium.journal.IJournalFactory;
+import herbarium.api.commentarium.pages.IPageManager;
+import herbarium.api.commentarium.pages.IPageTracker;
 import herbarium.api.genetics.IAlleleManager;
 import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuinManager;
@@ -30,4 +31,5 @@ public final class HerbariumApi {
   public static IGemOreTracker GEM_TRACKER;
   @Deprecated
   public static IHerbariumFontRenderer FONT_RENDERER;
+  public static IJournalFactory JOURNAL_FACTORY;
 }

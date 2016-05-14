@@ -1,7 +1,7 @@
 package herbarium.common.items;
 
 import herbarium.api.HerbariumApi;
-import herbarium.api.commentarium.IPage;
+import herbarium.api.commentarium.pages.IPage;
 import herbarium.common.core.NBTHelper;
 import herbarium.common.core.RuinGenerator;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,8 +1,8 @@
 package herbarium.common.core.commentarium;
 
 import herbarium.api.HerbariumApi;
-import herbarium.api.commentarium.IPage;
-import herbarium.api.commentarium.IPageGroup;
+import herbarium.api.commentarium.pages.IPage;
+import herbarium.api.commentarium.pages.IPageGroup;
 
 import java.util.LinkedList;
 import java.util.List;

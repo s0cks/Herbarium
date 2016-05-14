@@ -1,8 +1,8 @@
 package herbarium.common.core.commentarium;
 
 import herbarium.api.HerbariumApi;
-import herbarium.api.commentarium.IPage;
-import herbarium.api.commentarium.IPageTracker;
+import herbarium.api.commentarium.pages.IPage;
+import herbarium.api.commentarium.pages.IPageTracker;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.net.PacketSyncPageData;
 import net.minecraft.client.Minecraft;

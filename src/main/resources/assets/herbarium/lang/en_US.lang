@@ -4,7 +4,7 @@ item.herba_commentarium.name=Herba Commentarium
 item.herba_page.name=Herba Commentarium Page
 item.herba_pestle.name=Pestle
 
-## Pastes
+# Pastes
 item.herbarium.paste.alstromeria.name=Alstromeria Paste
 item.herbarium.paste.anemone.name=Anemone Paste
 item.herbarium.paste.belladonna.name=Belladonna Paste
@@ -48,6 +48,61 @@ herbarium.page.commentarium=**Lorem ipsum dolor sit amet**, consectetur adipisci
 herbarium.page.fire_flower=Lorem **ipsum **dolor sit amet, consectetur adipiscing elit. Curabitur dui est, tristique vitae sem sed, porta volutpat lectus. Sed at tristique risus, non hendrerit nisi. Praesent auctor, augue sit amet vulputate aliquam, purus augue faucibus arcu, vel gravida tellus tortor a ante. Curabitur lobortis posuere dolor, at mattis nulla semper et. Quisque pharetra, mauris nec imperdiet mollis, dui nunc fringilla justo, sed sodales enim neque a arcu. Praesent urna mauris, volutpat ut sollicitudin eu, convallis eu risus. Integer pulvinar accumsan purus vel bibendum. Nulla ornare pellentesque auctor.
 
 # Effects
+# Spirit
+herbarium.effects.spirit.lucky=Lucky
+herbarium.effects.spirit.terrifying=Terrifying
+herbarium.effects.spirit.air_paddling=Air Paddling
+herbarium.effects.spirit.lava_walking=Lava Walking
+herbarium.effects.spirit.blazing_aura=Blazing Aura
+herbarium.effects.spirit.stealthy=Stealthy
+herbarium.effects.spirit.paralyzed=Paralyzed
+herbarium.effects.spirit.decay=Decay
+herbarium.effects.spirit.gravity=Gravity
+herbarium.effects.spirit.lightning_rod=Lightning Rod
+herbarium.effects.spirit.earthquake=Earthquake
+herbarium.effects.spirit.hotfoot=Hotfoot
+herbarium.effects.spirit.tornado=Tornado
+herbarium.effects.spirit.dwarf_eyes=Dwarf Eyes
+herbarium.effects.spirit.disarm=Disarm
+herbarium.effects.spirit.frozen=Frozen
+herbarium.effects.spirit.metallic=Metallic
+herbarium.effects.spirit.gliding=Gliding
+herbarium.effects.spirit.flipped_vision=Flipped Vision
+herbarium.effects.spirit.vomit=Vomit
 herbarium.effects.spirit.orientation_loss=Orientation Loss
-herbarium.effects.spirit.luck=Lucky
+herbarium.effects.spirit.puzzled=Puzzled
+herbarium.effects.spirit.charismatic=Charismatic
+herbarium.effects.spirit.nausea=Nausea
+
+# Remedy
+herbarium.effects.remedy.green_thumb=Green Thumb
+herbarium.effects.remedy.haste=Haste
+herbarium.effects.remedy.menacing=Menacing
+herbarium.effects.remedy.robust=Robust
 herbarium.effects.remedy.water_walking=Water Walking
+herbarium.effects.remedy.fire_resistance=Fire Resistance
+herbarium.effects.remedy.prowler_vision=Prowler Visions
+herbarium.effects.remedy.swift_hands=Swift Hands
+herbarium.effects.remedy.unseen=Unseen
+herbarium.effects.remedy.lightweight=Lightweight
+herbarium.effects.remedy.iron_skin=Iron Skin
+
+# Venom
+herbarium.effects.venom.levitation=Levitation
+herbarium.effects.venom.ignition=Ignition
+herbarium.effects.venom.blindness=Blindness
+herbarium.effects.venom.chilled=Chilled
+herbarium.effects.venom.poison=Poison
+herbarium.effects.venom.electrolyzed=Electrolyzed
+herbarium.effects.venom.marked=Marked
+herbarium.effects.venom.heavy=Heavy
+herbarium.effects.venom.hurling=Hurling
+herbarium.effects.venom.scared=Scared
+herbarium.effects.venom.death_clock=Death Clock
+
+# Chapters
+herbarium.journal.chapters.intro=Introduction
+herbarium.journal.chapters.intro.table_of_contents=Table of Contents
+herbarium.journal.chapters.flowers=Flowers
+herbarium.journal.chapters.effects=Effects
+herbarium.journal.chapters.index=Index

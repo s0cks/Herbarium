@@ -1,4 +1,4 @@
-package herbarium.api.commentarium;
+package herbarium.api.commentarium.pages;
 
 import net.minecraft.entity.player.EntityPlayer;
 

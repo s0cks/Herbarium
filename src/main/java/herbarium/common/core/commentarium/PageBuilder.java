@@ -1,7 +1,7 @@
 package herbarium.common.core.commentarium;
 
-import herbarium.api.commentarium.IPageGroup;
-import herbarium.api.commentarium.IPageRenderer;
+import herbarium.api.commentarium.pages.IPageGroup;
+import herbarium.api.commentarium.pages.IPageRenderer;
 
 public final class PageBuilder {
   protected IPageGroup group;

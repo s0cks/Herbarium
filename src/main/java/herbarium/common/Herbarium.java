@@ -6,9 +6,9 @@ import herbarium.api.HerbariumApi;
 import herbarium.api.IGemOreTracker;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
-import herbarium.api.commentarium.IPage;
-import herbarium.api.commentarium.IPageGroup;
-import herbarium.api.commentarium.IPageManager;
+import herbarium.api.commentarium.pages.IPage;
+import herbarium.api.commentarium.pages.IPageGroup;
+import herbarium.api.commentarium.pages.IPageManager;
 import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IAlleleManager;
 import herbarium.api.genetics.IChromosomeType;
@@ -41,6 +41,8 @@ import herbarium.common.core.brew.effects.effect.VenomEffects;
 import herbarium.common.core.commentarium.JsonPageDeserializer;
 import herbarium.common.core.commentarium.PageGroups;
 import herbarium.common.core.commentarium.PageTracker;
+import herbarium.common.core.journal.EnumJournalChapters;
+import herbarium.common.core.journal.JournalFactory;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemJournal;
 import herbarium.common.items.ItemPage;
@@ -218,6 +220,7 @@ public final class Herbarium
     HerbariumApi.EFFECT_TRACKER = new EffectTracker();
     HerbariumApi.GEM_TRACKER = this;
     HerbariumApi.FONT_RENDERER = new HerbariumFontRenderer();
+    HerbariumApi.JOURNAL_FACTORY = new JournalFactory();
 
     for (PageGroups group : PageGroups.values()) this.register(group);
     for (VenomEffects effect : VenomEffects.values()) this.register(effect);
@@ -331,6 +334,8 @@ public final class Herbarium
     MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
 
     proxy.init();
+
+    EnumJournalChapters.init();
   }
 
   @Mod.EventHandler
@@ -494,6 +499,11 @@ public final class Herbarium
     }
 
     this.effects.add(effect);
+  }
+
+  @Override
+  public List<IEffect> allEffects() {
+    return Collections.unmodifiableList(this.effects);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package herbarium.common.net;
 
 import herbarium.api.HerbariumApi;
-import herbarium.api.commentarium.IPage;
+import herbarium.api.commentarium.pages.IPage;
 import herbarium.common.Herbarium;
 import herbarium.common.core.commentarium.PageTracker;
 import io.netty.buffer.ByteBuf;

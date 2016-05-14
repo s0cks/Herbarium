@@ -1,4 +1,4 @@
-package herbarium.api.commentarium;
+package herbarium.api.commentarium.pages;
 
 public interface IPage {
   public String title();

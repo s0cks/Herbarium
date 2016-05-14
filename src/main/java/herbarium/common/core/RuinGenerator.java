@@ -1,7 +1,7 @@
 package herbarium.common.core;
 
 import herbarium.api.HerbariumApi;
-import herbarium.api.commentarium.IPage;
+import herbarium.api.commentarium.pages.IPage;
 import herbarium.api.ruins.IRuin;
 import herbarium.common.Herbarium;
 import herbarium.common.HerbariumConfig;

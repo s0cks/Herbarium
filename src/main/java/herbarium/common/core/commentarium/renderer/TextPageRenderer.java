@@ -1,6 +1,6 @@
 package herbarium.common.core.commentarium.renderer;
 
-import herbarium.api.commentarium.IPageRenderer;
+import herbarium.api.commentarium.pages.IPageRenderer;
 import herbarium.common.Herbarium;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

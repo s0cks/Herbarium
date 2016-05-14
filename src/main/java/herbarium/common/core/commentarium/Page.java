@@ -1,8 +1,8 @@
 package herbarium.common.core.commentarium;
 
-import herbarium.api.commentarium.IPage;
-import herbarium.api.commentarium.IPageGroup;
-import herbarium.api.commentarium.IPageRenderer;
+import herbarium.api.commentarium.pages.IPage;
+import herbarium.api.commentarium.pages.IPageGroup;
+import herbarium.api.commentarium.pages.IPageRenderer;
 import net.minecraft.util.text.translation.I18n;
 
 public final class Page

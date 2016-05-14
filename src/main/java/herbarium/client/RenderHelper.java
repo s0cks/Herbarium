@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.Rectangle;
+
 public final class RenderHelper {
   public static final float TAU = (float) (Math.PI * 2.0F);
 
@@ -29,6 +31,10 @@ public final class RenderHelper {
 
   public static void color(int color) {
     color(color, 255);
+  }
+
+  public static void renderColoredQuad(Rectangle rect, int color){
+    renderColoredQuad(rect.x, rect.y, rect.width, rect.height, color);
   }
 
   public static void renderColoredQuad(int x, int y, int width, int height, int color) {
