@@ -15,8 +15,9 @@ import java.io.IOException;
 public final class GuiJournal
     extends GuiScreen {
   private static final ResourceLocation texture = new ResourceLocation("herbarium", "textures/gui/journal_gui.png");
-  private static final int XSIZE = 190;
-  private static final int YSIZE = 93;
+  private static final int xSize = 140;
+  private static final int ySize = 95;
+  private static final float scaleFactor = 2.5F;
 
   private final IJournal journal;
 
@@ -28,14 +29,11 @@ public final class GuiJournal
   public void drawScreen(int mouseX, int mouseY, float partialTicks) {
     GlStateManager.pushMatrix();
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-    int guiLeft = this.width / 2 - XSIZE / 2;
-    int guiTop = this.height / 2 - YSIZE / 2;
-
+    GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
+    int guiLeft = (int) ((this.width - (xSize * scaleFactor)) / (2 * scaleFactor));
+    int guiTop = (int) ((this.height - (ySize * scaleFactor)) / (2 * scaleFactor));
     this.mc.renderEngine.bindTexture(texture);
-    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0,
-                               XSIZE,
-                               YSIZE);
-
+    this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
     GlStateManager.popMatrix();
   }
 
@@ -52,6 +50,6 @@ public final class GuiJournal
 
   @Override
   public boolean doesGuiPauseGame() {
-    return true;
+    return false;
   }
 }
