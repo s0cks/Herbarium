@@ -1,4 +1,4 @@
-package herbarium.common.core.journal.pages;
+package herbarium.common.core.journal;
 
 import herbarium.api.commentarium.journal.IJournalPage;
 import herbarium.api.commentarium.journal.IJournalPageRenderer;

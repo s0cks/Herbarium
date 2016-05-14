@@ -6,7 +6,6 @@ import herbarium.api.collections.EffectComparators;
 import herbarium.api.collections.JournalPageComparator;
 import herbarium.api.collections.SortedArraySet;
 import herbarium.api.commentarium.journal.IJournalPage;
-import herbarium.common.core.journal.pages.DelegatedJournalPage;
 import herbarium.common.core.journal.renderer.ChapterHeaderRenderer;
 import herbarium.common.core.journal.renderer.EffectPageRenderer;
 

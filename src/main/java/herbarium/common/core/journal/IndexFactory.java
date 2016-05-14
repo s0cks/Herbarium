@@ -3,7 +3,6 @@ package herbarium.common.core.journal;
 import herbarium.api.collections.JournalChapterComparator;
 import herbarium.api.commentarium.journal.IJournalChapter;
 import herbarium.api.commentarium.journal.IJournalPage;
-import herbarium.common.core.journal.pages.DelegatedJournalPage;
 import herbarium.common.core.journal.renderer.ContentsPageRenderer;
 
 import java.util.LinkedList;
