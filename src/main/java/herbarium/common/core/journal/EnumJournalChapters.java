@@ -4,9 +4,9 @@ import herbarium.api.collections.JournalPageComparator;
 import herbarium.api.collections.SortedArraySet;
 import herbarium.api.commentarium.journal.IJournalChapter;
 import herbarium.api.commentarium.journal.IJournalPage;
+import herbarium.common.core.journal.renderer.ChapterHeaderRenderer;
 import herbarium.common.core.journal.renderer.TitlePageRenderer;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public enum EnumJournalChapters
@@ -15,14 +15,16 @@ implements IJournalChapter{
     @Override
     protected List<IJournalPage> initialize() {
       SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
-      pages.add(new DelegatedJournalPage("herbarium.journal.intro.title", 0, new TitlePageRenderer()));
+      pages.add(new DelegatedJournalPage(uuid(), 1, new TitlePageRenderer()));
       return pages;
     }
   },
   FLOWERS {
     @Override
     protected List<IJournalPage> initialize() {
-      return new LinkedList<>();
+      SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
+      pages.add(new DelegatedJournalPage(uuid(), 1, new ChapterHeaderRenderer(uuid(), ordinal())));
+      return pages;
     }
   },
   EFFECTS {
@@ -34,7 +36,7 @@ implements IJournalChapter{
   INDEX() {
     @Override
     protected List<IJournalPage> initialize() {
-      return IndexFactory.createChapter();
+      return IndexChapterFactory.createChapter();
     }
   };
 

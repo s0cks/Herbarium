@@ -1,8 +1,8 @@
 package herbarium.common.core.journal.renderer;
 
+import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.journal.IJournalPageRenderer;
 import herbarium.client.RomanNumerals;
-import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
 
@@ -17,9 +17,8 @@ implements IJournalPageRenderer {
   @Override
   public void render(int x, int y, float partial, boolean left) {
     GlStateManager.pushMatrix();
-    Herbarium.proxy.getClient()
-        .fontRendererObj
-        .drawString(this.header, x + 50, y + 75, 0x000000);
+    HerbariumApi.FONT_RENDERER
+        .drawString(this.header, x + 40, y + 75, 0x000000);
     GlStateManager.popMatrix();
   }
 }

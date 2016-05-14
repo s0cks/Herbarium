@@ -29,7 +29,6 @@ public final class HerbariumApi {
   public static ISpecies SPECIES_FLOWER;
   // Misc
   public static IGemOreTracker GEM_TRACKER;
-  @Deprecated
   public static IHerbariumFontRenderer FONT_RENDERER;
   public static IJournalFactory JOURNAL_FACTORY;
 }

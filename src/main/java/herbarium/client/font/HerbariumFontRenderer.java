@@ -30,6 +30,11 @@ public final class HerbariumFontRenderer
     GlStateManager.popMatrix();
   }
 
+  @Override
+  public float stringWidth(String str) {
+    return str.length() * 8;
+  }
+
   private float renderChar(char ch) {
     Herbarium.proxy.getClient().renderEngine.bindTexture(font);
 

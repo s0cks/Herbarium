@@ -23,7 +23,7 @@ public final class EffectChapterFactory {
     Queue<IEffect> effects = new LinkedList<>(HerbariumApi.EFFECT_MANAGER.allEffects());
     Collections.sort(((LinkedList<IEffect>) effects), EffectComparators.UUID);
 
-    int pageOrdinal = 0;
+    int pageOrdinal = 1;
     clearIt:
     while (!effects.isEmpty()) {
       IEffect[] e = new IEffect[7];
@@ -32,8 +32,8 @@ public final class EffectChapterFactory {
         if (effects.isEmpty()) break clearIt;
       }
 
-      pages.add(new DelegatedJournalPage("herbarium.journal.pages.effects_" + pageOrdinal, pageOrdinal, new
-                                                                                                            EffectPageRenderer(e)));
+      pages.add(new DelegatedJournalPage("herbarium.journal.chapters.effects." + pageOrdinal, pageOrdinal++, new
+                                                                                               EffectPageRenderer(e)));
     }
 
     return pages;

@@ -1,9 +1,9 @@
 package herbarium.common.core.journal.renderer;
 
+import herbarium.api.HerbariumApi;
+import herbarium.api.IHerbariumFontRenderer;
 import herbarium.api.commentarium.journal.IJournalPageRenderer;
 import herbarium.client.RomanNumerals;
-import herbarium.common.Herbarium;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
 
@@ -18,18 +18,31 @@ public final class ContentsPageRenderer
     public final int ordinal;
 
     public ContentsData(String entry, boolean isChapter, int ordinal) {
-      this.entry = this.buildEntry(entry, ordinal);
+      this.entry = this.buildEntry(entry, ordinal, isChapter);
       this.isChapter = isChapter;
       this.ordinal = ordinal;
     }
 
-    private String buildEntry(String entry, int ordinal) {
+    private String buildEntry(String entry, int ordinal, boolean isChapter) {
+      int part;
+      try{
+        String last = entry.substring(entry.lastIndexOf('.') + 1);
+        part = Integer.valueOf(last);
+        entry = entry.substring(0, entry.lastIndexOf('.'));
+      } catch(NumberFormatException e){
+        part = -1;
+      }
+
       String localizedName = I18n.translateToLocal(entry);
+      if(part != -1){
+        localizedName += " " + RomanNumerals.get(part);
+      }
+
       String numeral = RomanNumerals.get(ordinal);
 
       String e = localizedName;
-      FontRenderer fr = Herbarium.proxy.getClient().fontRendererObj;
-      while((fr.getStringWidth(e) + fr.getStringWidth(numeral)) < 115){
+      IHerbariumFontRenderer fr = HerbariumApi.FONT_RENDERER;
+      while((fr.stringWidth(e) + fr.stringWidth(numeral)) < (isChapter ? 116 : 115)){
         e += '.';
       }
 
@@ -49,10 +62,8 @@ public final class ContentsPageRenderer
 
     int dY = 0;
     for (ContentsData data : this.data) {
-      Herbarium.proxy.getClient()
-          .fontRendererObj
-          .drawString(data.entry, x + (!data.isChapter ? 10 : 0), y + (dY +=
-                                                                           12), 0x000000);
+      HerbariumApi.FONT_RENDERER
+          .drawString(data.entry, x + (!data.isChapter ? 10 : 0), y + (dY += 12), 0x000000);
     }
 
     GlStateManager.popMatrix();
