@@ -1,5 +1,7 @@
 package herbarium.common.core.brew.effects.effect;
 
+import herbarium.api.HerbariumApi;
+import herbarium.api.botany.IAlleleFlowerEffect;
 import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.common.Herbarium;
@@ -17,8 +19,9 @@ import net.minecraft.world.World;
 import java.util.concurrent.TimeUnit;
 
 public enum RemedyEffects
-    implements IEffect {
-  GREEN_THUMB(TimeUnit.SECONDS.toMillis(10)) {
+    implements IEffect,
+               IAlleleFlowerEffect{
+  GREEN_THUMB(TimeUnit.SECONDS.toMillis(10), false) {
     @Override
     public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState state) {
       player.addChatComponentMessage(new TextComponentString("Checking for crops"));
@@ -32,14 +35,14 @@ public enum RemedyEffects
       }
     }
   }, //Fertilizing action is 2x strong
-  HASTE(TimeUnit.MINUTES.toMillis(10)) { //More block breaking,
+  HASTE(TimeUnit.MINUTES.toMillis(10), false) { //More block breaking,
 
     @Override
     public float breakSpeed(EntityPlayer player, float originalSpeed) {
       return originalSpeed * 2.0F;
     }
   },
-  MENACING(TimeUnit.MINUTES.toMillis(3)) {
+  MENACING(TimeUnit.MINUTES.toMillis(3), false) {
     @Override
     public void onTargeted(EntityPlayer player, EntityLivingBase targeter) {
       if ((targeter instanceof EntityMob) && Herbarium.random.nextBoolean()) {
@@ -47,8 +50,8 @@ public enum RemedyEffects
       }
     }
   }, //Mobs ignore you
-  ROBUST(TimeUnit.MINUTES.toMillis(3)), //Inflict bleeding (DoT), more knockback, more crits
-  WATER_WALKING(TimeUnit.MINUTES.toMillis(3)) {
+  ROBUST(TimeUnit.MINUTES.toMillis(3), false), //Inflict bleeding (DoT), more knockback, more crits
+  WATER_WALKING(TimeUnit.MINUTES.toMillis(3), false) {
     @Override
     public void onTick(EntityPlayer player) {
       BlockPos below = player.getPosition()
@@ -69,27 +72,45 @@ public enum RemedyEffects
       }
     }
   }, //Walking on water
-  FIRE_RESISTANCE(TimeUnit.MINUTES.toMillis(3)), //Fire Resistance, more vulnerable to coldness
-  PROWLER_VISION(TimeUnit.MINUTES.toMillis(10)), //See nearby mobs with an outline, mobs notice you more early
-  SWIFT_HANDS(TimeUnit.MINUTES.toMillis(10)), //Less cooldown on attacks, less defense
-  UNSEEN(TimeUnit.MINUTES.toMillis(10)), //Invincibility (better than vanilla), no walking sound, highly more vulnerable
-  LIGHTWEIGHT(TimeUnit.MINUTES.toMillis(3)), //More resistant to falls, fast speed, more vulnerable to explosions/knockback, doesnt trigger tripwire/plates
-  IRON_SKIN(TimeUnit.MINUTES.toMillis(3)); //You get damaged less but you move a tad slower
+  FIRE_RESISTANCE(TimeUnit.MINUTES.toMillis(3), false), //Fire Resistance, more vulnerable to coldness
+  PROWLER_VISION(TimeUnit.MINUTES.toMillis(10), false), //See nearby mobs with an outline, mobs notice you more early
+  SWIFT_HANDS(TimeUnit.MINUTES.toMillis(10), false), //Less cooldown on attacks, less defense
+  UNSEEN(TimeUnit.MINUTES.toMillis(10), false), //Invincibility (better than vanilla), no walking sound, highly more
+  // vulnerable
+  LIGHTWEIGHT(TimeUnit.MINUTES.toMillis(3), false), //More resistant to falls, fast speed, more vulnerable to
+  // explosions/knockback, doesnt trigger tripwire/plates
+  IRON_SKIN(TimeUnit.MINUTES.toMillis(3), false); //You get damaged less but you move a tad slower
 
   private final ResourceLocation icon;
   private final long duration;
+  private final boolean dominant;
 
-  RemedyEffects(long duration) {
+  RemedyEffects(long duration, boolean dominant) {
     this.duration = duration;
+    this.dominant = dominant;
     this.icon = new ResourceLocation("herbarium", "textures/effects/" + this.name()
                                                                             .toLowerCase() + ".png");
   }
 
+  @Override
+  public boolean dominant() {
+    return this.dominant;
+  }
+
+  @Override
+  public String unlocalizedName() {
+    return this.uuid() + ".name";
+  }
 
   @Override
   public String uuid() {
     return "herbarium.effects.remedy." + this.name()
                                              .toLowerCase();
+  }
+
+  @Override
+  public IEffect effect() {
+    return HerbariumApi.EFFECT_MANAGER.getEffect(this.uuid());
   }
 
   @Override
