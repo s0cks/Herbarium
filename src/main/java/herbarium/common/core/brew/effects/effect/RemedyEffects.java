@@ -1,6 +1,5 @@
 package herbarium.common.core.brew.effects.effect;
 
-import herbarium.api.HerbariumApi;
 import herbarium.api.botany.IAlleleFlowerEffect;
 import herbarium.api.brew.EnumBrewType;
 import herbarium.api.brew.effects.IEffect;
@@ -110,7 +109,7 @@ public enum RemedyEffects
 
   @Override
   public IEffect effect() {
-    return HerbariumApi.EFFECT_MANAGER.getEffect(this.uuid());
+    return this;
   }
 
   @Override
