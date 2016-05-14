@@ -119,7 +119,7 @@ implements IEffect {
 
     @Override
     public String uuid() {
-        return "herbarium.effects.brew." + this.name().toLowerCase();
+        return "herbarium.effects.spirit." + this.name().toLowerCase();
     }
 
     @Override

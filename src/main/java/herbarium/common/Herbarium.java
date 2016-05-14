@@ -15,6 +15,7 @@ import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
 import herbarium.api.ruins.IRuin;
 import herbarium.api.ruins.IRuinManager;
+import herbarium.client.font.HerbariumFontRenderer;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockBarrel;
 import herbarium.common.blocks.BlockCaveFlower;
@@ -216,6 +217,7 @@ public final class Herbarium
         HerbariumApi.EFFECT_MANAGER = this;
         HerbariumApi.EFFECT_TRACKER = new EffectTracker();
         HerbariumApi.GEM_TRACKER = this;
+        HerbariumApi.FONT_RENDERER = new HerbariumFontRenderer();
 
         for (PageGroups group : PageGroups.values()) this.register(group);
         for (VenomEffects effect : VenomEffects.values()) this.register(effect);

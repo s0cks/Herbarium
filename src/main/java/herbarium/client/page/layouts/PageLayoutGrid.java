@@ -1,10 +1,10 @@
 package herbarium.client.page.layouts;
 
-import herbarium.client.page.IPageComponentLayout;
+import herbarium.client.page.IPageLayout;
 import herbarium.client.page.PageComponentContainer;
 
 public final class PageLayoutGrid
-        implements IPageComponentLayout {
+        implements IPageLayout {
     private int numRows;
     private int numCols;
 

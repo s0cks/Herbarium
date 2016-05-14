@@ -9,6 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import org.lwjgl.opengl.GL11;
 
 public final class RenderHelper{
+    public static final float TAU = (float) (Math.PI * 2.0F);
+
     private RenderHelper(){}
 
     public static void translateToEntityCoords(Entity e, float partial){
@@ -50,6 +52,45 @@ public final class RenderHelper{
         vb.pos(x + width, y, 1.0)
                 .color(r, g, b, 255)
                 .endVertex();
+        tess.draw();
+    }
+
+    public static void renderCircle(float x, float y, float radius){
+        GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+        GL11.glVertex2f(x, y);
+        for(float i = 0.0F; i <= 20.0F; i++){
+            GL11.glVertex2f(
+                    (float) (x + (radius * Math.cos(i * TAU / 20.0F))),
+                    (float) (y + (radius * Math.sin(i * TAU / 20.0F)))
+            );
+        }
+        GL11.glEnd();
+    }
+
+    public static void renderArc(float cx, float cy, float r, float start, float end){
+        float angle = (float) (start * Math.PI / 180.0F);
+        float dAngle = (float) (end * Math.PI / (180 * 30));
+
+        float lastX = (float) (cx + r * Math.cos(angle));
+        float lastY = (float) (cy + r * Math.sin(angle));
+
+        Tessellator tess = Tessellator.getInstance();
+        VertexBuffer vb = tess.getBuffer();
+        vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+        for(int i = 0; i <= 30; i++, angle += dAngle){
+            float currentX = (float) (cx + r * Math.cos(angle));
+            float currentY = (float) (cy + r * Math.sin(angle));
+
+            vb.pos(lastX, lastY, 200.0F)
+                    .color(0.0F, 0.0F, 0.0F, 0.0F)
+                    .endVertex();
+            vb.pos(currentX, currentY, 200.0F)
+                    .color(0.0F, 0.0F, 0.0F, 0.0F)
+                    .endVertex();
+
+            lastX = currentX;
+            lastY = currentY;
+        }
         tess.draw();
     }
 

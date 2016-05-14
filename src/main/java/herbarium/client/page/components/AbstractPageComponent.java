@@ -1,16 +1,45 @@
 package herbarium.client.page.components;
 
 import herbarium.client.page.IPageComponent;
+import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.Dimension;
 import java.awt.Rectangle;
 
 public abstract class AbstractPageComponent
-        implements IPageComponent {
+implements IPageComponent {
+    protected final Rectangle bounds = new Rectangle();
+    protected final Dimension preferredSize = new Dimension();
+
+    protected void setPreferredSize(int width, int height){
+        this.preferredSize.setSize(width, height);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return this.preferredSize;
+    }
+
+    @Override
+    public final Rectangle getGeometry() {
+        return this.bounds;
+    }
+
+    @Override
+    public void setGeometry(int x, int y, int width, int height) {
+        this.bounds.setBounds(x, y, width, height);
+    }
+
+    protected void drawString(String text, int x, int y, int color){
+        Herbarium.proxy.getClient().fontRendererObj
+                .drawString(text, x, y, color);
+    }
+
     protected void drawColoredQuad(int x, int y, int width, int height, int color){
         int red = (color >> 24 & 0xFF);
         int green = (color >> 16 & 0xFF);

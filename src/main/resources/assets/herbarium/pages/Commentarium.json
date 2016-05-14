@@ -1,35 +1,13 @@
 {
   "title": "Commentarium",
   "group": "Effects",
-  "layout": {
-    "name": "grid",
-    "rows": 3,
-    "columns": 2
-  },
+  "layout": "border",
   "components": [
     {
-      "type": "image",
-      "ref": "journal.png"
-    },
-    {
-      "type": "image",
-      "ref": "journal.png"
-    },
-    {
-      "type": "image",
-      "ref": "journal.png"
-    },
-    {
-      "type": "image",
-      "ref": "journal.png"
-    },
-    {
-      "type": "image",
-      "ref": "journal.png"
-    },
-    {
-      "type": "image",
-      "ref": "journal.png"
+      "type": "effect",
+      "effect": "herbarium.effects.remedy.water_walking",
+      "text": "This is a bit of a strange one. I took an elixir with this effect for the first time, and nothing really happened. Before it wore off though, it started raining, and with the last bit of the effect, I saw that the water refused to stick to my skin and my cloths. The next day, I brewed some more and jumped into a nearby lake after drinking it. That is, I tried to jump into a lake. My butt hurt for a few days after that, but I found that I could walk on water.",
+      "position": "center"
     }
   ]
 }

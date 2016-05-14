@@ -28,10 +28,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public final class EffectTracker
 implements IEffectTracker{
@@ -39,7 +41,7 @@ implements IEffectTracker{
     implements INBTSavable{
         private static final String CURRENT_TAG = "Current";
 
-        private final Map<IEffect, Long> current = new HashMap<>();
+        private final Map<IEffect, Long> current = new ConcurrentHashMap<>();
 
         @Override
         public void readFromNBT(NBTTagCompound comp) {
@@ -67,7 +69,8 @@ implements IEffectTracker{
         }
     }
 
-    private final Map<EntityPlayer, PlayerEffectData> data = new HashMap<>();
+    private final Lock lock = new ReentrantLock();
+    private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
 
     public void setData(EntityPlayer player, PlayerEffectData data){
         this.data.put(player, data);
@@ -84,32 +87,47 @@ implements IEffectTracker{
 
     @Override
     public boolean effectActive(EntityPlayer player, IEffect effect) {
-        if(effect == null) return false;
-        if(!this.data.containsKey(player)) return false;
-        for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
-            if(entry.getKey() == null) continue;
-            if(entry.getKey().uuid().equals(effect.uuid())){
-                return true;
+        try{
+            lock.lock();
+            if(effect == null) return false;
+            if(!this.data.containsKey(player)) return false;
+            for(Map.Entry<IEffect, Long> entry : this.data.get(player).current.entrySet()){
+                if(entry.getKey() == null) continue;
+                if(entry.getKey().uuid().equals(effect.uuid())){
+                    return true;
+                }
             }
-        }
 
-        return false;
+            return false;
+        } finally{
+            lock.unlock();
+        }
     }
 
     @Override
     public List<IEffect> getEffects(EntityPlayer player) {
-        if(!this.data.containsKey(player)) return null;
-        return new LinkedList<>(this.data.get(player).current.keySet());
+        try{
+            this.lock.lock();
+            if(!this.data.containsKey(player)) return null;
+            return new LinkedList<>(this.data.get(player).current.keySet());
+        } finally{
+            this.lock.unlock();
+        }
     }
 
     @Override
     public void setEffects(EntityPlayer player, List<IEffect> effects) {
-        if(!this.data.containsKey(player)) this.data.put(player, new PlayerEffectData());
-        PlayerEffectData ped = this.data.get(player);
-        ped.current.clear();
-        for(IEffect effect : effects){
-            effect.onDrink(player);
-            ped.current.put(effect, Minecraft.getSystemTime());
+        try{
+            this.lock.lock();
+            if(!this.data.containsKey(player)) this.data.put(player, new PlayerEffectData());
+            PlayerEffectData ped = this.data.get(player);
+            ped.current.clear();
+            for(IEffect effect : effects){
+                effect.onDrink(player);
+                ped.current.put(effect, Minecraft.getSystemTime());
+            }
+        } finally{
+            this.lock.unlock();
         }
     }
 
@@ -120,8 +138,13 @@ implements IEffectTracker{
 
     @Override
     public void clearEffects(EntityPlayer player) {
-        if(!this.data.containsKey(player)) return;
-        this.data.get(player).current.clear();
+        try{
+            this.lock.lock();
+            if(!this.data.containsKey(player)) return;
+            this.data.get(player).current.clear();
+        } finally{
+            this.lock.unlock();
+        }
     }
 
     @SubscribeEvent

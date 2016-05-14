@@ -11,14 +11,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import javax.imageio.ImageIO;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public final class PageComponentImage
-        extends AbstractPageComponent {
+extends AbstractPageComponent {
     private final String url;
-    private final Rectangle bounds;
     private final BufferedImage image;
     private boolean init;
     private ResourceLocation texture;
@@ -27,7 +25,7 @@ public final class PageComponentImage
         this.url = url;
         try(InputStream is = Herbarium.proxy.getClient().getResourceManager().getResource(new ResourceLocation("herbarium", "textures/images/" + url)).getInputStream()){
             this.image = ImageIO.read(is);
-            this.bounds = new Rectangle(0, 0, this.image.getWidth(), this.image.getHeight());
+            this.setPreferredSize(this.image.getWidth(), this.image.getHeight());
         } catch(Exception e){
             throw new RuntimeException(e);
         }
@@ -39,17 +37,6 @@ public final class PageComponentImage
         this.texture = mc.getTextureManager().getDynamicTextureLocation(this.url.substring(this.url.lastIndexOf("/") + 1, this.url.lastIndexOf(".")), new DynamicTexture(image));
         this.init = true;
     }
-
-    @Override
-    public Rectangle getGeometry() {
-        return this.bounds;
-    }
-
-    @Override
-    public void setGeometry(int x, int y, int width, int height) {
-        this.bounds.setBounds(x, y, width, height);
-    }
-
     @Override
     public void render(int x, int y, float partial) {
         this.init();

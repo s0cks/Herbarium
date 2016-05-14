@@ -31,6 +31,7 @@ public final class HerbariumApi{
 
     // Misc
     public static IGemOreTracker GEM_TRACKER;
+    @Deprecated  public static IHerbariumFontRenderer FONT_RENDERER;
 
     public static final Item.ToolMaterial PESTLE_MATERIAL =
             EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
