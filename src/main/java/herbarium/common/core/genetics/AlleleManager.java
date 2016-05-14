@@ -19,7 +19,6 @@ implements IAlleleManager{
 
   @Override
   public void registerAllele(IAllele allele, IChromosomeType type) {
-    System.out.println("Registering Allele " + allele.uuid());
     alleleMap.put(allele.uuid(), allele);
   }
 
@@ -30,7 +29,6 @@ implements IAlleleManager{
 
   @Override
   public IAllele getAllele(String uuid) {
-    System.out.println("Getting Allele " + uuid);
     return this.alleleMap.get(uuid);
   }
 }

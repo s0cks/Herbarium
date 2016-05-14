@@ -2,6 +2,7 @@ package herbarium.client.gui;
 
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.journal.IJournal;
+import herbarium.api.commentarium.journal.IJournalPage;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +15,10 @@ import java.io.IOException;
 @SideOnly(Side.CLIENT)
 public final class GuiJournal
     extends GuiScreen {
+  public static final int xSize = 140;
+  public static final int ySize = 95;
+
   private static final ResourceLocation texture = new ResourceLocation("herbarium", "textures/gui/journal_gui.png");
-  private static final int xSize = 140;
-  private static final int ySize = 95;
   private static final float scaleFactor = 2.5F;
 
   private final IJournal journal;
@@ -34,6 +36,24 @@ public final class GuiJournal
     int guiTop = (int) ((this.height - (ySize * scaleFactor)) / (2 * scaleFactor));
     this.mc.renderEngine.bindTexture(texture);
     this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+    GlStateManager.popMatrix();
+
+    GlStateManager.pushMatrix();
+    GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
+    IJournalPage page;
+    if((page = this.journal.left()) != null){
+      GlStateManager.pushMatrix();
+      GlStateManager.translate(guiLeft, guiTop, 0.0F);
+      page.delegate().render(scaleFactor, 0, 0, partialTicks, true);
+      GlStateManager.popMatrix();
+    }
+
+    if((page = this.journal.right()) != null){
+      GlStateManager.pushMatrix();
+      GlStateManager.translate(guiLeft + (xSize / 2), guiTop, 0.0F);
+      page.delegate().render(scaleFactor, 0, 0, partialTicks, false);
+      GlStateManager.popMatrix();
+    }
     GlStateManager.popMatrix();
   }
 

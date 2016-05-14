@@ -4,6 +4,7 @@ import herbarium.api.HerbariumApi;
 import herbarium.api.IHerbariumFontRenderer;
 import herbarium.api.commentarium.journal.IJournalPageRenderer;
 import herbarium.client.RomanNumerals;
+import herbarium.client.gui.GuiJournal;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.text.translation.I18n;
 
@@ -42,7 +43,7 @@ public final class ContentsPageRenderer
 
       String e = localizedName;
       IHerbariumFontRenderer fr = HerbariumApi.FONT_RENDERER;
-      while((fr.stringWidth(e) + fr.stringWidth(numeral)) < (isChapter ? 116 : 115)){
+      while((fr.stringWidth(e) + fr.stringWidth(numeral)) < (isChapter ? 132 : 115)){
         e += '.';
       }
 
@@ -57,13 +58,21 @@ public final class ContentsPageRenderer
   }
 
   @Override
-  public void render(int x, int y, float partial, boolean left) {
+  public void render(float scaleFactor, int x, int y, float partial, boolean left) {
     GlStateManager.pushMatrix();
+    scaleFactor *= 0.15F;
+    GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
 
     int dY = 0;
     for (ContentsData data : this.data) {
+      float width = HerbariumApi.FONT_RENDERER
+          .stringWidth(data.entry);
+      float xSize = GuiJournal.xSize / 2;
+      int i = ((int) ((xSize - (width * scaleFactor)) / (2 * scaleFactor)));
+      int j = ((int) ((48 * scaleFactor) / (2 * scaleFactor)));
+
       HerbariumApi.FONT_RENDERER
-          .drawString(data.entry, x + (!data.isChapter ? 10 : 0), y + (dY += 12), 0x000000);
+          .drawString(data.entry, x + i + (!data.isChapter ? 10 : 0) + (left ? 10 : -10), y + j + (dY += 12), 0x000000);
     }
 
     GlStateManager.popMatrix();
