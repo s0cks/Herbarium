@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import java.util.concurrent.TimeUnit;
 
 public enum SpiritEffects
-    implements IEffect {
+implements IEffect {
   ////T1
 
   ///Combined Remedy Effects

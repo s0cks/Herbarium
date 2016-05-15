@@ -3,7 +3,7 @@ package herbarium.api.genetics;
 import herbarium.api.genetics.alleles.IAlleleSpecies;
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IGenome{
+public interface IGenome {
   public IAlleleSpecies primary();
 
   public IAlleleSpecies secondary();

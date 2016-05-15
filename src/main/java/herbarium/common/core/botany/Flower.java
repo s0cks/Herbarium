@@ -6,8 +6,8 @@ import herbarium.common.core.genetics.Individual;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Flower
-    extends Individual
-    implements IFlower {
+extends Individual
+implements IFlower {
   private final IFlowerGenome genome;
 
   public Flower(NBTTagCompound comp) {
@@ -18,7 +18,7 @@ public class Flower
     }
   }
 
-  public Flower(IFlowerGenome genome){
+  public Flower(IFlowerGenome genome) {
     this.genome = genome;
   }
 

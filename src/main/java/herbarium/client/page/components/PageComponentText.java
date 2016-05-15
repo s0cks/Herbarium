@@ -3,7 +3,7 @@ package herbarium.client.page.components;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class PageComponentText
-    extends AbstractPageComponent {
+extends AbstractPageComponent {
   private final String[] lines;
 
   public PageComponentText(String text) {

@@ -22,7 +22,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.List;
 
 public final class RenderEffectTray
-    implements TweenAccessor<RenderEffectTray> {
+implements TweenAccessor<RenderEffectTray> {
   private static final byte ANGLE = 0x0;
   private static final byte OPACITY = 0x1;
 

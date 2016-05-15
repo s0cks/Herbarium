@@ -4,7 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public final class CreativeTabHerbarium
-    extends CreativeTabs {
+extends CreativeTabs {
   public CreativeTabHerbarium() {
     super("herbarium");
   }

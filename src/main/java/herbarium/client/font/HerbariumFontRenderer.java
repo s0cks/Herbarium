@@ -5,9 +5,8 @@ import herbarium.common.Herbarium;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-@Deprecated
 public final class HerbariumFontRenderer
-    implements IHerbariumFontRenderer {
+implements IHerbariumFontRenderer {
   private static final ResourceLocation font = new ResourceLocation("herbarium", "textures/gui/font.png");
 
   private int posX;
@@ -15,9 +14,9 @@ public final class HerbariumFontRenderer
 
   @Override
   public void drawString(String str, int x, int y, int color) {
-    float red = (float)(color >> 16 & 255) / 255.0F;
-    float blue = (float)(color >> 8 & 255) / 255.0F;
-    float green = (float)(color & 255) / 255.0F;
+    float red = (float) (color >> 16 & 255) / 255.0F;
+    float blue = (float) (color >> 8 & 255) / 255.0F;
+    float green = (float) (color & 255) / 255.0F;
     this.posX = x;
     this.posY = y;
     GlStateManager.pushMatrix();
@@ -26,7 +25,6 @@ public final class HerbariumFontRenderer
     for (int i = 0; i < str.length(); i++) {
       this.posX += this.renderChar(str.charAt(i));
     }
-    GlStateManager.disableAlpha();
     GlStateManager.popMatrix();
   }
 

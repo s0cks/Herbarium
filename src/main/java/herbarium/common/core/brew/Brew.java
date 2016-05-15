@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class Brew
-    implements IBrew {
+implements IBrew {
   private static final String EFFECTS_TAG = "Effects";
 
   public final List<IEffect> effects = new LinkedList<>();

@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import java.util.Random;
 
 public final class Chromosome
-    implements IChromosome {
+implements IChromosome {
   private static final String PRIMARY_TAG = "Primary";
   private static final String SECONDARY_TAG = "Secondary";
 
@@ -21,8 +21,8 @@ public final class Chromosome
 
   public Chromosome(NBTTagCompound comp) {
     this(
-        HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(PRIMARY_TAG)),
-        HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(SECONDARY_TAG))
+    HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(PRIMARY_TAG)),
+    HerbariumApi.ALLELE_MANAGER.getAllele(comp.getString(SECONDARY_TAG))
     );
   }
 
@@ -32,11 +32,17 @@ public final class Chromosome
   }
 
   public static IChromosome inherit(Random rand, IChromosome parent0, IChromosome parent1) {
-    IAllele choice0 = (rand.nextBoolean() ? parent0.primary() : parent0.secondary());
-    IAllele choice1 = (rand.nextBoolean() ? parent1.primary() : parent1.secondary());
-    return rand.nextBoolean() ?
-               new Chromosome(choice0, choice1) :
-               new Chromosome(choice1, choice0);
+    IAllele choice0 = (rand.nextBoolean()
+                       ? parent0.primary()
+                       : parent0.secondary());
+    IAllele choice1 = (rand.nextBoolean()
+                       ? parent1.primary()
+                       : parent1.secondary());
+    return rand.nextBoolean()
+           ?
+           new Chromosome(choice0, choice1)
+           :
+           new Chromosome(choice1, choice0);
   }
 
   @Override

@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class ItemPage
-    extends Item {
+extends Item {
   private static final String PAGE_TAG = "Page";
 
   public static void setPage(ItemStack stack, IPage page) {

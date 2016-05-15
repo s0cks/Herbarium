@@ -4,6 +4,6 @@ import herbarium.api.brew.effects.IEffect;
 import herbarium.api.genetics.IAllele;
 
 public interface IAlleleFlowerEffect
-    extends IAllele{
+extends IAllele {
   public IEffect effect();
 }

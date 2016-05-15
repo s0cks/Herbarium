@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Ruin
-    implements IRuin,
-               IRuinContext {
+implements IRuin,
+           IRuinContext {
   private final String name;
   private final String[][] template;
   private final Map<String, String> context = new HashMap<>();

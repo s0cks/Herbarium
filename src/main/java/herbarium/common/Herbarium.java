@@ -53,6 +53,7 @@ import herbarium.common.items.ItemPage;
 import herbarium.common.items.ItemPaste;
 import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
+import herbarium.common.tiles.TileEntityBrewBarrel;
 import herbarium.common.tiles.TileEntityMortar;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
@@ -91,18 +92,116 @@ import java.util.Random;
 import java.util.Set;
 
 @Mod(
-    modid = "herbarium",
-    name = "Herbarium",
-    version = "0.0.0.0",
-    dependencies = "required-after:Forge@[1.9-12.16.1.1887,)"
+modid = "herbarium",
+name = "Herbarium",
+version = "0.0.0.0",
+dependencies = "required-after:Forge@[1.9-12.16.1.1887,)"
 )
 public final class Herbarium
-    implements IPageManager,
-               IEffectManager,
-               IGuiHandler,
-               IRuinManager,
-               IAlleleManager,
-               IGemOreTracker {
+implements IPageManager,
+           IEffectManager,
+           IGuiHandler,
+           IRuinManager,
+           IAlleleManager,
+           IGemOreTracker {
+  public static final Random random = new Random();
+  public static final Gson gson = new GsonBuilder()
+                                  .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
+                                  .create();
+  public static final CreativeTabs tab = new CreativeTabHerbarium();
+  // Items
+  public static final Item itemJournal = new ItemJournal()
+                                         .setCreativeTab(Herbarium.tab)
+                                         .setUnlocalizedName("herba_commentarium")
+                                         .setMaxStackSize(1);
+  public static final Item itemPage = new ItemPage()
+                                      .setCreativeTab(Herbarium.tab)
+                                      .setUnlocalizedName("herba_page")
+                                      .setMaxStackSize(1);
+  public static final Item itemPestle = new ItemPestle()
+                                        .setCreativeTab(Herbarium.tab)
+                                        .setUnlocalizedName("herba_pestle")
+                                        .setMaxStackSize(1);
+  public static final Item itemBrew = new ItemBrew()
+                                      .setCreativeTab(Herbarium.tab)
+                                      .setUnlocalizedName("herba_brew")
+                                      .setMaxStackSize(1);
+  public static final Item itemPaste = new ItemPaste()
+                                       .setCreativeTab(Herbarium.tab)
+                                       .setUnlocalizedName("herba_paste");
+  // Blocks
+  // Flowers
+  public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
+                                               .setCreativeTab(Herbarium.tab)
+                                               .setUnlocalizedName("herba_alstromeria");
+  public static final Block blockBelladonna = new BlockHerbariumFlower(Flowers.BELLADONNA.individual())
+                                              .setCreativeTab(Herbarium.tab)
+                                              .setUnlocalizedName("herba_belladonna");
+  public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE.individual())
+                                               .setCreativeTab(Herbarium.tab)
+                                               .setUnlocalizedName("herba_anemone");
+  public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY_BLOSSOM.individual())
+                                             .setCreativeTab(Herbarium.tab)
+                                             .setUnlocalizedName("herba_blueberry_blossom");
+  public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP.individual())
+                                             .setCreativeTab(Herbarium.tab)
+                                             .setUnlocalizedName("herba_buttercup");
+  public static final Block blockCave = new BlockCaveFlower(Flowers.CAVERN_BLOOM.individual())
+                                        .setCreativeTab(Herbarium.tab)
+                                        .setUnlocalizedName("herba_cavern_bloom");
+  public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.WINTER_LILY.individual())
+                                              .setCreativeTab(Herbarium.tab)
+                                              .setUnlocalizedName("herba_winter_lily");
+  public static final Block blockFire = new BlockNetherFlower(Flowers.LANCET_ROOT.individual())
+                                        .setCreativeTab(Herbarium.tab)
+                                        .setUnlocalizedName("herba_lancet_root");
+  public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.TAIL_IRIS.individual())
+                                               .setCreativeTab(Herbarium.tab)
+                                               .setUnlocalizedName("herba_tail_iris");
+  public static final Block blockLotus = new BlockWaterFlower(Flowers.SPRING_LOTUS.individual())
+                                         .setCreativeTab(Herbarium.tab)
+                                         .setUnlocalizedName("herba_spring_lotus");
+  public static final Block blockNether = new BlockNetherFlower(Flowers.IGNEOUS_SPEAR.individual())
+                                          .setCreativeTab(Herbarium.tab)
+                                          .setUnlocalizedName("herba_igneous_spear");
+  public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPICAL_BERRIES.individual())
+                                                   .setCreativeTab(Herbarium.tab)
+                                                   .setUnlocalizedName("herba_tropical_berries");
+  // Misc
+  public static final Block blockCrucible = new BlockCrucible()
+                                            .setCreativeTab(Herbarium.tab)
+                                            .setUnlocalizedName("herba_crucible");
+  public static final Block blockCoil = new BlockCoil()
+                                        .setCreativeTab(Herbarium.tab)
+                                        .setUnlocalizedName("herba_coil");
+  public static final Block blockFlume = new BlockFlume()
+                                         .setCreativeTab(Herbarium.tab)
+                                         .setUnlocalizedName("herba_flume");
+  public static final Block blockPipe = new BlockPipe()
+                                        .setCreativeTab(Herbarium.tab)
+                                        .setUnlocalizedName("herba_pipe");
+  public static final Block blockMortar = new BlockMortar()
+                                          .setCreativeTab(Herbarium.tab)
+                                          .setUnlocalizedName("herba_mortar");
+  public static final Block blockBarrel = new BlockBarrel()
+                                          .setCreativeTab(Herbarium.tab)
+                                          .setUnlocalizedName("herba_barrel");
+  public static final Block blockJournal = new BlockJournal()
+                                           .setCreativeTab(Herbarium.tab)
+                                           .setUnlocalizedName("herba_journal");
+  public static final Block blockDebug = new BlockDebug()
+                                         .setCreativeTab(Herbarium.tab)
+                                         .setUnlocalizedName("herba_debug");
+  // GUIs
+  public static final byte GUI_JOURNAL = 0x1;
+  @Mod.Instance("herbarium")
+  public static Herbarium instance;
+  @SidedProxy(
+  clientSide = "herbarium.client.ClientProxy",
+  serverSide = "herbarium.common.CommonProxy"
+  )
+  public static CommonProxy proxy;
+
   static {
     HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
     HerbariumApi.ALLELE_MANAGER = new AlleleManager();
@@ -111,106 +210,6 @@ public final class Herbarium
     Flowers.initFlowers();
   }
 
-  public static final Random random = new Random();
-  public static final Gson gson = new GsonBuilder()
-                                      .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
-                                      .create();
-  public static final CreativeTabs tab = new CreativeTabHerbarium();
-
-  // Items
-  public static final Item itemJournal = new ItemJournal()
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_commentarium")
-                                             .setMaxStackSize(1);
-  public static final Item itemPage = new ItemPage()
-                                          .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_page")
-                                          .setMaxStackSize(1);
-  public static final Item itemPestle = new ItemPestle()
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_pestle")
-                                            .setMaxStackSize(1);
-  public static final Item itemBrew = new ItemBrew()
-                                          .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_brew")
-                                          .setMaxStackSize(1);
-  public static final Item itemPaste = new ItemPaste()
-                                           .setCreativeTab(Herbarium.tab)
-                                           .setUnlocalizedName("herba_paste");
-
-  // Blocks
-  // Flowers
-  public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
-                                                   .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_alstromeria");
-  public static final Block blockBelladonna = new BlockHerbariumFlower(Flowers.BELLADONNA.individual())
-                                                  .setCreativeTab(Herbarium.tab)
-                                                  .setUnlocalizedName("herba_belladonna");
-  public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE.individual())
-                                                   .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_anemone");
-  public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY_BLOSSOM.individual())
-                                                 .setCreativeTab(Herbarium.tab)
-                                                 .setUnlocalizedName("herba_blueberry_blossom");
-  public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP.individual())
-                                                 .setCreativeTab(Herbarium.tab)
-                                                 .setUnlocalizedName("herba_buttercup");
-  public static final Block blockCave = new BlockCaveFlower(Flowers.CAVERN_BLOOM.individual())
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_cavern_bloom");
-  public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.WINTER_LILY.individual())
-                                                  .setCreativeTab(Herbarium.tab)
-                                                  .setUnlocalizedName("herba_winter_lily");
-  public static final Block blockFire = new BlockNetherFlower(Flowers.LANCET_ROOT.individual())
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_lancet_root");
-  public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.TAIL_IRIS.individual())
-                                                   .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_tail_iris");
-  public static final Block blockLotus = new BlockWaterFlower(Flowers.SPRING_LOTUS.individual())
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_spring_lotus");
-  public static final Block blockNether = new BlockNetherFlower(Flowers.IGNEOUS_SPEAR.individual())
-                                              .setCreativeTab(Herbarium.tab)
-                                              .setUnlocalizedName("herba_igneous_spear");
-  public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPICAL_BERRIES.individual())
-                                                       .setCreativeTab(Herbarium.tab)
-                                                       .setUnlocalizedName("herba_tropical_berries");
-  // Misc
-  public static final Block blockCrucible = new BlockCrucible()
-                                                .setCreativeTab(Herbarium.tab)
-                                                .setUnlocalizedName("herba_crucible");
-  public static final Block blockCoil = new BlockCoil()
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_coil");
-  public static final Block blockFlume = new BlockFlume()
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_flume");
-  public static final Block blockPipe = new BlockPipe()
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_pipe");
-  public static final Block blockMortar = new BlockMortar()
-                                              .setCreativeTab(Herbarium.tab)
-                                              .setUnlocalizedName("herba_mortar");
-  public static final Block blockBarrel = new BlockBarrel()
-                                              .setCreativeTab(Herbarium.tab)
-                                              .setUnlocalizedName("herba_barrel");
-  public static final Block blockJournal = new BlockJournal()
-                                               .setCreativeTab(Herbarium.tab)
-                                               .setUnlocalizedName("herba_journal");
-  public static final Block blockDebug = new BlockDebug()
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_debug");
-
-  // GUIs
-  public static final byte GUI_JOURNAL = 0x1;
-  @Mod.Instance("herbarium")
-  public static Herbarium instance;
-  @SidedProxy(
-      clientSide = "herbarium.client.ClientProxy",
-      serverSide = "herbarium.common.CommonProxy"
-  )
-  public static CommonProxy proxy;
   private final Set<IPage> pages = new HashSet<>();
   private final List<IRuin> ruins = new LinkedList<>();
   private final List<IEffect> effects = new LinkedList<>();
@@ -279,6 +278,7 @@ public final class Herbarium
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
     GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
+    GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
 
     proxy.registerRenders();
   }
@@ -301,12 +301,12 @@ public final class Herbarium
     proxy.registerColors();
 
     String[] ruins = new String[]{
-        "basic"
+    "basic"
     };
     for (String ruin : ruins) this.registerRuin(new ResourceLocation("herbarium", "ruins/" + ruin + ".json"));
 
     String[] pages = new String[]{
-        "Commentarium"
+    "Commentarium"
     };
     for (String page : pages) {
       try (InputStream is = Herbarium.proxy.getClient()

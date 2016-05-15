@@ -12,12 +12,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public final class EffectPageRenderer
-    implements IJournalPageRenderer{
+implements IJournalPageRenderer {
   private static final ResourceLocation overlay = new ResourceLocation("herbarium", "textures/gui/entry_overlay_1.png");
 
   private final IEffect[] effects;
 
-  public EffectPageRenderer(IEffect[] effects){
+  public EffectPageRenderer(IEffect[] effects) {
     this.effects = effects;
   }
 
@@ -30,8 +30,8 @@ public final class EffectPageRenderer
     x = (int) (GuiJournal.xSize / 2 * scaleFactor) - 10;
 
     int current = 0;
-    for(int i = 0; i < 2; i++){
-      for(int j = 0; j < 3; j++){
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < 3; j++) {
         IEffect effect = this.effects[current++];
 
         Tessellator tess = Tessellator.getInstance();
@@ -50,26 +50,26 @@ public final class EffectPageRenderer
         int tY = ((int) (iY - ((j + 1) * overlayScaleFactor) - (j * overlayScaleFactor))) + 14;
 
         Herbarium.proxy
-            .getClient()
-            .renderEngine
-            .bindTexture(overlay);
+        .getClient()
+        .renderEngine
+        .bindTexture(overlay);
         vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         vb.pos(tX, tY, 1.0)
-            .tex(0, 0)
-            .color(1.0F, 1.0F, 1.0F, 1.0F)
-            .endVertex();
+          .tex(0, 0)
+          .color(1.0F, 1.0F, 1.0F, 1.0F)
+          .endVertex();
         vb.pos(tX, tY + 18, 1.0)
-            .tex(0, 1)
-            .color(1.0F, 1.0F, 1.0F, 1.0F)
-            .endVertex();
+          .tex(0, 1)
+          .color(1.0F, 1.0F, 1.0F, 1.0F)
+          .endVertex();
         vb.pos(tX + 18, tY + 18, 1.0)
-            .tex(1, 1)
-            .color(1.0F, 1.0F, 1.0F, 1.0F)
-            .endVertex();
+          .tex(1, 1)
+          .color(1.0F, 1.0F, 1.0F, 1.0F)
+          .endVertex();
         vb.pos(tX + 18, tY, 1.0)
-            .tex(1, 0)
-            .color(1.0F, 1.0F, 1.0F, 1.0F)
-            .endVertex();
+          .tex(1, 0)
+          .color(1.0F, 1.0F, 1.0F, 1.0F)
+          .endVertex();
         tess.draw();
         GlStateManager.disableBlend();
 
@@ -85,8 +85,8 @@ public final class EffectPageRenderer
         tY = ((int) (iY - ((j + 1) * iconScaleFactor) - (j * iconScaleFactor))) + 15;
 
         Herbarium.proxy.getClient()
-            .renderEngine
-            .bindTexture(effect.icon());
+        .renderEngine
+        .bindTexture(effect.icon());
         vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         vb.pos(tX, tY, 1.0)
           .tex(0, 0)

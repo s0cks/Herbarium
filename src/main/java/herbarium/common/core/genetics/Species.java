@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Species
-    implements ISpecies {
+implements ISpecies {
   private final Map<String, IAllele[]> templates = new HashMap<>();
 
   private final String uuid;
@@ -35,8 +35,8 @@ public abstract class Species
   @Override
   public IChromosome[] templateAsChromosomes(IAllele[] template) {
     Chromosome[] chromosomes = new Chromosome[template.length];
-    for(int i = 0; i < template.length; i++){
-      if(template[i] != null){
+    for (int i = 0; i < template.length; i++) {
+      if (template[i] != null) {
         chromosomes[i] = new Chromosome(template[i]);
       }
     }
@@ -58,7 +58,7 @@ public abstract class Species
   @Override
   public IAllele[] getTemplate(String ident) {
     IAllele[] template = this.templates.get(ident);
-    if(template == null) return null;
+    if (template == null) return null;
     return Arrays.copyOf(template, template.length);
   }
 

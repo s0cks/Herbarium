@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public final class PageComponentImage
-    extends AbstractPageComponent {
+extends AbstractPageComponent {
   private final String url;
   private final BufferedImage image;
   private boolean init;

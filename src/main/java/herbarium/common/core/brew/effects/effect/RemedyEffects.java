@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import java.util.concurrent.TimeUnit;
 
 public enum RemedyEffects
-    implements IEffect,
-               IAlleleFlowerEffect{
+implements IEffect,
+           IAlleleFlowerEffect {
   GREEN_THUMB(TimeUnit.SECONDS.toMillis(10), false) {
     @Override
     public void onActiveBlock(EntityPlayer player, BlockPos pos, IBlockState state) {
@@ -93,24 +93,19 @@ public enum RemedyEffects
   }
 
   @Override
-  public boolean dominant() {
-    return this.dominant;
+  public String unlocalizedName() {
+    return this.uuid() + ".name";
   }
 
   @Override
-  public String unlocalizedName() {
-    return this.uuid() + ".name";
+  public boolean dominant() {
+    return this.dominant;
   }
 
   @Override
   public String uuid() {
     return "herbarium.effects.remedy." + this.name()
                                              .toLowerCase();
-  }
-
-  @Override
-  public IEffect effect() {
-    return this;
   }
 
   @Override
@@ -153,5 +148,10 @@ public enum RemedyEffects
   @Override
   public long duration() {
     return this.duration;
+  }
+
+  @Override
+  public IEffect effect() {
+    return this;
   }
 }

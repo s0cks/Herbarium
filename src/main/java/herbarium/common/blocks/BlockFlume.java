@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public final class BlockFlume
-    extends Block {
+extends Block {
   private final AxisAlignedBB box = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 1.0, 0.9);
 
   public BlockFlume() {

@@ -8,7 +8,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public final class TileEntityMortar
-    extends TileEntity {
+extends TileEntity {
   private ItemStack currentItem;
   private int pasteLevel;
 

@@ -4,15 +4,19 @@ import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class BlockPipe
-    extends BlockContainer {
+extends BlockContainer {
   public BlockPipe() {
     super(Material.IRON);
   }
@@ -29,46 +33,25 @@ public final class BlockPipe
 
   @Override
   public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
-    for (EnumFacing dir : EnumFacing.values()) {
-      TileEntity other = worldIn.getTileEntity(pos.offset(dir));
-      if (other instanceof TileEntityPipe) {
-        ((TileEntityPipe) other).connector()
-                                .remove(pos);
-      }
-    }
   }
 
   @Override
   public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-    TileEntityPipe self = ((TileEntityPipe) worldIn.getTileEntity(pos));
-    for (EnumFacing dir : EnumFacing.values()) {
-      TileEntity other = worldIn.getTileEntity(pos.offset(dir));
-      if (other instanceof TileEntityPipe) {
-        self.connector()
-            .add(pos.offset(dir));
-      }
+  }
+
+  @Override
+  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
+    if (stack == null) {
+      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + (((TileEntityPipe) worldIn.getTileEntity(pos)).amount())));
+      playerIn.addChatComponentMessage(new TextComponentString("Suction: " + (((TileEntityPipe) worldIn.getTileEntity(pos)).suction(null))));
+      return true;
     }
+    return false;
   }
 
   @Override
   public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
-    TileEntityPipe self = ((TileEntityPipe) world.getTileEntity(pos));
-    if (world.getTileEntity(neighbor) instanceof TileEntityPipe) {
-      TileEntityPipe other = ((TileEntityPipe) world.getTileEntity(neighbor));
-      if (!other.connector()
-                .hasConnectionTo(pos)) {
-        other.connector()
-             .add(pos);
-        self.connector()
-            .add(other.getPos());
-      }
-    }
-
-    if (self.connector()
-            .hasConnectionTo(neighbor) && world.isAirBlock(neighbor)) {
-      self.connector()
-          .remove(neighbor);
-    }
   }
 
   public EnumBlockRenderType getRenderType(IBlockState state) {

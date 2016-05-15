@@ -10,8 +10,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class BlockWaterFlower
-    extends BlockHerbariumFlower {
-  public BlockWaterFlower(IFlower flower){
+extends BlockHerbariumFlower {
+  public BlockWaterFlower(IFlower flower) {
     super(flower);
   }
 
@@ -23,14 +23,16 @@ public final class BlockWaterFlower
   }
 
   public static final class SpringLotusColorizer
-      implements IBlockColor {
+  implements IBlockColor {
     @Override
     public int colorMultiplier(IBlockState state, IBlockAccess worldIn, BlockPos pos, int tintIndex) {
       if (tintIndex == 0) {
         boolean inWorld = worldIn != null && pos != null;
-        return inWorld ?
-                   2129968 :
-                   7455580;
+        return inWorld
+               ?
+               2129968
+               :
+               7455580;
       }
       return 0xFFFFFF;
     }

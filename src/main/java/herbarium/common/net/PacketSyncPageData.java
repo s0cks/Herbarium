@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class PacketSyncPageData
-    implements IMessageHandler<PacketSyncPageData, IMessage>,
-               IMessage {
+implements IMessageHandler<PacketSyncPageData, IMessage>,
+           IMessage {
   private Set<IPage> pages;
 
   public PacketSyncPageData() {

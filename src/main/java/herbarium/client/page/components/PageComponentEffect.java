@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public final class PageComponentEffect
-    extends AbstractPageComponent {
+extends AbstractPageComponent {
   private final String text;
   private final String uuid;
   private final BufferedImage image;

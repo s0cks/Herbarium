@@ -12,7 +12,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 
 public abstract class AbstractPageComponent
-    implements IPageComponent {
+implements IPageComponent {
   protected final Rectangle bounds = new Rectangle();
   protected final Dimension preferredSize = new Dimension();
 
@@ -47,7 +47,7 @@ public abstract class AbstractPageComponent
 
   protected void drawString(String text, int x, int y, int color) {
     HerbariumApi.FONT_RENDERER
-        .drawString(text, x, y, color);
+    .drawString(text, x, y, color);
   }
 
   protected void drawColoredQuad(int x, int y, int width, int height, int color) {

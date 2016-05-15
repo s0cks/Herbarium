@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @SideOnly(Side.CLIENT)
 public final class GuiJournal
-    extends GuiScreen {
+extends GuiScreen {
   public static final int xSize = 140;
   public static final int ySize = 95;
 
@@ -41,17 +41,19 @@ public final class GuiJournal
     GlStateManager.pushMatrix();
     GlStateManager.scale(scaleFactor, scaleFactor, scaleFactor);
     IJournalPage page;
-    if((page = this.journal.left()) != null){
+    if ((page = this.journal.left()) != null) {
       GlStateManager.pushMatrix();
       GlStateManager.translate(guiLeft, guiTop, 0.0F);
-      page.delegate().render(scaleFactor, 0, 0, partialTicks, true);
+      page.delegate()
+          .render(scaleFactor, 0, 0, partialTicks, true);
       GlStateManager.popMatrix();
     }
 
-    if((page = this.journal.right()) != null){
+    if ((page = this.journal.right()) != null) {
       GlStateManager.pushMatrix();
       GlStateManager.translate(guiLeft + (xSize / 2), guiTop, 0.0F);
-      page.delegate().render(scaleFactor, 0, 0, partialTicks, false);
+      page.delegate()
+          .render(scaleFactor, 0, 0, partialTicks, false);
       GlStateManager.popMatrix();
     }
     GlStateManager.popMatrix();

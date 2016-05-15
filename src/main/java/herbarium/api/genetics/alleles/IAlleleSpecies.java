@@ -6,7 +6,7 @@ import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.ISpecies;
 
 public interface IAlleleSpecies
-    extends IAllele {
+extends IAllele {
   public ISpecies species();
 
   public String description();

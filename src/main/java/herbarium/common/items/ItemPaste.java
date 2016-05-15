@@ -7,20 +7,20 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public final class ItemPaste
-    extends Item {
+extends Item {
   public static final String[] names = new String[]{
-      "alstromeria",
-      "anemone",
-      "belladonna",
-      "blueberry_blossom",
-      "buttercup",
-      "cavern_bloom",
-      "igneous_spear",
-      "lancet_root",
-      "spring_lotus",
-      "tail_iris",
-      "tropical_berries",
-      "winter_lily"
+  "alstromeria",
+  "anemone",
+  "belladonna",
+  "blueberry_blossom",
+  "buttercup",
+  "cavern_bloom",
+  "igneous_spear",
+  "lancet_root",
+  "spring_lotus",
+  "tail_iris",
+  "tropical_berries",
+  "winter_lily"
   };
 
   public static final byte alstromeria = 0x0;

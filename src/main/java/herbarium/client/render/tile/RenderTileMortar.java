@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import org.lwjgl.opengl.GL11;
 
 public final class RenderTileMortar
-    extends TileEntitySpecialRenderer<TileEntityMortar> {
+extends TileEntitySpecialRenderer<TileEntityMortar> {
   private static final ModelResourceLocation modelLoc = new ModelResourceLocation("herbarium:mortar", "inventory");
 
   @Override

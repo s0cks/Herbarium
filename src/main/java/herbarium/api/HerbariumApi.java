@@ -14,7 +14,7 @@ import net.minecraftforge.common.util.EnumHelper;
 
 public final class HerbariumApi {
   public static final Item.ToolMaterial PESTLE_MATERIAL =
-      EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
+  EnumHelper.addToolMaterial("pestle", 0, 261, 1.0F, 3.0F, 0);
   // Pages
   public static IPageManager PAGE_MANAGER;
   public static IPageTracker PAGE_TRACKER;

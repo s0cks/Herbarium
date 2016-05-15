@@ -8,7 +8,7 @@ import herbarium.api.genetics.ISpecies;
 import java.util.LinkedHashMap;
 
 public final class AlleleManager
-implements IAlleleManager{
+implements IAlleleManager {
   private final LinkedHashMap<String, ISpecies> speciesMap = new LinkedHashMap<>();
   private final LinkedHashMap<String, IAllele> alleleMap = new LinkedHashMap<>();
 

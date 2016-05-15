@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class ItemBrew
-    extends Item {
+extends Item {
   private static final String BREW_TAG = "Brew";
 
   public ItemBrew() {
@@ -94,7 +94,7 @@ public final class ItemBrew
   }
 
   public static final class BrewColorizer
-      implements IItemColor {
+  implements IItemColor {
     @Override
     public int getColorFromItemstack(ItemStack stack, int tintIndex) {
       IBrew brew = ItemBrew.getBrew(stack);

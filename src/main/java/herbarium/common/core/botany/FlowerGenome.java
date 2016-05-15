@@ -3,8 +3,8 @@ package herbarium.common.core.botany;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.HerbariumApi;
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.botany.IAlleleFlowerSpecies;
 import herbarium.api.botany.IFlowerGenome;
 import herbarium.api.genetics.IChromosome;
@@ -17,8 +17,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public final class FlowerGenome
-    extends Genome
-    implements IFlowerGenome {
+extends Genome
+implements IFlowerGenome {
   private static final LoadingCache<NBTTagCompound, FlowerGenome> ark = CacheBuilder.newBuilder()
                                                                                     .maximumSize(128)
                                                                                     .expireAfterAccess(1, TimeUnit.MINUTES)
@@ -41,7 +41,7 @@ public final class FlowerGenome
   public static FlowerGenome fromNBT(final NBTTagCompound comp) {
     if (comp == null) return null;
     try {
-      return ark.get(comp, new Callable<FlowerGenome>(){
+      return ark.get(comp, new Callable<FlowerGenome>() {
         @Override
         public FlowerGenome call()
         throws Exception {

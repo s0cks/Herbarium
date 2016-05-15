@@ -33,7 +33,7 @@ public final class EffectChapterFactory {
       }
 
       pages.add(new DelegatedJournalPage("herbarium.journal.chapters.effects." + pageOrdinal, pageOrdinal++, new
-                                                                                               EffectPageRenderer(e)));
+                                                                                                             EffectPageRenderer(e)));
     }
 
     return pages;

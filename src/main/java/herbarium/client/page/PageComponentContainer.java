@@ -6,8 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class PageComponentContainer
-    implements IPageScreen,
-               Iterable<IPageComponent> {
+implements IPageScreen,
+           Iterable<IPageComponent> {
   private final Dimension size;
 
   private final List<IPageComponent> components = new LinkedList<>();

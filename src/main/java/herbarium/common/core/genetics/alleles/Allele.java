@@ -3,7 +3,7 @@ package herbarium.common.core.genetics.alleles;
 import herbarium.api.genetics.IAllele;
 
 public abstract class Allele
-    implements IAllele {
+implements IAllele {
   private final String uuid;
   private final boolean dominant;
 

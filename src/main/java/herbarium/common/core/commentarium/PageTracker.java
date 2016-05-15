@@ -32,7 +32,7 @@ import java.util.Queue;
 import java.util.Set;
 
 public final class PageTracker
-    implements IPageTracker {
+implements IPageTracker {
   private static final Map<EntityPlayer, PageData> data = new HashMap<>();
 
   public static void set(EntityPlayer player, Set<IPage> pages) {

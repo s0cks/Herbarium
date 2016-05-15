@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BlockHerbariumFlower
-    extends Block{
+extends Block {
   protected final IFlower flower;
   protected final ThreadLocal<List<ItemStack>> drops = new ThreadLocal<>();
 
@@ -66,15 +66,7 @@ public class BlockHerbariumFlower
     Block bottom = worldIn.getBlockState(pos.down())
                           .getBlock();
     return bottom == Blocks.DIRT
-               || bottom == Blocks.GRASS;
-  }
-
-  @Override
-  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-    if(!stack.hasTagCompound()) return;
-    IFlower flower = new Flower(stack.getTagCompound());
-    tooltip.add("Primary: " + flower.genome().primary().uuid());
-    tooltip.add("Secondary: " + flower.genome().secondary().uuid());
+           || bottom == Blocks.GRASS;
   }
 
   @Override
@@ -95,5 +87,17 @@ public class BlockHerbariumFlower
     List<ItemStack> result = this.drops.get();
     this.drops.set(null);
     return result;
+  }
+
+  @Override
+  public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+    if (!stack.hasTagCompound()) return;
+    IFlower flower = new Flower(stack.getTagCompound());
+    tooltip.add("Primary: " + flower.genome()
+                                    .primary()
+                                    .uuid());
+    tooltip.add("Secondary: " + flower.genome()
+                                      .secondary()
+                                      .uuid());
   }
 }

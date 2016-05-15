@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public final class PacketSyncEffects
-    implements IMessageHandler<PacketSyncEffects, IMessage>,
-               IMessage {
+implements IMessageHandler<PacketSyncEffects, IMessage>,
+           IMessage {
   private EffectTracker.PlayerEffectData data;
 
   public PacketSyncEffects() {

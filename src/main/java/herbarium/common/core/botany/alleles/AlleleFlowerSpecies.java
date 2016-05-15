@@ -1,9 +1,9 @@
 package herbarium.common.core.botany.alleles;
 
-import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.EnumHumidity;
 import herbarium.api.EnumTemperature;
 import herbarium.api.HerbariumApi;
+import herbarium.api.botany.EnumFlowerChromosome;
 import herbarium.api.botany.IAlleleFlowerSpecies;
 import herbarium.api.botany.IAlleleFlowerSpeciesBuilder;
 import herbarium.api.botany.IFlowerSpecies;
@@ -11,9 +11,9 @@ import herbarium.api.genetics.IAlleleSpeciesBuilder;
 import herbarium.common.core.genetics.alleles.AlleleSpecies;
 
 public final class AlleleFlowerSpecies
-    extends AlleleSpecies
-    implements IAlleleFlowerSpecies,
-               IAlleleFlowerSpeciesBuilder{
+extends AlleleSpecies
+implements IAlleleFlowerSpecies,
+           IAlleleFlowerSpeciesBuilder {
   private EnumTemperature temperature = EnumTemperature.NORMAL;
   private EnumHumidity humidity = EnumHumidity.NORMAL;
 
@@ -33,13 +33,13 @@ public final class AlleleFlowerSpecies
   }
 
   @Override
-  public EnumHumidity humidity() {
-    return this.humidity;
+  public EnumTemperature temperature() {
+    return this.temperature;
   }
 
   @Override
-  public EnumTemperature temperature() {
-    return this.temperature;
+  public EnumHumidity humidity() {
+    return this.humidity;
   }
 
   @Override

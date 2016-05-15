@@ -24,7 +24,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import java.lang.reflect.Type;
 
 public final class JsonPageDeserializer
-    implements JsonDeserializer<IPage> {
+implements JsonDeserializer<IPage> {
   @Override
   public IPage deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
   throws JsonParseException {
@@ -110,14 +110,14 @@ public final class JsonPageDeserializer
     }
 
     return new PageBuilder()
-               .setGroup(group)
-               .setRenderer(renderer.layout(layout))
-               .setTitle(title)
-               .build();
+           .setGroup(group)
+           .setRenderer(renderer.layout(layout))
+           .setTitle(title)
+           .build();
   }
 
   public static final class JsonPageRenderer
-      implements IPageRenderer {
+  implements IPageRenderer {
     private final PageComponentContainer container;
 
     public JsonPageRenderer(PageComponentContainer container) {

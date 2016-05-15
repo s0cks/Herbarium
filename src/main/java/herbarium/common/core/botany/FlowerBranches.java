@@ -7,19 +7,10 @@ import herbarium.common.core.genetics.IBranchDefinition;
 import java.util.Arrays;
 
 public enum FlowerBranches
-implements IBranchDefinition{
+implements IBranchDefinition {
   REMEDY,
   SPIRIT,
   VENOM;
-
-  protected void setBranchProperties(IAllele[] template){}
-
-  @Override
-  public final IAllele[] template(){
-    IAllele[] template = defaultTemplate();
-    this.setBranchProperties(template);
-    return template;
-  }
 
   private static IAllele[] defaultTemplate;
 
@@ -29,5 +20,14 @@ implements IBranchDefinition{
     }
 
     return Arrays.copyOf(defaultTemplate, defaultTemplate.length);
+  }
+
+  protected void setBranchProperties(IAllele[] template) {}
+
+  @Override
+  public final IAllele[] template() {
+    IAllele[] template = defaultTemplate();
+    this.setBranchProperties(template);
+    return template;
   }
 }

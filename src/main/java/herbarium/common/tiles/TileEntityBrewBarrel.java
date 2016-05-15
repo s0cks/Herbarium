@@ -9,7 +9,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 
-public final class TileEntityPipe
+public final class TileEntityBrewBarrel
 extends TileEntity
 implements ITickable {
   private IBrewStack stack;
@@ -48,8 +48,6 @@ implements ITickable {
 
   @Override
   public void update() {
-    if (!this.getWorld().isRemote) {
 
-    }
   }
 }

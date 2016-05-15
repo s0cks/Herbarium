@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public final class FlowerSpecies
-    extends Species
-    implements IFlowerSpecies {
+extends Species
+implements IFlowerSpecies {
   public FlowerSpecies() {
     super("flower");
   }

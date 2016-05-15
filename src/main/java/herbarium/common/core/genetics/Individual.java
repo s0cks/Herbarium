@@ -4,7 +4,7 @@ import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.IIndividual;
 
 public abstract class Individual
-    implements IIndividual {
+implements IIndividual {
   @Override
   public boolean isPureBred(IChromosomeType type) {
     return this.genome()

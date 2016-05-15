@@ -36,7 +36,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public final class EffectTracker
-    implements IEffectTracker {
+implements IEffectTracker {
   private final Lock lock = new ReentrantLock();
   private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
 
@@ -253,7 +253,7 @@ public final class EffectTracker
   }
 
   public static final class PlayerEffectData
-      implements INBTSavable {
+  implements INBTSavable {
     private static final String CURRENT_TAG = "Current";
 
     private final Map<IEffect, Long> current = new ConcurrentHashMap<>();

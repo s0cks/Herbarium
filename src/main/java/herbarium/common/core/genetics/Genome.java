@@ -12,7 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import java.util.Arrays;
 
 public abstract class Genome
-    implements IGenome {
+implements IGenome {
   private final IChromosome[] chromosomes;
 
   public Genome(IChromosome[] chromosomes) {
@@ -61,7 +61,7 @@ public abstract class Genome
   @Override
   public void writeToNBT(NBTTagCompound comp) {
     NBTTagList chromosomesList = new NBTTagList();
-    for(int i = 0; i < this.chromosomes.length; i++){
+    for (int i = 0; i < this.chromosomes.length; i++) {
       NBTTagCompound chromosomeComp = new NBTTagCompound();
       chromosomeComp.setByte("Ordinal", (byte) i);
       this.chromosomes[i].writeToNBT(chromosomeComp);

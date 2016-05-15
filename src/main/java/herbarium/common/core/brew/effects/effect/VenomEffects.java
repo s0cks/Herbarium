@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.concurrent.TimeUnit;
 
 public enum VenomEffects
-    implements IEffect {
+implements IEffect {
   LEVITATION(TimeUnit.MINUTES.toMillis(3)), //Lifts entities hit into air
   IGNITION(TimeUnit.MINUTES.toMillis(3)), //Sets entities on fire, gives them swiftness
   BLINDNESS(TimeUnit.MINUTES.toMillis(3)), //Blinds entities, makes them prone to crit

@@ -12,8 +12,8 @@ import herbarium.common.core.genetics.alleles.AlleleHelper;
 import java.util.Arrays;
 
 public enum Flowers
-implements IFlowerDefinition{
-  ALSTROMERIA(FlowerBranches.SPIRIT, true){
+implements IFlowerDefinition {
+  ALSTROMERIA(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -28,7 +28,7 @@ implements IFlowerDefinition{
 
     }
   },
-  BELLADONNA(FlowerBranches.SPIRIT, true){
+  BELLADONNA(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -76,7 +76,7 @@ implements IFlowerDefinition{
 
     }
   },
-  BUTTERCUP(FlowerBranches.SPIRIT, true){
+  BUTTERCUP(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -92,7 +92,7 @@ implements IFlowerDefinition{
 
     }
   },
-  CAVERN_BLOOM(FlowerBranches.SPIRIT, true){
+  CAVERN_BLOOM(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -108,7 +108,7 @@ implements IFlowerDefinition{
 
     }
   },
-  WINTER_LILY(FlowerBranches.SPIRIT, true){
+  WINTER_LILY(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -124,7 +124,7 @@ implements IFlowerDefinition{
 
     }
   },
-  LANCET_ROOT(FlowerBranches.SPIRIT, true){
+  LANCET_ROOT(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -140,7 +140,7 @@ implements IFlowerDefinition{
 
     }
   },
-  TAIL_IRIS(FlowerBranches.SPIRIT, true){
+  TAIL_IRIS(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -156,7 +156,7 @@ implements IFlowerDefinition{
 
     }
   },
-  SPRING_LOTUS(FlowerBranches.SPIRIT, true){
+  SPRING_LOTUS(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -172,7 +172,7 @@ implements IFlowerDefinition{
 
     }
   },
-  IGNEOUS_SPEAR(FlowerBranches.SPIRIT, true){
+  IGNEOUS_SPEAR(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -188,7 +188,7 @@ implements IFlowerDefinition{
 
     }
   },
-  TROPICAL_BERRIES(FlowerBranches.SPIRIT, true){
+  TROPICAL_BERRIES(FlowerBranches.SPIRIT, true) {
     @Override
     protected void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species) {
 
@@ -213,23 +213,26 @@ implements IFlowerDefinition{
   Flowers(FlowerBranches branch, boolean dominant) {
     this.branch = branch;
 
-    String uuid = "herbarium.flower.species." + this.name().toLowerCase();
+    String uuid = "herbarium.flower.species." + this.name()
+                                                    .toLowerCase();
 
     IAlleleFlowerSpeciesBuilder builder = HerbariumApi.FLOWER_FACTORY
-        .createSpecies(uuid, dominant);
+                                          .createSpecies(uuid, dominant);
     this.setSpeciesProperties(builder);
     this.species = builder.build();
   }
 
-  protected abstract void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species);
-  protected abstract void setAlleles(IAllele[] template);
-  protected abstract void registerMutations();
-
-  public static void initFlowers(){
-    for(Flowers flower : values()) flower.init();
+  public static void initFlowers() {
+    for (Flowers flower : values()) flower.init();
   }
 
-  private void init(){
+  protected abstract void setSpeciesProperties(IAlleleFlowerSpeciesBuilder species);
+
+  protected abstract void setAlleles(IAllele[] template);
+
+  protected abstract void registerMutations();
+
+  private void init() {
     this.template = this.branch.template();
     AlleleHelper.set(this.template, EnumFlowerChromosome.SPECIES, this.species);
     this.setAlleles(template);
@@ -238,18 +241,17 @@ implements IFlowerDefinition{
   }
 
   @Override
-  public IAllele[] template() {
-    return Arrays.copyOf(this.template, this.template.length);
-  }
-
-  @Override
   public IFlowerGenome genome() {
     return this.genome;
   }
 
-
   @Override
   public IFlower individual() {
     return new Flower(this.genome);
+  }
+
+  @Override
+  public IAllele[] template() {
+    return Arrays.copyOf(this.template, this.template.length);
   }
 }

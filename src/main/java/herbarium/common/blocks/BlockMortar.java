@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class BlockMortar
-    extends BlockContainer {
+extends BlockContainer {
   private final AxisAlignedBB box = new AxisAlignedBB(0.15, 0.0, 0.15, 0.85, 0.45, 0.85);
 
   public BlockMortar() {

@@ -46,22 +46,22 @@ public final class IndexChapterFactory {
         count++;
         if (count >= 13) {
           pages.add(new DelegatedJournalPage("herbarium.journal.pages.index." + pageCount, pageCount++, new
-                                                                                                            ContentsPageRenderer(datas)));
+                                                                                                        ContentsPageRenderer(datas)));
           datas.clear();
           count = 0;
-        } else if(ps.size() <= 14){
+        } else if (ps.size() <= 14) {
           break;
         }
       }
 
-      if(!ps.isEmpty()){
-        while(!ps.isEmpty()){
+      if (!ps.isEmpty()) {
+        while (!ps.isEmpty()) {
           IJournalPage page = ps.remove();
           datas.add(new ContentsPageRenderer.ContentsData(page.uuid(), false, ordinal++));
         }
 
         pages.add(new DelegatedJournalPage("herbarium.journal.pages.index." + pageCount, pageCount++, new
-                                                                                                          ContentsPageRenderer(datas)));
+                                                                                                      ContentsPageRenderer(datas)));
       }
     }
 

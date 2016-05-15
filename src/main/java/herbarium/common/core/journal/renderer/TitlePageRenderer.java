@@ -6,7 +6,7 @@ import herbarium.client.gui.GuiJournal;
 import net.minecraft.client.renderer.GlStateManager;
 
 public final class TitlePageRenderer
-implements IJournalPageRenderer{
+implements IJournalPageRenderer {
   @Override
   public void render(float scaleFactor, int x, int y, float partial, boolean left) {
     GlStateManager.pushMatrix();
@@ -18,7 +18,9 @@ implements IJournalPageRenderer{
     int i = ((int) ((xSize - (width * scaleFactor)) / (2 * scaleFactor)));
     int j = ((int) ((GuiJournal.ySize - (8 * scaleFactor)) / (2 * scaleFactor)));
 
-    HerbariumApi.FONT_RENDERER.drawString("Herba Commentarium", x + i + (left ? 10 : -5), y + j - 16, 0x000000);
+    HerbariumApi.FONT_RENDERER.drawString("Herba Commentarium", x + i + (left
+                                                                         ? 10
+                                                                         : -5), y + j - 16, 0x000000);
     GlStateManager.popMatrix();
   }
 }

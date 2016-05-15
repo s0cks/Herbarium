@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PageLayoutBorder
-    implements IPageLayout {
+implements IPageLayout {
   private final Map<Position, IPageComponent> children = new HashMap<>();
 
   public void add(IPageComponent comp, Position pos) {

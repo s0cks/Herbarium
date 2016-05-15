@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockAccess;
 import java.util.Random;
 
 public final class BlockJournal
-    extends Block {
+extends Block {
   private final AxisAlignedBB box = new AxisAlignedBB(0.275, 0.0, 0.275, 0.725, 0.2, 0.725);
 
   public BlockJournal() {

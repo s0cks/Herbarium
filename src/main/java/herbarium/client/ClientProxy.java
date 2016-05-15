@@ -23,7 +23,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public final class ClientProxy
-    extends CommonProxy {
+extends CommonProxy {
   private RenderEffectTray renderEffectTray;
 
   @Override

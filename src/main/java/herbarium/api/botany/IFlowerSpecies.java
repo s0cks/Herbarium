@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface IFlowerSpecies
-    extends ISpecies {
+extends ISpecies {
   @Override
   public IFlower getMember(ItemStack stack);
 

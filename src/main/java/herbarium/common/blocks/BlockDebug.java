@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public final class BlockDebug
-    extends Block {
+extends Block {
   public BlockDebug() {
     super(Material.GLASS);
   }

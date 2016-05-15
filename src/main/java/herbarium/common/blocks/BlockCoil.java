@@ -5,7 +5,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 
 public final class BlockCoil
-    extends Block {
+extends Block {
   public BlockCoil() {
     super(Material.IRON);
   }

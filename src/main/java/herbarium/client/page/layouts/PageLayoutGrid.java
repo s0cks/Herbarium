@@ -4,7 +4,7 @@ import herbarium.client.page.IPageLayout;
 import herbarium.client.page.PageComponentContainer;
 
 public final class PageLayoutGrid
-    implements IPageLayout {
+implements IPageLayout {
   private int numRows;
   private int numCols;
 

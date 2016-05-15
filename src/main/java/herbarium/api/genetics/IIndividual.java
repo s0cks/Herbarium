@@ -2,7 +2,7 @@ package herbarium.api.genetics;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IIndividual{
+public interface IIndividual {
   public IGenome genome();
 
   public String displayName();

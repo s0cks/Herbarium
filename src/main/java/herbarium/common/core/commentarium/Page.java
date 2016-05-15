@@ -6,7 +6,7 @@ import herbarium.api.commentarium.pages.IPageRenderer;
 import net.minecraft.util.text.translation.I18n;
 
 public final class Page
-    implements IPage {
+implements IPage {
   private final String title;
   private final IPageRenderer renderer;
   private final IPageGroup group;
@@ -56,7 +56,7 @@ public final class Page
   @Override
   public boolean equals(Object obj) {
     return obj instanceof Page
-               && ((Page) obj).uuid()
-                              .equals(this.uuid());
+           && ((Page) obj).uuid()
+                          .equals(this.uuid());
   }
 }

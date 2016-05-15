@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public enum PageGroups
-    implements IPageGroup {
+implements IPageGroup {
   FLOWERS("Flowers"),
   BLOCKS("Blocks"),
   EFFECTS("Effects");

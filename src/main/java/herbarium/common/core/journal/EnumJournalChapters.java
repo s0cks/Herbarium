@@ -10,7 +10,7 @@ import herbarium.common.core.journal.renderer.TitlePageRenderer;
 import java.util.List;
 
 public enum EnumJournalChapters
-implements IJournalChapter{
+implements IJournalChapter {
   INTRO {
     @Override
     protected List<IJournalPage> initialize() {
@@ -42,21 +42,22 @@ implements IJournalChapter{
 
   private List<IJournalPage> pages;
 
-  protected abstract List<IJournalPage> initialize();
-
-  @Override
-  public String uuid() {
-    return "herbarium.journal.chapters." + this.name().toLowerCase();
-  }
-
-  public static void init(){
-    for(EnumJournalChapters value : values()){
+  public static void init() {
+    for (EnumJournalChapters value : values()) {
       value.pages = value.initialize();
     }
   }
 
+  protected abstract List<IJournalPage> initialize();
+
   @Override
-  public void insertPage(IJournalPage page){
+  public String uuid() {
+    return "herbarium.journal.chapters." + this.name()
+                                               .toLowerCase();
+  }
+
+  @Override
+  public void insertPage(IJournalPage page) {
     this.pages.add(page);
   }
 

@@ -4,7 +4,7 @@ import herbarium.api.commentarium.journal.IJournalPage;
 import herbarium.api.commentarium.journal.IJournalPageRenderer;
 
 public final class DelegatedJournalPage
-    implements IJournalPage {
+implements IJournalPage {
   private final int ordinal;
   private final String uuid;
   private final IJournalPageRenderer delegate;

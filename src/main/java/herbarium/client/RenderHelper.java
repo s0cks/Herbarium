@@ -39,17 +39,17 @@ public final class RenderHelper {
     GL11.glColor4d(r, g, b, alpha);
   }
 
-  public static void renderItem(ItemStack stack){
-    if(stack == null) return;
+  public static void renderItem(ItemStack stack) {
+    if (stack == null) return;
     GlStateManager.pushMatrix();
     GlStateManager.disableLighting();
     GlStateManager.scale(0.5F, 0.5F, 0.5F);
 
     RenderItem render = Herbarium.proxy
-        .getClient()
-        .getRenderItem();
+                        .getClient()
+                        .getRenderItem();
 
-    if(!render.shouldRenderItemIn3D(stack)){
+    if (!render.shouldRenderItemIn3D(stack)) {
       GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
     }
 
@@ -100,9 +100,9 @@ public final class RenderHelper {
     GlStateManager.glVertex3f(x, y, 0.0F);
     for (float i = 0.0F; i <= MAX_CIRCLE_SEGMENTS; i++) {
       GlStateManager.glVertex3f(
-          ((float) (x + (radius * Math.cos(i * TAU / MAX_CIRCLE_SEGMENTS)))),
-          ((float) (y + (radius * Math.sin(i * TAU / MAX_CIRCLE_SEGMENTS)))),
-          0.0F
+      ((float) (x + (radius * Math.cos(i * TAU / MAX_CIRCLE_SEGMENTS)))),
+      ((float) (y + (radius * Math.sin(i * TAU / MAX_CIRCLE_SEGMENTS)))),
+      0.0F
       );
     }
     GlStateManager.glEnd();
@@ -115,9 +115,9 @@ public final class RenderHelper {
     GlStateManager.glVertex3f(x, y, 0.0F);
     for (float i = 0.0F; i <= numSegments; i++) {
       GlStateManager.glVertex3f(
-          ((float) (x + (radius * Math.cos(i * TAU / MAX_CIRCLE_SEGMENTS)))),
-          ((float) (y + (radius * Math.sin(i * TAU / MAX_CIRCLE_SEGMENTS)))),
-          0.0F
+      ((float) (x + (radius * Math.cos(i * TAU / MAX_CIRCLE_SEGMENTS)))),
+      ((float) (y + (radius * Math.sin(i * TAU / MAX_CIRCLE_SEGMENTS)))),
+      0.0F
       );
     }
     GlStateManager.glEnd();
