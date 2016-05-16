@@ -188,37 +188,17 @@ public class TrueTypeFont {
     return new byte[]{
     (byte) (value >>> 24),
     (byte) (value >>> 16),
-    (te int correctL = 9, correctR = 8;
+    (byte) (value >>> 8),
+    (byte) value
+    };
+  }
 
-    private class FloatObject {
-      /**
-       * Character's width
-       */
-      public float width;
-
-      /**
-       * Character's height
-       */
-      public float height;
-
-      /**
-       * Character's stored x position
-       */
-      public float storedX;
-
-    /**
-     * Charabyte) (value >>> 8),
-     (byte) value
-     };
-     }
-
-     public void destroy() {
-     IntBuffer scratch = BufferUtils.createIntBuffer(1);
-     scratch.put(0, fontTextureID);
-     GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-     GL11.glDeleteTextures(scratch);
-     }
-     }
+  public void destroy() {
+    IntBuffer scratch = BufferUtils.createIntBuffer(1);
+    scratch.put(0, fontTextureID);
+    GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+    GL11.glDeleteTextures(scratch);
+  }
 
   public void setCorrection(boolean on) {
     if (on) {
@@ -389,6 +369,28 @@ public class TrueTypeFont {
     return this.fontMetrics.stringWidth(whatchars);
   }
 
+class FloatObject {
+  /**
+   * Character's width
+   */
+  public float width;
+
+  /**
+   * Character's height
+   */
+  public float height;
+
+  /**
+   * Character's stored x position
+   */
+  public float storedX;
+
+  /**
+   * Character's stored y position
+   */
+  public float storedY;
+}
+
   public float getWidth(int width) {
     float total = 0;
     FloatObject obj = charArray['W'];
@@ -511,32 +513,11 @@ public class TrueTypeFont {
           if (d > 0) totalwidth += (floatObject.width - c) * d;
         }
         i += d;
-
       }
+      t.draw();
+
+      GL11.glPopMatrix();
+
     }
-    t.draw();
-
-    GL11.glPopMatrix();
   }
-
-  private class FloatObject {
-    /**
-     * Character's width
-     */
-    public float width;
-
-    /**
-     * Character's height
-     */
-    public float height;
-
-    /**
-     * Character's stored x position
-     */
-    public float storedX;
-
-    /**
-     * Character's stored y position
-     */
-    public float storedY;
-  }
+}

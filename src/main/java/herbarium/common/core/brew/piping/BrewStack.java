@@ -26,6 +26,12 @@ implements IBrewStack {
   }
 
   public static boolean brewsEqual(IBrew brew0, IBrew brew1) {
+    if (((brew0 == null) && (brew1 != null)) || ((brew0 != null) && (brew1 == null))) {
+      return false;
+    } else if ((brew0 == null) && (brew1 == null)) {
+      return true;
+    }
+
     if (brew0.effects()
              .size() != brew1.effects()
                              .size()) return false;

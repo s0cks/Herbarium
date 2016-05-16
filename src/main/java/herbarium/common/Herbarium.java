@@ -28,6 +28,7 @@ import herbarium.common.blocks.BlockJournal;
 import herbarium.common.blocks.BlockMortar;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
+import herbarium.common.blocks.BlockRuinSelector;
 import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
@@ -54,8 +55,10 @@ import herbarium.common.items.ItemPaste;
 import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityBrewBarrel;
+import herbarium.common.tiles.TileEntityCrucible;
 import herbarium.common.tiles.TileEntityMortar;
 import herbarium.common.tiles.TileEntityPipe;
+import herbarium.common.tiles.TileEntityRuinSelector;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
@@ -104,6 +107,14 @@ implements IPageManager,
            IRuinManager,
            IAlleleManager,
            IGemOreTracker {
+  static {
+    HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
+    HerbariumApi.ALLELE_MANAGER = new AlleleManager();
+    HerbariumApi.FLOWER_SPECIES = new FlowerSpecies();
+
+    Flowers.initFlowers();
+  }
+
   public static final Random random = new Random();
   public static final Gson gson = new GsonBuilder()
                                   .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
@@ -192,6 +203,10 @@ implements IPageManager,
   public static final Block blockDebug = new BlockDebug()
                                          .setCreativeTab(Herbarium.tab)
                                          .setUnlocalizedName("herba_debug");
+  public static final Block blockRuinSelector = new BlockRuinSelector()
+                                                .setCreativeTab(Herbarium.tab)
+                                                .setUnlocalizedName("herba_ruin_selector");
+
   // GUIs
   public static final byte GUI_JOURNAL = 0x1;
   @Mod.Instance("herbarium")
@@ -201,14 +216,6 @@ implements IPageManager,
   serverSide = "herbarium.common.CommonProxy"
   )
   public static CommonProxy proxy;
-
-  static {
-    HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
-    HerbariumApi.ALLELE_MANAGER = new AlleleManager();
-    HerbariumApi.FLOWER_SPECIES = new FlowerSpecies();
-
-    Flowers.initFlowers();
-  }
 
   private final Set<IPage> pages = new HashSet<>();
   private final List<IRuin> ruins = new LinkedList<>();
@@ -274,11 +281,14 @@ implements IPageManager,
     GameRegistry.registerBlock(blockBarrel, "barrel");
     GameRegistry.registerBlock(blockJournal, "journal_block");
     GameRegistry.registerBlock(blockDebug, "debug");
+    GameRegistry.registerBlock(blockRuinSelector, "ruin_selector");
 
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
     GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
     GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
+    GameRegistry.registerTileEntity(TileEntityRuinSelector.class, "ruin_selector");
+    GameRegistry.registerTileEntity(TileEntityCrucible.class, "crucible");
 
     proxy.registerRenders();
   }

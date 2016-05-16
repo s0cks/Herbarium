@@ -44,11 +44,4 @@ implements IRuin,
   public Block map(char sym) {
     return Block.getBlockFromName(this.context.get(String.valueOf(sym)));
   }
-
-  @Override
-  public void define(char sym, Block block) {
-    this.context.put(String.valueOf(sym), block.getRegistryName()
-                                               .getResourceDomain() + ":" + block.getRegistryName()
-                                                                                 .getResourcePath());
-  }
 }

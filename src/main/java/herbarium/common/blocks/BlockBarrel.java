@@ -44,22 +44,20 @@ extends BlockContainer {
 
   @Override
   public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    TileEntityBrewBarrel barrel = ((TileEntityBrewBarrel) worldIn.getTileEntity(pos));
-
     ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
+    TileEntityBrewBarrel barrel = ((TileEntityBrewBarrel) worldIn.getTileEntity(pos));
     if (stack == null) {
-      playerIn.addChatComponentMessage(new TextComponentString("Current Amount: " + barrel.amount()));
+      playerIn.addChatComponentMessage(new TextComponentString("Suction: " + barrel.suction(EnumFacing.UP)));
+      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + barrel.amount()));
       return true;
-    } else {
-      if (stack.getItem() instanceof ItemBrew) {
+    } else{
+      if (stack.getItem() instanceof ItemBrew){
         IBrew brew = ItemBrew.getBrew(stack);
-        if (brew != null) {
+        if(brew != null){
           barrel.add(brew, IBrewStack.MAX_AMOUNT, EnumFacing.UP);
-          return true;
         }
       }
     }
-
     return false;
   }
 

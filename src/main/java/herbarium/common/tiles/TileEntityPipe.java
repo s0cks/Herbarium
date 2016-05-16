@@ -1,55 +1,89 @@
 package herbarium.common.tiles;
 
-import herbarium.api.brew.piping.IBrewStack;
+import herbarium.api.brew.IBrew;
+import herbarium.api.brew.piping.IBrewTransport;
+import herbarium.common.core.brew.piping.BrewPipingHelper;
 import herbarium.common.core.brew.piping.BrewStack;
+import herbarium.common.tiles.core.TileEntityBrewTransport;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
 public final class TileEntityPipe
-extends TileEntity
-implements ITickable {
-  private IBrewStack stack;
+extends TileEntityBrewTransport
+implements ITickable{
+  private int suction;
 
   @Override
-  public void readFromNBT(NBTTagCompound compound) {
-    super.readFromNBT(compound);
-
-    if (compound.hasKey("Stack")) {
-      this.stack = BrewStack.loadFromNBT(compound.getCompoundTag("Stack"));
+  public void update() {
+    this.calculateSuction();;
+    if(this.suction > 0){
+      this.equalize();
     }
+  }
+
+  private void calculateSuction(){
+    this.suction = 0;
+    for(EnumFacing facing : EnumFacing.VALUES){
+      if(this.canConnectTo(facing)){
+        TileEntity tile = BrewPipingHelper.getConnected(this.getWorld(), this.getPos(), facing);
+        if(tile != null){
+          IBrewTransport transport = ((IBrewTransport) tile);
+          if((this.amount() > 0) && (!BrewStack.brewsEqual(this.brew(), transport.brew()))){
+            continue;
+          }
+
+          int suction = transport.suction(facing.getOpposite());
+          if((suction > 0) && (suction > this.suction + 1)){
+            this.suction = suction - 1;
+          }
+        }
+      }
+    }
+  }
+
+  private void equalize(){
+    for(EnumFacing facing : EnumFacing.VALUES){
+      if(this.canConnectTo(facing)){
+        TileEntity tile = BrewPipingHelper.getConnected(this.getWorld(), this.getPos(), facing);
+        if(tile != null){
+          IBrewTransport transport = ((IBrewTransport) tile);
+          if(!transport.canOutputTo(facing.getOpposite())){
+            continue;
+          }
+
+          if(((this.brew() == null) || (BrewStack.brewsEqual(this.brew(), transport.brew()))) && (this.suction(null) > transport.suction(facing.getOpposite())) && (this.suction(null) >= transport.minimumSuction())){
+            IBrew brew = transport.brew();
+            int amount = this.add(brew, transport.extract(brew, 1, facing.getOpposite()), facing);
+            if(amount > 0){
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Override
+  public int suction(EnumFacing facing) {
+    return this.suction;
+  }
+
+  @Override
+  public int minimumSuction() {
+    return 0;
   }
 
   @Override
   public void writeToNBT(NBTTagCompound compound) {
     super.writeToNBT(compound);
-
-    if (this.stack != null) {
-      NBTTagCompound stackCompound = new NBTTagCompound();
-      this.stack.writeToNBT(stackCompound);
-      compound.setTag("Stack", stackCompound);
-    }
+    compound.setInteger("Suction", this.suction);
   }
 
   @Override
-  public Packet<?> getDescriptionPacket() {
-    NBTTagCompound tag = new NBTTagCompound();
-    this.writeToNBT(tag);
-    return new SPacketUpdateTileEntity(this.getPos(), this.getBlockMetadata(), tag);
-  }
-
-  @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    this.readFromNBT(pkt.getNbtCompound());
-  }
-
-  @Override
-  public void update() {
-    if (!this.getWorld().isRemote) {
-
-    }
+  public void readFromNBT(NBTTagCompound compound) {
+    super.readFromNBT(compound);
+    this.suction = compound.getInteger("Suction");
   }
 }
