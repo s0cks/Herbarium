@@ -1,4 +1,4 @@
-package herbarium.common.blocks;
+package herbarium.common.blocks.flowers;
 
 import herbarium.api.botany.IFlower;
 import net.minecraft.block.Block;
@@ -6,17 +6,16 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public final class BlockNetherFlower
+public final class BlockCaveFlower
 extends BlockHerbariumFlower {
-
-  public BlockNetherFlower(IFlower flower) {
+  public BlockCaveFlower(IFlower flower) {
     super(flower);
   }
 
   @Override
   public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-    Block bottom = worldIn.getBlockState(pos.down())
-                          .getBlock();
-    return bottom == Blocks.SOUL_SAND;
+    Block top = worldIn.getBlockState(pos.up())
+                       .getBlock();
+    return top == Blocks.STONE;
   }
 }

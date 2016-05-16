@@ -41,7 +41,12 @@ implements IEffectTracker {
   private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
 
   public void setData(EntityPlayer player, PlayerEffectData data) {
-    this.data.put(player, data);
+    try{
+      lock.lock();
+      this.data.put(player, data);
+    } finally{
+      lock.unlock();
+    }
   }
 
   public PlayerEffectData getData(EntityPlayer player) {

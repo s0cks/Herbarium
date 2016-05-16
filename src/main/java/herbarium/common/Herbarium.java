@@ -15,18 +15,20 @@ import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
 import herbarium.client.font.HerbariumFontRenderer;
 import herbarium.client.gui.GuiJournal;
-import herbarium.common.blocks.BlockBarrel;
-import herbarium.common.blocks.BlockCaveFlower;
-import herbarium.common.blocks.BlockCoil;
-import herbarium.common.blocks.BlockCrucible;
 import herbarium.common.blocks.BlockDebug;
-import herbarium.common.blocks.BlockFlume;
-import herbarium.common.blocks.BlockHerbariumFlower;
 import herbarium.common.blocks.BlockJournal;
-import herbarium.common.blocks.BlockMortar;
-import herbarium.common.blocks.BlockNetherFlower;
-import herbarium.common.blocks.BlockPipe;
-import herbarium.common.blocks.BlockWaterFlower;
+import herbarium.common.blocks.brewing.BlockBarrel;
+import herbarium.common.blocks.brewing.BlockCoalescer;
+import herbarium.common.blocks.brewing.BlockCoil;
+import herbarium.common.blocks.brewing.BlockCrucible;
+import herbarium.common.blocks.brewing.BlockFermenter;
+import herbarium.common.blocks.brewing.BlockFlume;
+import herbarium.common.blocks.brewing.BlockMortar;
+import herbarium.common.blocks.brewing.BlockPipe;
+import herbarium.common.blocks.flowers.BlockCaveFlower;
+import herbarium.common.blocks.flowers.BlockHerbariumFlower;
+import herbarium.common.blocks.flowers.BlockNetherFlower;
+import herbarium.common.blocks.flowers.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.KeyHandler;
@@ -50,7 +52,9 @@ import herbarium.common.items.ItemPaste;
 import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.TileEntityBrewBarrel;
+import herbarium.common.tiles.TileEntityCoalescer;
 import herbarium.common.tiles.TileEntityCrucible;
+import herbarium.common.tiles.TileEntityFermenter;
 import herbarium.common.tiles.TileEntityMortar;
 import herbarium.common.tiles.TileEntityPipe;
 import net.minecraft.block.Block;
@@ -197,6 +201,13 @@ implements IPageManager,
   public static final Block blockDebug = new BlockDebug()
                                          .setCreativeTab(Herbarium.tab)
                                          .setUnlocalizedName("herba_debug");
+  public static final Block blockCoalescer = new BlockCoalescer()
+                                             .setCreativeTab(Herbarium.tab)
+                                             .setUnlocalizedName("hebra_coalescer");
+  public static final Block blockFermenter = new BlockFermenter()
+                                             .setCreativeTab(Herbarium.tab)
+                                             .setUnlocalizedName("herba_fermenter");
+
   // GUIs
   public static final byte GUI_JOURNAL = 0x1;
 
@@ -270,12 +281,16 @@ implements IPageManager,
     GameRegistry.registerBlock(blockBarrel, "barrel");
     GameRegistry.registerBlock(blockJournal, "journal_block");
     GameRegistry.registerBlock(blockDebug, "debug");
+    GameRegistry.registerBlock(blockCoalescer, "coalescer");
+    GameRegistry.registerBlock(blockFermenter, "fermenter");
 
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
     GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
     GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
     GameRegistry.registerTileEntity(TileEntityCrucible.class, "crucible");
+    GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
+    GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
 
     proxy.registerRenders();
   }

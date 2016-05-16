@@ -1,4 +1,4 @@
-package herbarium.common.blocks;
+package herbarium.common.blocks.flowers;
 
 import herbarium.api.botany.IFlower;
 import herbarium.common.core.botany.Flower;

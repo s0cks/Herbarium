@@ -1,6 +1,7 @@
-package herbarium.common.blocks;
+package herbarium.common.blocks.brewing;
 
 import herbarium.api.IPestle;
+import herbarium.common.blocks.flowers.BlockHerbariumFlower;
 import herbarium.common.tiles.TileEntityMortar;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

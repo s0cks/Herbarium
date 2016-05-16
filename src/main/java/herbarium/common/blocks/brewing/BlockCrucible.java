@@ -1,4 +1,4 @@
-package herbarium.common.blocks;
+package herbarium.common.blocks.brewing;
 
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.piping.IBrewStack;

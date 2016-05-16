@@ -5,7 +5,7 @@ import herbarium.client.render.RenderItemPageFP;
 import herbarium.client.render.tile.RenderTileMortar;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
-import herbarium.common.blocks.BlockWaterFlower;
+import herbarium.common.blocks.flowers.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemPaste;
 import herbarium.common.tiles.TileEntityMortar;
