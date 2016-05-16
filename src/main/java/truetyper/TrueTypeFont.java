@@ -369,28 +369,6 @@ public class TrueTypeFont {
     return this.fontMetrics.stringWidth(whatchars);
   }
 
-class FloatObject {
-  /**
-   * Character's width
-   */
-  public float width;
-
-  /**
-   * Character's height
-   */
-  public float height;
-
-  /**
-   * Character's stored x position
-   */
-  public float storedX;
-
-  /**
-   * Character's stored y position
-   */
-  public float storedY;
-}
-
   public float getWidth(int width) {
     float total = 0;
     FloatObject obj = charArray['W'];
@@ -519,5 +497,27 @@ class FloatObject {
       GL11.glPopMatrix();
 
     }
+  }
+
+  class FloatObject {
+    /**
+     * Character's width
+     */
+    public float width;
+
+    /**
+     * Character's height
+     */
+    public float height;
+
+    /**
+     * Character's stored x position
+     */
+    public float storedX;
+
+    /**
+     * Character's stored y position
+     */
+    public float storedY;
   }
 }

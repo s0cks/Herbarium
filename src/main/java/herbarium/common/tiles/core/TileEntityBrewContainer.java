@@ -11,34 +11,38 @@ extends TileEntityBrewSource
 implements IBrewTransport {
   protected final int maxAmount;
 
-  protected TileEntityBrewContainer(int maxAmount){
+  protected TileEntityBrewContainer(int maxAmount) {
     this.maxAmount = maxAmount;
   }
 
-  protected TileEntityBrewContainer(){
+  protected TileEntityBrewContainer() {
     this(IBrewStack.MAX_AMOUNT);
+  }
+
+  public void setBrewStack(BrewStack stack) {
+    this.stack = stack;
   }
 
   @Override
   public int add(IBrew brew, int amount, EnumFacing facing) {
-    if(brew == null) return 0;
-    if(!this.canInputFrom(brew, amount, facing)){
+    if (brew == null) return 0;
+    if (!this.canInputFrom(brew, amount, facing)) {
       return 0;
     }
 
-    if(this.stack == null){
+    if (this.stack == null) {
       return (this.stack = new BrewStack(brew, amount)).amount();
     }
 
-    if(!BrewStack.brewsEqual(this.stack.brew(), brew)){
+    if (!BrewStack.brewsEqual(this.stack.brew(), brew)) {
       return 0;
     }
 
     int filled = this.maxAmount - this.amount();
-    if(amount < filled){
+    if (amount < filled) {
       this.stack.setAmount(this.amount() + amount);
       filled = amount;
-    } else{
+    } else {
       this.stack.setAmount(this.maxAmount);
     }
 

@@ -3,7 +3,6 @@ package herbarium.common.tiles.core;
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.piping.IBrewSource;
 import herbarium.common.core.brew.piping.BrewStack;
-import herbarium.common.tiles.core.TileEntityHerbarium;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
@@ -31,8 +30,22 @@ implements IBrewSource {
   }
 
   @Override
+  public IBrew brew() {
+    return this.stack != null
+           ? this.stack.brew()
+           : null;
+  }
+
+  @Override
+  public int amount() {
+    return this.stack == null
+           ? 0
+           : this.stack.amount();
+  }
+
+  @Override
   public int extract(IBrew brew, int amount, EnumFacing facing) {
-    if(this.brew() == null || brew == null) return 0;
+    if (this.brew() == null || brew == null) return 0;
     if ((this.stack != null && BrewStack.brewsEqual(this.stack.brew(), brew)) && this.canOutputTo(facing)) {
       int drained = amount;
       if (this.amount() < drained) {
@@ -47,19 +60,5 @@ implements IBrewSource {
     }
 
     return 0;
-  }
-
-  @Override
-  public int amount() {
-    return this.stack == null
-           ? 0
-           : this.stack.amount();
-  }
-
-  @Override
-  public IBrew brew() {
-    return this.stack != null
-           ? this.stack.brew()
-           : null;
   }
 }

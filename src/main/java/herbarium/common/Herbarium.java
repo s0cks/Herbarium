@@ -134,7 +134,6 @@ implements IPageManager,
   public static final Item itemPaste = new ItemPaste()
                                        .setCreativeTab(Herbarium.tab)
                                        .setUnlocalizedName("herba_paste");
-
   // Blocks
   // Flowers
   public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
@@ -198,9 +197,9 @@ implements IPageManager,
   public static final Block blockDebug = new BlockDebug()
                                          .setCreativeTab(Herbarium.tab)
                                          .setUnlocalizedName("herba_debug");
-
   // GUIs
   public static final byte GUI_JOURNAL = 0x1;
+
   @Mod.Instance("herbarium")
   public static Herbarium instance;
   @SidedProxy(

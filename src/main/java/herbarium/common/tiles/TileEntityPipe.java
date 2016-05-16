@@ -12,30 +12,31 @@ import net.minecraft.util.ITickable;
 
 public final class TileEntityPipe
 extends TileEntityBrewTransport
-implements ITickable{
+implements ITickable {
   private int suction;
 
   @Override
   public void update() {
-    this.calculateSuction();;
-    if(this.suction > 0){
+    this.calculateSuction();
+    ;
+    if (this.suction > 0) {
       this.equalize();
     }
   }
 
-  private void calculateSuction(){
+  private void calculateSuction() {
     this.suction = 0;
-    for(EnumFacing facing : EnumFacing.VALUES){
-      if(this.canConnectTo(facing)){
+    for (EnumFacing facing : EnumFacing.VALUES) {
+      if (this.canConnectTo(facing)) {
         TileEntity tile = BrewPipingHelper.getConnected(this.getWorld(), this.getPos(), facing);
-        if(tile != null){
+        if (tile != null) {
           IBrewTransport transport = ((IBrewTransport) tile);
-          if((this.amount() > 0) && (!BrewStack.brewsEqual(this.brew(), transport.brew()))){
+          if ((this.amount() > 0) && (!BrewStack.brewsEqual(this.brew(), transport.brew()))) {
             continue;
           }
 
           int suction = transport.suction(facing.getOpposite());
-          if((suction > 0) && (suction > this.suction + 1)){
+          if ((suction > 0) && (suction > this.suction + 1)) {
             this.suction = suction - 1;
           }
         }
@@ -43,20 +44,20 @@ implements ITickable{
     }
   }
 
-  private void equalize(){
-    for(EnumFacing facing : EnumFacing.VALUES){
-      if(this.canConnectTo(facing)){
+  private void equalize() {
+    for (EnumFacing facing : EnumFacing.VALUES) {
+      if (this.canConnectTo(facing)) {
         TileEntity tile = BrewPipingHelper.getConnected(this.getWorld(), this.getPos(), facing);
-        if(tile != null){
+        if (tile != null) {
           IBrewTransport transport = ((IBrewTransport) tile);
-          if(!transport.canOutputTo(facing.getOpposite())){
+          if (!transport.canOutputTo(facing.getOpposite())) {
             continue;
           }
 
-          if(((this.brew() == null) || (BrewStack.brewsEqual(this.brew(), transport.brew()))) && (this.suction(null) > transport.suction(facing.getOpposite())) && (this.suction(null) >= transport.minimumSuction())){
+          if (((this.brew() == null) || (BrewStack.brewsEqual(this.brew(), transport.brew()))) && (this.suction(null) > transport.suction(facing.getOpposite())) && (this.suction(null) >= transport.minimumSuction())) {
             IBrew brew = transport.brew();
             int amount = this.add(brew, transport.extract(brew, 1, facing.getOpposite()), facing);
-            if(amount > 0){
+            if (amount > 0) {
               return;
             }
           }
@@ -76,14 +77,14 @@ implements ITickable{
   }
 
   @Override
-  public void writeToNBT(NBTTagCompound compound) {
-    super.writeToNBT(compound);
-    compound.setInteger("Suction", this.suction);
-  }
-
-  @Override
   public void readFromNBT(NBTTagCompound compound) {
     super.readFromNBT(compound);
     this.suction = compound.getInteger("Suction");
+  }
+
+  @Override
+  public void writeToNBT(NBTTagCompound compound) {
+    super.writeToNBT(compound);
+    compound.setInteger("Suction", this.suction);
   }
 }

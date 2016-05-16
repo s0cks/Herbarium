@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public final class BrewPipingHelper {
   public static TileEntity getConnected(World world, BlockPos pos, EnumFacing dir) {
     TileEntity tile = world.getTileEntity(pos.offset(dir));
-    if((tile instanceof IBrewTransport) && (((IBrewTransport) tile)).canConnectTo(dir.getOpposite())){
+    if ((tile instanceof IBrewTransport) && (((IBrewTransport) tile)).canConnectTo(dir.getOpposite())) {
       return tile;
     }
     return null;

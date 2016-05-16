@@ -4,7 +4,7 @@ import herbarium.api.brew.IBrew;
 import net.minecraft.util.EnumFacing;
 
 public abstract class TileEntityBrewTransport
-extends TileEntityBrewContainer{
+extends TileEntityBrewContainer {
   @Override
   public boolean canInputFrom(IBrew brew, int amount, EnumFacing facing) {
     return true;

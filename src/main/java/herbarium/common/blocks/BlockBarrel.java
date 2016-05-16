@@ -50,10 +50,10 @@ extends BlockContainer {
       playerIn.addChatComponentMessage(new TextComponentString("Suction: " + barrel.suction(EnumFacing.UP)));
       playerIn.addChatComponentMessage(new TextComponentString("Amount: " + barrel.amount()));
       return true;
-    } else{
-      if (stack.getItem() instanceof ItemBrew){
+    } else {
+      if (stack.getItem() instanceof ItemBrew) {
         IBrew brew = ItemBrew.getBrew(stack);
-        if(brew != null){
+        if (brew != null) {
           barrel.add(brew, IBrewStack.MAX_AMOUNT, EnumFacing.UP);
         }
       }

@@ -5,7 +5,7 @@ import herbarium.common.tiles.core.TileEntityBrewTransport;
 import net.minecraft.util.EnumFacing;
 
 public final class TileEntityCrucible
-extends TileEntityBrewTransport{
+extends TileEntityBrewTransport {
   @Override
   public boolean canInputFrom(IBrew brew, int amount, EnumFacing facing) {
     return false;

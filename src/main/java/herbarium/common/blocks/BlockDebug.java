@@ -27,8 +27,9 @@ extends Block {
       if (stack.getItem() instanceof ItemPage) {
         ItemPage.setPage(stack, HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
       }
-    } else{
-      Ruin.create(new ResourceLocation("herbarium", "schematics/Cross.schematic")).spawn(worldIn, pos);
+    } else {
+      Ruin.create(new ResourceLocation("herbarium", "schematics/Cross.schematic"))
+          .spawn(worldIn, pos);
     }
     return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
   }

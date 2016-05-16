@@ -2,6 +2,7 @@ package herbarium.common.blocks;
 
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.piping.IBrewStack;
+import herbarium.common.core.brew.piping.BrewStack;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.tiles.TileEntityCrucible;
 import net.minecraft.block.BlockContainer;
@@ -20,30 +21,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public final class BlockCrucible
-extends BlockContainer{
+extends BlockContainer {
   private final AxisAlignedBB box = new AxisAlignedBB(0.1, 0.0, 0.1, 0.9, 0.875, 0.9);
 
   public BlockCrucible() {
     super(Material.IRON);
-  }
-
-  @Override
-  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-    ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
-    TileEntityCrucible crucible = ((TileEntityCrucible) worldIn.getTileEntity(pos));
-    if (stack == null) {
-      playerIn.addChatComponentMessage(new TextComponentString("Suction: " + crucible.suction(EnumFacing.UP)));
-      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + crucible.amount()));
-      return true;
-    } else{
-      if (stack.getItem() instanceof ItemBrew){
-        IBrew brew = ItemBrew.getBrew(stack);
-        if(brew != null){
-          crucible.add(brew, IBrewStack.MAX_AMOUNT, EnumFacing.UP);
-        }
-      }
-    }
-    return false;
   }
 
   @Override
@@ -63,6 +45,25 @@ extends BlockContainer{
 
   @Override
   public boolean isOpaqueCube(IBlockState state) {
+    return false;
+  }
+
+  @Override
+  public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    ItemStack stack = playerIn.getHeldItem(EnumHand.MAIN_HAND);
+    TileEntityCrucible crucible = ((TileEntityCrucible) worldIn.getTileEntity(pos));
+    if (stack == null) {
+      playerIn.addChatComponentMessage(new TextComponentString("Suction: " + crucible.suction(EnumFacing.UP)));
+      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + crucible.amount()));
+      return true;
+    } else {
+      if (stack.getItem() instanceof ItemBrew) {
+        IBrew brew = ItemBrew.getBrew(stack);
+        if (brew != null) {
+          crucible.setBrewStack(new BrewStack(brew, IBrewStack.MAX_AMOUNT));
+        }
+      }
+    }
     return false;
   }
 
