@@ -1,6 +1,7 @@
 package herbarium.common.blocks;
 
 import herbarium.api.HerbariumApi;
+import herbarium.common.core.Ruin;
 import herbarium.common.items.ItemPage;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -25,6 +27,8 @@ extends Block {
       if (stack.getItem() instanceof ItemPage) {
         ItemPage.setPage(stack, HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
       }
+    } else{
+      Ruin.create(new ResourceLocation("herbarium", "schematics/Cross.schematic")).spawn(worldIn, pos);
     }
     return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
   }

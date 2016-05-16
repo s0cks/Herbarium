@@ -8,7 +8,6 @@ import herbarium.api.commentarium.journal.IJournalFactory;
 import herbarium.api.commentarium.pages.IPageManager;
 import herbarium.api.commentarium.pages.IPageTracker;
 import herbarium.api.genetics.IAlleleManager;
-import herbarium.api.ruins.IRuinManager;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -20,8 +19,6 @@ public final class HerbariumApi {
   public static IPageTracker PAGE_TRACKER;
   // Flowers
   public static IFlowerManager FLOWER_MANAGER;
-  // Ruins
-  public static IRuinManager RUIN_MANAGER;
   // Effects
   public static IEffectTracker EFFECT_TRACKER;
   public static IEffectManager EFFECT_MANAGER;

@@ -3,7 +3,6 @@ package herbarium.common.items;
 import herbarium.api.HerbariumApi;
 import herbarium.api.commentarium.pages.IPage;
 import herbarium.common.core.NBTHelper;
-import herbarium.common.core.RuinGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,7 +42,6 @@ extends Item {
         double x = playerIn.posX + worldIn.rand.nextInt(150);
         double z = playerIn.posZ + worldIn.rand.nextInt(150);
         BlockPos pos = worldIn.getTopSolidOrLiquidBlock(new BlockPos(x, 1, z));
-        RuinGenerator.generate(HerbariumApi.RUIN_MANAGER.getRandom(worldIn.rand), worldIn, pos = new BlockPos(x, pos.getY(), z), HerbariumApi.PAGE_TRACKER.unlearnedPage(playerIn));
         playerIn.addChatComponentMessage(new TextComponentString("Spawned Ruin @" + pos));
       }
     } else {

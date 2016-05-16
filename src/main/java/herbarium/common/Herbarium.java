@@ -13,8 +13,6 @@ import herbarium.api.genetics.IAllele;
 import herbarium.api.genetics.IAlleleManager;
 import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
-import herbarium.api.ruins.IRuin;
-import herbarium.api.ruins.IRuinManager;
 import herbarium.client.font.HerbariumFontRenderer;
 import herbarium.client.gui.GuiJournal;
 import herbarium.common.blocks.BlockBarrel;
@@ -28,13 +26,10 @@ import herbarium.common.blocks.BlockJournal;
 import herbarium.common.blocks.BlockMortar;
 import herbarium.common.blocks.BlockNetherFlower;
 import herbarium.common.blocks.BlockPipe;
-import herbarium.common.blocks.BlockRuinSelector;
 import herbarium.common.blocks.BlockWaterFlower;
 import herbarium.common.core.BiomeSpecificCaveGeneration;
 import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.KeyHandler;
-import herbarium.common.core.Ruin;
-import herbarium.common.core.RuinGenerator;
 import herbarium.common.core.botany.FlowerFactory;
 import herbarium.common.core.botany.FlowerSpecies;
 import herbarium.common.core.botany.Flowers;
@@ -58,7 +53,6 @@ import herbarium.common.tiles.TileEntityBrewBarrel;
 import herbarium.common.tiles.TileEntityCrucible;
 import herbarium.common.tiles.TileEntityMortar;
 import herbarium.common.tiles.TileEntityPipe;
-import herbarium.common.tiles.TileEntityRuinSelector;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
@@ -104,7 +98,6 @@ public final class Herbarium
 implements IPageManager,
            IEffectManager,
            IGuiHandler,
-           IRuinManager,
            IAlleleManager,
            IGemOreTracker {
   static {
@@ -117,6 +110,7 @@ implements IPageManager,
 
   public static final Random random = new Random();
   public static final Gson gson = new GsonBuilder()
+                                  .setPrettyPrinting()
                                   .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
                                   .create();
   public static final CreativeTabs tab = new CreativeTabHerbarium();
@@ -140,6 +134,7 @@ implements IPageManager,
   public static final Item itemPaste = new ItemPaste()
                                        .setCreativeTab(Herbarium.tab)
                                        .setUnlocalizedName("herba_paste");
+
   // Blocks
   // Flowers
   public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
@@ -203,9 +198,6 @@ implements IPageManager,
   public static final Block blockDebug = new BlockDebug()
                                          .setCreativeTab(Herbarium.tab)
                                          .setUnlocalizedName("herba_debug");
-  public static final Block blockRuinSelector = new BlockRuinSelector()
-                                                .setCreativeTab(Herbarium.tab)
-                                                .setUnlocalizedName("herba_ruin_selector");
 
   // GUIs
   public static final byte GUI_JOURNAL = 0x1;
@@ -218,7 +210,6 @@ implements IPageManager,
   public static CommonProxy proxy;
 
   private final Set<IPage> pages = new HashSet<>();
-  private final List<IRuin> ruins = new LinkedList<>();
   private final List<IEffect> effects = new LinkedList<>();
   private final List<IAllele> alleles = new LinkedList<>();
   private final List<ISpecies> species = new LinkedList<>();
@@ -231,7 +222,6 @@ implements IPageManager,
 
     HerbariumApi.PAGE_MANAGER = this;
     HerbariumApi.PAGE_TRACKER = new PageTracker();
-    HerbariumApi.RUIN_MANAGER = this;
     HerbariumApi.EFFECT_MANAGER = this;
     HerbariumApi.EFFECT_TRACKER = new EffectTracker();
     HerbariumApi.GEM_TRACKER = this;
@@ -281,27 +271,14 @@ implements IPageManager,
     GameRegistry.registerBlock(blockBarrel, "barrel");
     GameRegistry.registerBlock(blockJournal, "journal_block");
     GameRegistry.registerBlock(blockDebug, "debug");
-    GameRegistry.registerBlock(blockRuinSelector, "ruin_selector");
 
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
     GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
     GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
-    GameRegistry.registerTileEntity(TileEntityRuinSelector.class, "ruin_selector");
     GameRegistry.registerTileEntity(TileEntityCrucible.class, "crucible");
 
     proxy.registerRenders();
-  }
-
-  private void registerRuin(ResourceLocation loc) {
-    try (InputStream in = proxy.getClient()
-                               .getResourceManager()
-                               .getResource(loc)
-                               .getInputStream()) {
-      this.register(gson.fromJson(new InputStreamReader(in), Ruin.class));
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
   }
 
   @Mod.EventHandler
@@ -309,11 +286,6 @@ implements IPageManager,
     NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
 
     proxy.registerColors();
-
-    String[] ruins = new String[]{
-    "basic"
-    };
-    for (String ruin : ruins) this.registerRuin(new ResourceLocation("herbarium", "ruins/" + ruin + ".json"));
 
     String[] pages = new String[]{
     "Commentarium"
@@ -336,7 +308,6 @@ implements IPageManager,
 
     MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
     MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
-    MinecraftForge.EVENT_BUS.register(new RuinGenerator());
     MinecraftForge.EVENT_BUS.register(new KeyHandler());
 
     MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockAlstromeria, Biomes.PLAINS, Biomes.RIVER, Biomes.FOREST_HILLS));
@@ -470,41 +441,6 @@ implements IPageManager,
       default:
         return null;
     }
-  }
-
-  @Override
-  public void register(IRuin ruin) {
-    for (IRuin r : this.ruins) {
-      if (r.uuid()
-           .equals(ruin.uuid())) {
-        return;
-      }
-    }
-
-    this.ruins.add(ruin);
-  }
-
-  @Override
-  public IRuin getRuin(String uuid) {
-    for (IRuin r : this.ruins) {
-      if (r.uuid()
-           .equals(uuid)) {
-        return r;
-      }
-    }
-
-    return null;
-  }
-
-  @Override
-  public IRuin getRandom(Random rand) {
-    for (IRuin ruin : this.ruins) {
-      if (rand.nextBoolean()) {
-        return ruin;
-      }
-    }
-
-    return this.ruins.get(0);
   }
 
   @Override
