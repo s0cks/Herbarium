@@ -4,7 +4,7 @@ import herbarium.api.brew.IBrew;
 import herbarium.api.brew.piping.IBrewStack;
 import herbarium.common.core.brew.piping.BrewStack;
 import herbarium.common.items.ItemBrew;
-import herbarium.common.tiles.TileEntityCrucible;
+import herbarium.common.tiles.brewing.TileEntityCrucible;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

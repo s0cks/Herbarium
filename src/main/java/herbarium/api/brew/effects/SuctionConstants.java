@@ -1,7 +1,7 @@
 package herbarium.api.brew.effects;
 
 public final class SuctionConstants {
-  public static final int MAX_SUCTION = 100;
-  public static final int MIN_SUCTION = 0;
-  public static final int PIPE_SUCTION = 25;
+  public static final int CONSUMER_SUCTION = 32;
+  public static final int NO_SUCTION = 0;
+  public static final int PRODUCER_SUCTION = NO_SUCTION;
 }

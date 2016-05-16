@@ -8,7 +8,7 @@ import herbarium.common.Herbarium;
 import herbarium.common.blocks.flowers.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemPaste;
-import herbarium.common.tiles.TileEntityMortar;
+import herbarium.common.tiles.brewing.TileEntityMortar;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;

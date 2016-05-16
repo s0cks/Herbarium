@@ -1,6 +1,7 @@
-package herbarium.common.tiles;
+package herbarium.common.tiles.brewing;
 
 import herbarium.api.brew.IBrew;
+import herbarium.api.brew.effects.SuctionConstants;
 import herbarium.api.brew.piping.IBrewTransport;
 import herbarium.common.core.brew.piping.BrewPipingHelper;
 import herbarium.common.core.brew.piping.BrewStack;
@@ -18,8 +19,7 @@ implements ITickable {
   @Override
   public void update() {
     this.calculateSuction();
-    ;
-    if (this.suction > 0) {
+    if (this.suction > SuctionConstants.NO_SUCTION) {
       this.equalize();
     }
   }
@@ -36,7 +36,7 @@ implements ITickable {
           }
 
           int suction = transport.suction(facing.getOpposite());
-          if ((suction > 0) && (suction > this.suction + 1)) {
+          if ((suction > SuctionConstants.NO_SUCTION) && (suction > this.suction + 1)) {
             this.suction = suction - 1;
           }
         }
@@ -73,7 +73,7 @@ implements ITickable {
 
   @Override
   public int minimumSuction() {
-    return 0;
+    return SuctionConstants.NO_SUCTION;
   }
 
   @Override

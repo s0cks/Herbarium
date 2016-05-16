@@ -1,6 +1,7 @@
-package herbarium.common.tiles;
+package herbarium.common.tiles.brewing;
 
 import herbarium.api.brew.IBrew;
+import herbarium.api.brew.effects.SuctionConstants;
 import herbarium.api.brew.piping.IBrewStack;
 import herbarium.api.brew.piping.IBrewTransport;
 import herbarium.common.core.brew.piping.BrewPipingHelper;
@@ -9,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 
-public final class TileEntityCoalescer
+public final class TileEntityFermenter
 extends TileEntity
 implements IBrewTransport,
            ITickable {
@@ -18,9 +19,6 @@ implements IBrewTransport,
   EnumFacing.EAST,
   EnumFacing.NORTH,
   };
-
-  private boolean rotating;
-  private float rotation;
 
   private BrewStack[] inputs = new BrewStack[3];
   private BrewStack output;
@@ -71,15 +69,15 @@ implements IBrewTransport,
   public int suction(EnumFacing facing) {
     BrewStack input = this.getInput(facing);
     if ((input == null) || (input.amount() < IBrewStack.MAX_AMOUNT)) {
-      return 32;
+      return SuctionConstants.CONSUMER_SUCTION;
     }
 
-    return 0;
+    return SuctionConstants.NO_SUCTION;
   }
 
   @Override
   public int minimumSuction() {
-    return 32;
+    return SuctionConstants.NO_SUCTION;
   }
 
   @Override

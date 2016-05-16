@@ -1,4 +1,4 @@
-package herbarium.common.tiles;
+package herbarium.common.tiles.brewing;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

@@ -2,7 +2,7 @@ package herbarium.client.render.tile;
 
 import herbarium.client.RenderHelper;
 import herbarium.common.Herbarium;
-import herbarium.common.tiles.TileEntityMortar;
+import herbarium.common.tiles.brewing.TileEntityMortar;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;

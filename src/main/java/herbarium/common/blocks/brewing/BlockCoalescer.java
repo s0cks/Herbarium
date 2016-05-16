@@ -2,7 +2,7 @@ package herbarium.common.blocks.brewing;
 
 import herbarium.api.brew.IBrew;
 import herbarium.api.brew.effects.IEffect;
-import herbarium.common.tiles.TileEntityCoalescer;
+import herbarium.common.tiles.brewing.TileEntityCoalescer;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

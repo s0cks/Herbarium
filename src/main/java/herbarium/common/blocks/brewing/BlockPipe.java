@@ -1,6 +1,6 @@
 package herbarium.common.blocks.brewing;
 
-import herbarium.common.tiles.TileEntityPipe;
+import herbarium.common.tiles.brewing.TileEntityPipe;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

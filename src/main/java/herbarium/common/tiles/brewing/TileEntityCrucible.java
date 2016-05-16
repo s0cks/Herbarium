@@ -1,6 +1,7 @@
-package herbarium.common.tiles;
+package herbarium.common.tiles.brewing;
 
 import herbarium.api.brew.IBrew;
+import herbarium.api.brew.effects.SuctionConstants;
 import herbarium.common.tiles.core.TileEntityBrewTransport;
 import net.minecraft.util.EnumFacing;
 
@@ -13,11 +14,11 @@ extends TileEntityBrewTransport {
 
   @Override
   public int suction(EnumFacing facing) {
-    return 0;
+    return SuctionConstants.PRODUCER_SUCTION;
   }
 
   @Override
   public int minimumSuction() {
-    return 0;
+    return SuctionConstants.NO_SUCTION;
   }
 }
