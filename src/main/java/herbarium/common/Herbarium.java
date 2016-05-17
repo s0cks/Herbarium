@@ -185,7 +185,6 @@ implements IPageManager,
     HerbariumItems.init();
     HerbariumBlocks.init();
 
-    // Blocks
     // Flowers
     GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
     GameRegistry.registerBlock(blockBelladonna, "belladonna");

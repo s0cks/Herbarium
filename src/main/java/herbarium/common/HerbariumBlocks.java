@@ -11,39 +11,50 @@ import herbarium.common.blocks.brewing.BlockFlume;
 import herbarium.common.blocks.brewing.BlockMortar;
 import herbarium.common.blocks.brewing.BlockPipe;
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public final class HerbariumBlocks {
   public static final Block blockCrucible = new BlockCrucible()
                                             .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_crucible");
+                                            .setUnlocalizedName("crucible")
+                                            .setRegistryName(new ResourceLocation("herbarium", "crucible"));
   public static final Block blockCoil = new BlockCoil()
                                         .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_coil");
+                                        .setUnlocalizedName("coil")
+                                        .setRegistryName(new ResourceLocation("herbarium", "coil"));
   public static final Block blockFlume = new BlockFlume()
                                          .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_flume");
+                                         .setUnlocalizedName("flume")
+                                         .setRegistryName(new ResourceLocation("herbarium", "flume"));
   public static final Block blockPipe = new BlockPipe()
                                         .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_pipe");
+                                        .setUnlocalizedName("pipe")
+                                        .setRegistryName(new ResourceLocation("herbarium", "pipe"));
   public static final Block blockMortar = new BlockMortar()
                                           .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_mortar");
+                                          .setUnlocalizedName("mortar")
+                                          .setRegistryName(new ResourceLocation("herbarium", "mortar"));
   public static final Block blockBarrel = new BlockBarrel()
                                           .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_barrel");
+                                          .setUnlocalizedName("barrel")
+                                          .setRegistryName(new ResourceLocation("herbarium", "barrel"));
   public static final Block blockJournal = new BlockJournal()
                                            .setCreativeTab(Herbarium.tab)
-                                           .setUnlocalizedName("herba_journal");
+                                           .setUnlocalizedName("journal")
+                                           .setRegistryName(new ResourceLocation("herbarium", "journal"));
   public static final Block blockDebug = new BlockDebug()
                                          .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_debug");
+                                         .setUnlocalizedName("debug")
+                                         .setRegistryName(new ResourceLocation("herbarium", "debug"));
   public static final Block blockCoalescer = new BlockCoalescer()
                                              .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("hebra_coalescer");
+                                             .setUnlocalizedName("coalescer")
+                                             .setRegistryName(new ResourceLocation("herbarium", "coalescer"));
   public static final Block blockFermenter = new BlockFermenter()
                                              .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_fermenter");
+                                             .setUnlocalizedName("fermenter")
+                                             .setRegistryName(new ResourceLocation("herbarium", "fermenter"));
 
   public static void init() {
     GameRegistry.register(blockCrucible);
