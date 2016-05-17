@@ -1,6 +1,7 @@
 package herbarium.common.items;
 
 import herbarium.common.Herbarium;
+import herbarium.common.HerbariumBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ extends Item {
     } else {
       if (worldIn.isAirBlock(pos.up())) {
         stack.stackSize--;
-        worldIn.setBlockState(pos.up(), Herbarium.blockJournal.getDefaultState());
+        worldIn.setBlockState(pos.up(), HerbariumBlocks.blockJournal.getDefaultState());
       }
     }
     return EnumActionResult.SUCCESS;

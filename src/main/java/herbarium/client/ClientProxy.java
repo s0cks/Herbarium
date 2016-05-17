@@ -5,6 +5,8 @@ import herbarium.client.render.RenderItemPageFP;
 import herbarium.client.render.tile.RenderTileMortar;
 import herbarium.common.CommonProxy;
 import herbarium.common.Herbarium;
+import herbarium.common.HerbariumBlocks;
+import herbarium.common.HerbariumItems;
 import herbarium.common.blocks.flowers.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemPaste;
@@ -41,18 +43,20 @@ extends CommonProxy {
 
   @Override
   public void registerRenders() {
+    // =========================================================================
     // Items
-    registerRender(Herbarium.itemJournal, "journal");
-    registerRender(Herbarium.itemPage, "page");
-    registerRender(Herbarium.itemPestle, "pestle");
-    registerRender(Herbarium.itemBrew, 0, "remedy");
-    registerRender(Herbarium.itemBrew, 1, "spirit");
-    registerRender(Herbarium.itemBrew, 2, "venom");
-
+    registerRender(HerbariumItems.itemJournal, "journal");
+    registerRender(HerbariumItems.itemPage, "page");
+    registerRender(HerbariumItems.itemPestle, "pestle");
+    registerRender(HerbariumItems.itemBrew, 0, "remedy");
+    registerRender(HerbariumItems.itemBrew, 1, "spirit");
+    registerRender(HerbariumItems.itemBrew, 2, "venom");
     for (int i = 0; i < ItemPaste.names.length; i++) {
-      registerRender(Herbarium.itemPaste, i, ItemPaste.names[i] + "_paste");
+      registerRender(HerbariumItems.itemPaste, i, ItemPaste.names[i] + "_paste");
     }
+    // =========================================================================
 
+    // =========================================================================
     // Blocks
     registerRender(Herbarium.blockAlstromeria, "alstromeria");
     registerRender(Herbarium.blockBelladonna, "belladonna");
@@ -66,22 +70,34 @@ extends CommonProxy {
     registerRender(Herbarium.blockLotus, "spring_lotus");
     registerRender(Herbarium.blockNether, "igneous_spear");
     registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
-    registerRender(Herbarium.blockCoil, "coil");
-    registerRender(Herbarium.blockCrucible, "crucible");
-    registerRender(Herbarium.blockFlume, "flume");
-    registerRender(Herbarium.blockPipe, "pipe");
-    registerRender(Herbarium.blockMortar, "mortar");
-    registerRender(Herbarium.blockBarrel, "barrel");
-    registerRender(Herbarium.blockJournal, "journal_block");
 
+    registerRender(HerbariumBlocks.blockCoil, "coil");
+    registerRender(HerbariumBlocks.blockCrucible, "crucible");
+    registerRender(HerbariumBlocks.blockFlume, "flume");
+    registerRender(HerbariumBlocks.blockPipe, "pipe");
+    registerRender(HerbariumBlocks.blockMortar, "mortar");
+    registerRender(HerbariumBlocks.blockBarrel, "barrel");
+    registerRender(HerbariumBlocks.blockJournal, "journal_block");
+    // =========================================================================
+
+    // =========================================================================
+    // Misc
     MinecraftForge.EVENT_BUS.register(new RenderItemPageFP());
     MinecraftForge.EVENT_BUS.register(new ClientEffectHandler());
+    // =========================================================================
   }
 
   @Override
   public void registerColors() {
-    registerColor(new ItemBrew.BrewColorizer(), Herbarium.itemBrew);
+    // =========================================================================
+    // Items
+    registerColor(new ItemBrew.BrewColorizer(), HerbariumItems.itemBrew);
+    // =========================================================================
+
+    // =========================================================================
+    // Blocks
     registerColor(new BlockWaterFlower.SpringLotusColorizer(), Herbarium.blockLotus);
+    // =========================================================================
   }
 
   @Override

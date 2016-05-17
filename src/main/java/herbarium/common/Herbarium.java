@@ -3,7 +3,7 @@ package herbarium.common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import herbarium.api.HerbariumApi;
-import herbarium.api.IGemOreTracker;
+import herbarium.api.IGemTracker;
 import herbarium.api.brew.effects.IEffect;
 import herbarium.api.brew.effects.IEffectManager;
 import herbarium.api.commentarium.pages.IPage;
@@ -15,16 +15,6 @@ import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
 import herbarium.client.font.HerbariumFontRenderer;
 import herbarium.client.gui.GuiJournal;
-import herbarium.common.blocks.BlockDebug;
-import herbarium.common.blocks.BlockJournal;
-import herbarium.common.blocks.brewing.BlockBarrel;
-import herbarium.common.blocks.brewing.BlockCoalescer;
-import herbarium.common.blocks.brewing.BlockCoil;
-import herbarium.common.blocks.brewing.BlockCrucible;
-import herbarium.common.blocks.brewing.BlockFermenter;
-import herbarium.common.blocks.brewing.BlockFlume;
-import herbarium.common.blocks.brewing.BlockMortar;
-import herbarium.common.blocks.brewing.BlockPipe;
 import herbarium.common.blocks.flowers.BlockCaveFlower;
 import herbarium.common.blocks.flowers.BlockHerbariumFlower;
 import herbarium.common.blocks.flowers.BlockNetherFlower;
@@ -45,11 +35,6 @@ import herbarium.common.core.commentarium.PageTracker;
 import herbarium.common.core.genetics.AlleleManager;
 import herbarium.common.core.journal.EnumJournalChapters;
 import herbarium.common.core.journal.JournalFactory;
-import herbarium.common.items.ItemBrew;
-import herbarium.common.items.ItemJournal;
-import herbarium.common.items.ItemPage;
-import herbarium.common.items.ItemPaste;
-import herbarium.common.items.ItemPestle;
 import herbarium.common.net.HerbariumNetwork;
 import herbarium.common.tiles.brewing.TileEntityBrewBarrel;
 import herbarium.common.tiles.brewing.TileEntityCoalescer;
@@ -66,7 +51,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -103,7 +87,7 @@ implements IPageManager,
            IEffectManager,
            IGuiHandler,
            IAlleleManager,
-           IGemOreTracker {
+           IGemTracker {
   static {
     HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
     HerbariumApi.ALLELE_MANAGER = new AlleleManager();
@@ -118,26 +102,6 @@ implements IPageManager,
                                   .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
                                   .create();
   public static final CreativeTabs tab = new CreativeTabHerbarium();
-  // Items
-  public static final Item itemJournal = new ItemJournal()
-                                         .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_commentarium")
-                                         .setMaxStackSize(1);
-  public static final Item itemPage = new ItemPage()
-                                      .setCreativeTab(Herbarium.tab)
-                                      .setUnlocalizedName("herba_page")
-                                      .setMaxStackSize(1);
-  public static final Item itemPestle = new ItemPestle()
-                                        .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_pestle")
-                                        .setMaxStackSize(1);
-  public static final Item itemBrew = new ItemBrew()
-                                      .setCreativeTab(Herbarium.tab)
-                                      .setUnlocalizedName("herba_brew")
-                                      .setMaxStackSize(1);
-  public static final Item itemPaste = new ItemPaste()
-                                       .setCreativeTab(Herbarium.tab)
-                                       .setUnlocalizedName("herba_paste");
   // Blocks
   // Flowers
   public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
@@ -176,38 +140,6 @@ implements IPageManager,
   public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPICAL_BERRIES.individual())
                                                    .setCreativeTab(Herbarium.tab)
                                                    .setUnlocalizedName("herba_tropical_berries");
-  // Misc
-  public static final Block blockCrucible = new BlockCrucible()
-                                            .setCreativeTab(Herbarium.tab)
-                                            .setUnlocalizedName("herba_crucible");
-  public static final Block blockCoil = new BlockCoil()
-                                        .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_coil");
-  public static final Block blockFlume = new BlockFlume()
-                                         .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_flume");
-  public static final Block blockPipe = new BlockPipe()
-                                        .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_pipe");
-  public static final Block blockMortar = new BlockMortar()
-                                          .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_mortar");
-  public static final Block blockBarrel = new BlockBarrel()
-                                          .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_barrel");
-  public static final Block blockJournal = new BlockJournal()
-                                           .setCreativeTab(Herbarium.tab)
-                                           .setUnlocalizedName("herba_journal");
-  public static final Block blockDebug = new BlockDebug()
-                                         .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_debug");
-  public static final Block blockCoalescer = new BlockCoalescer()
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("hebra_coalescer");
-  public static final Block blockFermenter = new BlockFermenter()
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_fermenter");
-
   // GUIs
   public static final byte GUI_JOURNAL = 0x1;
 
@@ -250,12 +182,8 @@ implements IPageManager,
     register(Blocks.REDSTONE_ORE);
     register(Blocks.LIT_REDSTONE_ORE);
 
-    // Items
-    GameRegistry.registerItem(itemJournal, "journal");
-    GameRegistry.registerItem(itemPage, "page");
-    GameRegistry.registerItem(itemPestle, "pestle");
-    GameRegistry.registerItem(itemBrew, "brew");
-    GameRegistry.registerItem(itemPaste, "paste");
+    HerbariumItems.init();
+    HerbariumBlocks.init();
 
     // Blocks
     // Flowers
@@ -271,18 +199,6 @@ implements IPageManager,
     GameRegistry.registerBlock(blockLotus, "spring_lotus");
     GameRegistry.registerBlock(blockNether, "igneous_spear");
     GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
-
-    // Misc
-    GameRegistry.registerBlock(blockCrucible, "crucible");
-    GameRegistry.registerBlock(blockCoil, "coil");
-    GameRegistry.registerBlock(blockFlume, "flume");
-    GameRegistry.registerBlock(blockPipe, "pipe");
-    GameRegistry.registerBlock(blockMortar, "mortar");
-    GameRegistry.registerBlock(blockBarrel, "barrel");
-    GameRegistry.registerBlock(blockJournal, "journal_block");
-    GameRegistry.registerBlock(blockDebug, "debug");
-    GameRegistry.registerBlock(blockCoalescer, "coalescer");
-    GameRegistry.registerBlock(blockFermenter, "fermenter");
 
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");

@@ -1,6 +1,6 @@
 package herbarium.common.blocks;
 
-import herbarium.common.Herbarium;
+import herbarium.common.HerbariumItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -36,6 +36,6 @@ extends Block {
 
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return Herbarium.itemJournal;
+    return HerbariumItems.itemJournal;
   }
 }
