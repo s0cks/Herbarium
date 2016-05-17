@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public final class BlockCoalescer
 extends BlockContainer {
-  public BlockCoalescer(){
+  public BlockCoalescer() {
     super(Material.IRON);
   }
 
@@ -29,11 +29,15 @@ extends BlockContainer {
     TileEntityCoalescer coalescer = (((TileEntityCoalescer) worldIn.getTileEntity(pos)));
     if (stack == null) {
       playerIn.addChatComponentMessage(new TextComponentString("Suction: " + coalescer.suction(side)));
-      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + (coalescer.getInput(side) != null ? coalescer.getInput(side).amount() : 0)));
+      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + (coalescer.getInput(side) != null
+                                                                             ? coalescer.getInput(side)
+                                                                                        .amount()
+                                                                             : 0)));
 
-      if(coalescer.getInput(side) != null){
-        IBrew brew = coalescer.getInput(side).brew();
-        for(IEffect effect : brew.effects()){
+      if (coalescer.getInput(side) != null) {
+        IBrew brew = coalescer.getInput(side)
+                              .brew();
+        for (IEffect effect : brew.effects()) {
           playerIn.addChatComponentMessage(new TextComponentString(I18n.translateToLocal(effect.uuid())));
         }
       }

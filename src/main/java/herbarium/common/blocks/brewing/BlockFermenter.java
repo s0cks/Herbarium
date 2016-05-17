@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 public final class BlockFermenter
 extends BlockContainer {
-  public BlockFermenter(){
+  public BlockFermenter() {
     super(Material.WOOD);
   }
 
@@ -34,11 +34,15 @@ extends BlockContainer {
     TileEntityFermenter fermenter = (((TileEntityFermenter) worldIn.getTileEntity(pos)));
     if (stack == null) {
       playerIn.addChatComponentMessage(new TextComponentString("Suction: " + fermenter.suction(side)));
-      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + (fermenter.getInput(side) != null ? fermenter.getInput(side).amount() : 0)));
+      playerIn.addChatComponentMessage(new TextComponentString("Amount: " + (fermenter.getInput(side) != null
+                                                                             ? fermenter.getInput(side)
+                                                                                        .amount()
+                                                                             : 0)));
 
-      if(fermenter.getInput(side) != null){
-        IBrew brew = fermenter.getInput(side).brew();
-        for(IEffect effect : brew.effects()){
+      if (fermenter.getInput(side) != null) {
+        IBrew brew = fermenter.getInput(side)
+                              .brew();
+        for (IEffect effect : brew.effects()) {
           playerIn.addChatComponentMessage(new TextComponentString(I18n.translateToLocal(effect.uuid())));
         }
       }

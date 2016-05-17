@@ -16,8 +16,8 @@ import java.util.Queue;
 public final class EffectChapterFactory {
   public static SortedArraySet<IJournalPage> createChapter() {
     SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
-    pages.add(new DelegatedJournalPage(EnumJournalChapters.EFFECTS.uuid(), 0,
-                                       new ChapterHeaderRenderer(EnumJournalChapters.EFFECTS.uuid(),
+    pages.add(new JournalPage(EnumJournalChapters.EFFECTS.uuid(), 0,
+                              new ChapterHeaderRenderer(EnumJournalChapters.EFFECTS.uuid(),
                                                                  EnumJournalChapters.EFFECTS.ordinal())));
 
     Queue<IEffect> effects = new LinkedList<>(HerbariumApi.EFFECT_MANAGER.allEffects());
@@ -32,7 +32,7 @@ public final class EffectChapterFactory {
         if (effects.isEmpty()) break clearIt;
       }
 
-      pages.add(new DelegatedJournalPage("herbarium.journal.chapters.effects." + pageOrdinal, pageOrdinal++, new
+      pages.add(new JournalPage("herbarium.journal.chapters.effects." + pageOrdinal, pageOrdinal++, new
                                                                                                              EffectPageRenderer(e)));
     }
 

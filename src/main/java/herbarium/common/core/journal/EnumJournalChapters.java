@@ -15,7 +15,7 @@ implements IJournalChapter {
     @Override
     protected List<IJournalPage> initialize() {
       SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
-      pages.add(new DelegatedJournalPage(uuid(), 1, new TitlePageRenderer()));
+      pages.add(new JournalPage(uuid(), 1, new TitlePageRenderer()));
       return pages;
     }
   },
@@ -23,7 +23,7 @@ implements IJournalChapter {
     @Override
     protected List<IJournalPage> initialize() {
       SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
-      pages.add(new DelegatedJournalPage(uuid(), 1, new ChapterHeaderRenderer(uuid(), ordinal())));
+      pages.add(new JournalPage(uuid(), 1, new ChapterHeaderRenderer(uuid(), ordinal())));
       return pages;
     }
   },

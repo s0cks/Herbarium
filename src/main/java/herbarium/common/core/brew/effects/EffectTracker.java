@@ -41,10 +41,10 @@ implements IEffectTracker {
   private final Map<EntityPlayer, PlayerEffectData> data = new ConcurrentHashMap<>();
 
   public void setData(EntityPlayer player, PlayerEffectData data) {
-    try{
+    try {
       lock.lock();
       this.data.put(player, data);
-    } finally{
+    } finally {
       lock.unlock();
     }
   }
