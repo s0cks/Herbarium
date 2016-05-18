@@ -1,12 +1,6 @@
 {
   "forge_marker": 1,
   "variants": {
-    "normal": {
-      "model": "herbarium:barrel",
-      "textures": {
-        "texture": "herbarium:models/barrel"
-      }
-    },
     "inventory": {
       "model": "herbarium:barrel",
       "textures": {

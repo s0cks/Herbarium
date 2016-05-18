@@ -18,7 +18,7 @@ public final class EffectChapterFactory {
     SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
     pages.add(new JournalPage(EnumJournalChapters.EFFECTS.uuid(), 0,
                               new ChapterHeaderRenderer(EnumJournalChapters.EFFECTS.uuid(),
-                                                                 EnumJournalChapters.EFFECTS.ordinal())));
+                                                        EnumJournalChapters.EFFECTS.ordinal())));
 
     Queue<IEffect> effects = new LinkedList<>(HerbariumApi.EFFECT_MANAGER.allEffects());
     Collections.sort(((LinkedList<IEffect>) effects), EffectComparators.UUID);
@@ -33,7 +33,7 @@ public final class EffectChapterFactory {
       }
 
       pages.add(new JournalPage("herbarium.journal.chapters.effects." + pageOrdinal, pageOrdinal++, new
-                                                                                                             EffectPageRenderer(e)));
+                                                                                                    EffectPageRenderer(e)));
     }
 
     return pages;

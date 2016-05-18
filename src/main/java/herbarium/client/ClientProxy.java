@@ -4,7 +4,6 @@ import herbarium.client.render.RenderEffectTray;
 import herbarium.client.render.RenderItemPageFP;
 import herbarium.client.render.tile.RenderTileMortar;
 import herbarium.common.CommonProxy;
-import herbarium.common.Herbarium;
 import herbarium.common.HerbariumBlocks;
 import herbarium.common.HerbariumItems;
 import herbarium.common.blocks.flowers.BlockWaterFlower;
@@ -19,6 +18,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -58,18 +58,18 @@ extends CommonProxy {
 
     // =========================================================================
     // Blocks
-    registerRender(Herbarium.blockAlstromeria, "alstromeria");
-    registerRender(Herbarium.blockBelladonna, "belladonna");
-    registerRender(Herbarium.blockBlueAnemone, "anemone");
-    registerRender(Herbarium.blockBlueberry, "blueberry_blossom");
-    registerRender(Herbarium.blockButtercup, "buttercup");
-    registerRender(Herbarium.blockCave, "cavern_bloom");
-    registerRender(Herbarium.blockWinterLily, "winter_lily");
-    registerRender(Herbarium.blockFire, "lancet_root");
-    registerRender(Herbarium.blockLongEarIris, "tail_iris");
-    registerRender(Herbarium.blockLotus, "spring_lotus");
-    registerRender(Herbarium.blockNether, "igneous_spear");
-    registerRender(Herbarium.blockTropicalBerries, "tropical_berries");
+    registerRender(HerbariumBlocks.blockAlstromeria, "alstromeria");
+    registerRender(HerbariumBlocks.blockBelladonna, "belladonna");
+    registerRender(HerbariumBlocks.blockBlueAnemone, "anemone");
+    registerRender(HerbariumBlocks.blockBlueberryBlossom, "blueberry_blossom");
+    registerRender(HerbariumBlocks.blockButtercup, "buttercup");
+    registerRender(HerbariumBlocks.blockCavernBloom, "cavern_bloom");
+    registerRender(HerbariumBlocks.blockWinterLily, "winter_lily");
+    registerRender(HerbariumBlocks.blockLancetRoot, "lancet_root");
+    registerRender(HerbariumBlocks.blockTailIris, "tail_iris");
+    registerRender(HerbariumBlocks.blockSpringLotus, "spring_lotus");
+    registerRender(HerbariumBlocks.blockIgneousSpear, "igneous_spear");
+    registerRender(HerbariumBlocks.blockTropicalBerries, "tropical_berries");
 
     registerRender(HerbariumBlocks.blockCoil, "coil");
     registerRender(HerbariumBlocks.blockCrucible, "crucible");
@@ -96,7 +96,7 @@ extends CommonProxy {
 
     // =========================================================================
     // Blocks
-    registerColor(new BlockWaterFlower.SpringLotusColorizer(), Herbarium.blockLotus);
+    registerColor(new BlockWaterFlower.SpringLotusColorizer(), HerbariumBlocks.blockSpringLotus);
     // =========================================================================
   }
 
@@ -131,7 +131,7 @@ extends CommonProxy {
   }
 
   private void registerRender(Block block, String id) {
-    registerRender(Item.getItemFromBlock(block), id);
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(new ResourceLocation("herbarium", id), "inventory"));
   }
 
   private void registerRender(Item item, int meta, String id) {
@@ -139,6 +139,9 @@ extends CommonProxy {
   }
 
   private void registerRender(Item item, String id) {
-    ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("herbarium:" + id, "inventory"));
+    ModelLoader.setCustomModelResourceLocation(
+    item,
+    0,
+    new ModelResourceLocation("herbarium:" + id, "inventory"));
   }
 }

@@ -1,14 +1,5 @@
 {
-  "forge_marker": 1,
   "variants": {
-    "normal": {
-      "model": "herbarium:alstromeria"
-    },
-    "inventory": {
-      "model": "herbarium:alstromeria",
-      "textures": {
-        "cross": "herbarium:blocks/flowers/alstromeria"
-      }
-    }
+    "inventory": { "model": "herbarium:flowers/alstromeria" }
   }
 }

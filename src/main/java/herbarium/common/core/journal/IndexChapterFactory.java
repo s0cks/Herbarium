@@ -20,7 +20,7 @@ public final class IndexChapterFactory {
     SortedArraySet<IJournalPage> pages = new SortedArraySet<>(new JournalPageComparator());
     pages.add(new JournalPage(EnumJournalChapters.INDEX.uuid(), 0,
                               new ChapterHeaderRenderer(EnumJournalChapters.INDEX.uuid(),
-                                                                 EnumJournalChapters.INDEX.ordinal())));
+                                                        EnumJournalChapters.INDEX.ordinal())));
 
     int pageCount = 0;
     int count = 0;
@@ -46,7 +46,7 @@ public final class IndexChapterFactory {
         count++;
         if (count >= 13) {
           pages.add(new JournalPage("herbarium.journal.pages.index." + pageCount, pageCount++, new
-                                                                                                        ContentsPageRenderer(datas)));
+                                                                                               ContentsPageRenderer(datas)));
           datas.clear();
           count = 0;
         } else if (ps.size() <= 14) {
@@ -61,7 +61,7 @@ public final class IndexChapterFactory {
         }
 
         pages.add(new JournalPage("herbarium.journal.pages.index." + pageCount, pageCount++, new
-                                                                                                      ContentsPageRenderer(datas)));
+                                                                                             ContentsPageRenderer(datas)));
       }
     }
 

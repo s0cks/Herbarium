@@ -15,12 +15,6 @@ import herbarium.api.genetics.IChromosomeType;
 import herbarium.api.genetics.ISpecies;
 import herbarium.client.font.HerbariumFontRenderer;
 import herbarium.client.gui.GuiJournal;
-import herbarium.common.blocks.flowers.BlockCaveFlower;
-import herbarium.common.blocks.flowers.BlockHerbariumFlower;
-import herbarium.common.blocks.flowers.BlockNetherFlower;
-import herbarium.common.blocks.flowers.BlockWaterFlower;
-import herbarium.common.core.BiomeSpecificCaveGeneration;
-import herbarium.common.core.BiomeSpecificGeneration;
 import herbarium.common.core.KeyHandler;
 import herbarium.common.core.botany.FlowerFactory;
 import herbarium.common.core.botany.FlowerSpecies;
@@ -49,7 +43,6 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -88,6 +81,15 @@ implements IPageManager,
            IGuiHandler,
            IAlleleManager,
            IGemTracker {
+  public static final Random random = new Random();
+  public static final Gson gson = new GsonBuilder()
+                                  .setPrettyPrinting()
+                                  .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
+                                  .create();
+  public static final CreativeTabs tab = new CreativeTabHerbarium();
+  // GUIs
+  public static final byte GUI_JOURNAL = 0x1;
+
   static {
     HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
     HerbariumApi.ALLELE_MANAGER = new AlleleManager();
@@ -95,53 +97,6 @@ implements IPageManager,
 
     Flowers.initFlowers();
   }
-
-  public static final Random random = new Random();
-  public static final Gson gson = new GsonBuilder()
-                                  .setPrettyPrinting()
-                                  .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
-                                  .create();
-  public static final CreativeTabs tab = new CreativeTabHerbarium();
-  // Blocks
-  // Flowers
-  public static final Block blockAlstromeria = new BlockHerbariumFlower(Flowers.ALSTROMERIA.individual())
-                                               .setCreativeTab(Herbarium.tab)
-                                               .setUnlocalizedName("herba_alstromeria");
-  public static final Block blockBelladonna = new BlockHerbariumFlower(Flowers.BELLADONNA.individual())
-                                              .setCreativeTab(Herbarium.tab)
-                                              .setUnlocalizedName("herba_belladonna");
-  public static final Block blockBlueAnemone = new BlockHerbariumFlower(Flowers.BLUE_ANEMONE.individual())
-                                               .setCreativeTab(Herbarium.tab)
-                                               .setUnlocalizedName("herba_anemone");
-  public static final Block blockBlueberry = new BlockHerbariumFlower(Flowers.BLUEBERRY_BLOSSOM.individual())
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_blueberry_blossom");
-  public static final Block blockButtercup = new BlockHerbariumFlower(Flowers.BUTTERCUP.individual())
-                                             .setCreativeTab(Herbarium.tab)
-                                             .setUnlocalizedName("herba_buttercup");
-  public static final Block blockCave = new BlockCaveFlower(Flowers.CAVERN_BLOOM.individual())
-                                        .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_cavern_bloom");
-  public static final Block blockWinterLily = new BlockHerbariumFlower(Flowers.WINTER_LILY.individual())
-                                              .setCreativeTab(Herbarium.tab)
-                                              .setUnlocalizedName("herba_winter_lily");
-  public static final Block blockFire = new BlockNetherFlower(Flowers.LANCET_ROOT.individual())
-                                        .setCreativeTab(Herbarium.tab)
-                                        .setUnlocalizedName("herba_lancet_root");
-  public static final Block blockLongEarIris = new BlockHerbariumFlower(Flowers.TAIL_IRIS.individual())
-                                               .setCreativeTab(Herbarium.tab)
-                                               .setUnlocalizedName("herba_tail_iris");
-  public static final Block blockLotus = new BlockWaterFlower(Flowers.SPRING_LOTUS.individual())
-                                         .setCreativeTab(Herbarium.tab)
-                                         .setUnlocalizedName("herba_spring_lotus");
-  public static final Block blockNether = new BlockNetherFlower(Flowers.IGNEOUS_SPEAR.individual())
-                                          .setCreativeTab(Herbarium.tab)
-                                          .setUnlocalizedName("herba_igneous_spear");
-  public static final Block blockTropicalBerries = new BlockHerbariumFlower(Flowers.TROPICAL_BERRIES.individual())
-                                                   .setCreativeTab(Herbarium.tab)
-                                                   .setUnlocalizedName("herba_tropical_berries");
-  // GUIs
-  public static final byte GUI_JOURNAL = 0x1;
 
   @Mod.Instance("herbarium")
   public static Herbarium instance;
@@ -185,20 +140,6 @@ implements IPageManager,
     HerbariumItems.init();
     HerbariumBlocks.init();
 
-    // Flowers
-    GameRegistry.registerBlock(blockAlstromeria, "alstromeria");
-    GameRegistry.registerBlock(blockBelladonna, "belladonna");
-    GameRegistry.registerBlock(blockBlueAnemone, "anemone");
-    GameRegistry.registerBlock(blockBlueberry, "blueberry_blossom");
-    GameRegistry.registerBlock(blockButtercup, "buttercup");
-    GameRegistry.registerBlock(blockCave, "cavern_bloom");
-    GameRegistry.registerBlock(blockWinterLily, "winter_lily");
-    GameRegistry.registerBlock(blockFire, "lancet_root");
-    GameRegistry.registerBlock(blockLongEarIris, "tail_iris");
-    GameRegistry.registerBlock(blockLotus, "spring_lotus");
-    GameRegistry.registerBlock(blockNether, "igneous_spear");
-    GameRegistry.registerBlock(blockTropicalBerries, "tropical_berries");
-
     // Tiles
     GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
     GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
@@ -207,13 +148,14 @@ implements IPageManager,
     GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
     GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
 
-    proxy.registerRenders();
   }
 
   @Mod.EventHandler
   public void init(FMLInitializationEvent e) {
     NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
 
+    proxy.init();
+    proxy.registerRenders();
     proxy.registerColors();
 
     String[] pages = new String[]{
@@ -238,20 +180,6 @@ implements IPageManager,
     MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
     MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
     MinecraftForge.EVENT_BUS.register(new KeyHandler());
-
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockAlstromeria, Biomes.PLAINS, Biomes.RIVER, Biomes.FOREST_HILLS));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockBlueAnemone, Biomes.OCEAN, Biomes.RIVER, Biomes.DEEP_OCEAN, Biomes.BEACH));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockBelladonna, Biomes.SWAMPLAND, Biomes.ROOFED_FOREST));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockButtercup, Biomes.PLAINS, Biomes.EXTREME_HILLS, Biomes.EXTREME_HILLS_EDGE, Biomes.EXTREME_HILLS_WITH_TREES));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockFire, Biomes.MESA, Biomes.MESA_ROCK, Biomes.MESA_CLEAR_ROCK, Biomes.DESERT, Biomes.DESERT_HILLS, Biomes.SAVANNA, Biomes.MUTATED_SAVANNA_ROCK));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockLotus, Biomes.FOREST, Biomes.FOREST_HILLS));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockLongEarIris, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.JUNGLE_EDGE));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockTropicalBerries, Biomes.JUNGLE, Biomes.JUNGLE_HILLS, Biomes.JUNGLE_EDGE));
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificGeneration(blockWinterLily, Biomes.TAIGA, Biomes.COLD_TAIGA, Biomes.COLD_TAIGA_HILLS, Biomes.FROZEN_OCEAN, Biomes.FROZEN_RIVER, Biomes.MUTATED_ICE_FLATS, Biomes.ICE_MOUNTAINS, Biomes.TAIGA_HILLS));
-
-    MinecraftForge.EVENT_BUS.register(new BiomeSpecificCaveGeneration(Biomes.EXTREME_HILLS, blockCave, 30));
-
-    proxy.init();
 
     EnumJournalChapters.init();
   }
