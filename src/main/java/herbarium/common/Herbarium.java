@@ -148,6 +148,7 @@ implements IPageManager,
     GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
     GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
 
+    proxy.registerRenders();
   }
 
   @Mod.EventHandler
@@ -155,7 +156,6 @@ implements IPageManager,
     NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
 
     proxy.init();
-    proxy.registerRenders();
     proxy.registerColors();
 
     String[] pages = new String[]{
