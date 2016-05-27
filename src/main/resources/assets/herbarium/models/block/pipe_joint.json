@@ -1,0 +1,27 @@
+{
+"textures": {
+    "main": "models/pipe"
+},
+"elements": [ 
+{
+    "__comment": "Pipe",
+    "from": [ 7, 7, 7 ],
+    "to": [ 9, 9, 9 ],
+    "faces": {
+        "down":  { "uv": [ 0, 0, 2, 2 ], "texture": "#main" },
+        "up":    { "uv": [ 14, 0, 16, 2 ], "rotation": 180, "texture": "#main" },
+        "north": { "uv": [ 8, 0, 10, 2 ], "rotation": 270, "texture": "#main" },
+        "south": { "uv": [ 7, 0, 9, 2 ], "rotation": 270, "texture": "#main" },
+        "west":  { "uv": [ 7, 0, 9, 2 ], "rotation": 90, "texture": "#main", "cullface": "west" },
+        "east":  { "uv": [ 7, 0, 9, 2 ], "rotation": 270, "texture": "#main", "cullface": "east" }
+    }
+}
+],
+"display": {
+    "gui": {
+        "rotation": [ 22.5, 45, 0 ],
+        "translation": [ 0, 0, 0 ],
+        "scale": [ 0.5, 0.5, 0.5 ]
+    }
+}
+}
