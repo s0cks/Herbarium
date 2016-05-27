@@ -148,6 +148,7 @@ implements IPageManager,
     GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
     GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
 
+    proxy.preInit();
     proxy.registerRenders();
   }
 

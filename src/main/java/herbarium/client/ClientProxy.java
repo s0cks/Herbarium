@@ -3,6 +3,7 @@ package herbarium.client;
 import herbarium.client.render.RenderEffectTray;
 import herbarium.client.render.RenderItemPageFP;
 import herbarium.client.render.tile.RenderTileMortar;
+import herbarium.client.render.tile.RenderTilePipe;
 import herbarium.common.CommonProxy;
 import herbarium.common.HerbariumBlocks;
 import herbarium.common.HerbariumItems;
@@ -10,6 +11,7 @@ import herbarium.common.blocks.flowers.BlockWaterFlower;
 import herbarium.common.items.ItemBrew;
 import herbarium.common.items.ItemPaste;
 import herbarium.common.tiles.brewing.TileEntityMortar;
+import herbarium.common.tiles.brewing.TileEntityPipe;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -39,6 +41,11 @@ extends CommonProxy {
   public BlockRendererDispatcher dispatcher() {
     return this.getClient()
                .getBlockRendererDispatcher();
+  }
+
+  @Override
+  public void preInit() {
+    MinecraftForge.EVENT_BUS.register(ClientEventHandler.instance());
   }
 
   @Override
@@ -116,6 +123,7 @@ extends CommonProxy {
     // MinecraftForge.EVENT_BUS.register((this.renderEffectTray = new RenderEffectTray()));
 
     ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMortar.class, new RenderTileMortar());
+    ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPipe.class, new RenderTilePipe());
   }
 
   private void registerColor(IItemColor color, Item item) {

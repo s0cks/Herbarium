@@ -18,5 +18,6 @@ public class CommonProxy {
 
   public RenderEffectTray renderEffectTray() { return null; }
 
+  public void preInit(){}
   public void init() {}
 }

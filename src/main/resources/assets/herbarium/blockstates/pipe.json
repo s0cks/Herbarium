@@ -2,13 +2,13 @@
   "forge_marker": 1,
   "variants": {
     "normal": {
-      "model": "herbarium:pipe",
+      "model": "herbarium:pipe_joint",
       "textures": {
         "main": "herbarium:models/pipe"
       }
     },
     "inventory": {
-      "model": "herbarium:pipe",
+      "model": "herbarium:pipe_joint",
       "textures": {
         "main": "herbarium:models/pipe"
       }
