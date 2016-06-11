@@ -70,321 +70,318 @@ import java.util.Random;
 import java.util.Set;
 
 @Mod(
-modid = "herbarium",
-name = "Herbarium",
-version = "0.0.0.0",
-dependencies = "required-after:Forge@[1.9-12.16.1.1887,)"
+        modid = "herbarium",
+        name = "Herbarium",
+        version = "0.0.0.0",
+        dependencies = "required-after:Forge@[1.9-12.16.1.1887,)"
 )
 public final class Herbarium
-implements IPageManager,
-           IEffectManager,
-           IGuiHandler,
-           IAlleleManager,
-           IGemTracker {
-  public static final Random random = new Random();
-  public static final Gson gson = new GsonBuilder()
-                                  .setPrettyPrinting()
-                                  .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
-                                  .create();
-  public static final CreativeTabs tab = new CreativeTabHerbarium();
-  // GUIs
-  public static final byte GUI_JOURNAL = 0x1;
+        implements IPageManager,
+        IEffectManager,
+        IGuiHandler,
+        IAlleleManager,
+        IGemTracker {
+    @Mod.Instance("herbarium")
+    public static Herbarium instance;
+    public static final Random random = new Random();
+    public static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(IPage.class, new JsonPageDeserializer())
+            .create();
+    public static final CreativeTabs tab = new CreativeTabHerbarium();
+    // GUIs
+    public static final byte GUI_JOURNAL = 0x1;
 
-  static {
-    HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
-    HerbariumApi.ALLELE_MANAGER = new AlleleManager();
-    HerbariumApi.FLOWER_SPECIES = new FlowerSpecies();
+    static {
+        HerbariumApi.FLOWER_FACTORY = new FlowerFactory();
+        HerbariumApi.ALLELE_MANAGER = new AlleleManager();
+        HerbariumApi.FLOWER_SPECIES = new FlowerSpecies();
 
-    Flowers.initFlowers();
-  }
-
-  @Mod.Instance("herbarium")
-  public static Herbarium instance;
-  @SidedProxy(
-  clientSide = "herbarium.client.ClientProxy",
-  serverSide = "herbarium.common.CommonProxy"
-  )
-  public static CommonProxy proxy;
-
-  private final Set<IPage> pages = new HashSet<>();
-  private final List<IEffect> effects = new LinkedList<>();
-  private final List<IAllele> alleles = new LinkedList<>();
-  private final List<ISpecies> species = new LinkedList<>();
-  private final List<IPageGroup> groups = new LinkedList<>();
-  private final List<Block> gems = new LinkedList<>();
-
-  @Mod.EventHandler
-  public void preInit(FMLPreInitializationEvent e) {
-    HerbariumConfig.init(new Configuration(e.getSuggestedConfigurationFile()));
-
-    HerbariumApi.PAGE_MANAGER = this;
-    HerbariumApi.PAGE_TRACKER = new PageTracker();
-    HerbariumApi.EFFECT_MANAGER = this;
-    HerbariumApi.EFFECT_TRACKER = new EffectTracker();
-    HerbariumApi.GEM_TRACKER = this;
-    HerbariumApi.FONT_RENDERER = new HerbariumFontRenderer();
-    HerbariumApi.JOURNAL_FACTORY = new JournalFactory();
-
-    for (PageGroups group : PageGroups.values()) this.register(group);
-    for (VenomEffects effect : VenomEffects.values()) this.register(effect);
-    for (SpiritEffects effect : SpiritEffects.values()) this.register(effect);
-    for (RemedyEffects effect : RemedyEffects.values()) this.register(effect);
-
-    register(Blocks.DIAMOND_ORE);
-    register(Blocks.EMERALD_ORE);
-    register(Blocks.QUARTZ_ORE);
-    register(Blocks.LAPIS_ORE);
-    register(Blocks.REDSTONE_ORE);
-    register(Blocks.LIT_REDSTONE_ORE);
-
-    HerbariumItems.init();
-    HerbariumBlocks.init();
-
-    // Tiles
-    GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
-    GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
-    GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
-    GameRegistry.registerTileEntity(TileEntityCrucible.class, "crucible");
-    GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
-    GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
-
-    proxy.preInit();
-    proxy.registerRenders();
-  }
-
-  @Mod.EventHandler
-  public void init(FMLInitializationEvent e) {
-    NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
-
-    proxy.init();
-    proxy.registerColors();
-
-    String[] pages = new String[]{
-    "Commentarium"
-    };
-    for (String page : pages) {
-      try (InputStream is = Herbarium.proxy.getClient()
-                                           .getResourceManager()
-                                           .getResource(new ResourceLocation("herbarium", "pages/" + page + ".json"))
-                                           .getInputStream()) {
-        this.register(Herbarium.gson.fromJson(new InputStreamReader(is), IPage.class));
-      } catch (Exception ex) {
-        throw new RuntimeException(ex);
-      }
+        Flowers.initFlowers();
     }
-  }
 
-  @Mod.EventHandler
-  public void postInit(FMLPostInitializationEvent e) {
-    HerbariumNetwork.init();
+    @SidedProxy(serverSide = "herbarium.common.CommonProxy", clientSide = "herbarium.client.ClientProxy")
+    public static CommonProxy proxy;
 
-    MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
-    MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
-    MinecraftForge.EVENT_BUS.register(new KeyHandler());
+    private final Set<IPage> pages = new HashSet<>();
+    private final List<IEffect> effects = new LinkedList<>();
+    private final List<IAllele> alleles = new LinkedList<>();
+    private final List<ISpecies> species = new LinkedList<>();
+    private final List<IPageGroup> groups = new LinkedList<>();
+    private final List<Block> gems = new LinkedList<>();
 
-    EnumJournalChapters.init();
-  }
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent e) {
+        HerbariumConfig.init(new Configuration(e.getSuggestedConfigurationFile()));
 
-  @Mod.EventHandler
-  public void serverStarting(FMLServerStartingEvent e) {
-    e.registerServerCommand(new CommandBase() {
-      @Override
-      public String getCommandName() {
-        return "pages_all";
-      }
+        HerbariumApi.PAGE_MANAGER = this;
+        HerbariumApi.PAGE_TRACKER = new PageTracker();
+        HerbariumApi.EFFECT_MANAGER = this;
+        HerbariumApi.EFFECT_TRACKER = new EffectTracker();
+        HerbariumApi.GEM_TRACKER = this;
+        HerbariumApi.FONT_RENDERER = new HerbariumFontRenderer();
+        HerbariumApi.JOURNAL_FACTORY = new JournalFactory();
 
-      @Override
-      public String getCommandUsage(ICommandSender sender) {
-        return "pages_all";
-      }
+        for (PageGroups group : PageGroups.values()) this.register(group);
+        for (VenomEffects effect : VenomEffects.values()) this.register(effect);
+        for (SpiritEffects effect : SpiritEffects.values()) this.register(effect);
+        for (RemedyEffects effect : RemedyEffects.values()) this.register(effect);
 
-      @Override
-      public void execute(MinecraftServer server, ICommandSender sender, String[] args)
-      throws CommandException {
-        for (IPage page : HerbariumApi.PAGE_MANAGER.all()) {
-          if (!HerbariumApi.PAGE_TRACKER.learned(((EntityPlayer) sender), page)) {
-            HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
-          }
+        register(Blocks.DIAMOND_ORE);
+        register(Blocks.EMERALD_ORE);
+        register(Blocks.QUARTZ_ORE);
+        register(Blocks.LAPIS_ORE);
+        register(Blocks.REDSTONE_ORE);
+        register(Blocks.LIT_REDSTONE_ORE);
+
+        HerbariumItems.init();
+        HerbariumBlocks.init();
+
+        // Tiles
+        GameRegistry.registerTileEntity(TileEntityPipe.class, "pipe");
+        GameRegistry.registerTileEntity(TileEntityMortar.class, "mortar");
+        GameRegistry.registerTileEntity(TileEntityBrewBarrel.class, "brew_barrel");
+        GameRegistry.registerTileEntity(TileEntityCrucible.class, "crucible");
+        GameRegistry.registerTileEntity(TileEntityCoalescer.class, "coalescer");
+        GameRegistry.registerTileEntity(TileEntityFermenter.class, "fermenter");
+
+        proxy.preInit();
+        proxy.registerRenders();
+    }
+
+    @Mod.EventHandler
+    public void init(FMLInitializationEvent e) {
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, instance);
+
+        proxy.init();
+        proxy.registerColors();
+
+        String[] pages = new String[]{
+                "Commentarium"
+        };
+        for (String page : pages) {
+            try (InputStream is = Herbarium.proxy.getClient()
+                    .getResourceManager()
+                    .getResource(new ResourceLocation("herbarium", "pages/" + page + ".json"))
+                    .getInputStream()) {
+                this.register(Herbarium.gson.fromJson(new InputStreamReader(is), IPage.class));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
         }
-        HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
-      }
-    });
-    e.registerServerCommand(new CommandBase() {
-      @Override
-      public String getCommandName() {
-        return "effects_clear";
-      }
-
-      @Override
-      public String getCommandUsage(ICommandSender sender) {
-        return "effects_clear";
-      }
-
-      @Override
-      public void execute(MinecraftServer server, ICommandSender sender, String[] args)
-      throws CommandException {
-        HerbariumApi.EFFECT_TRACKER.clearEffects(((EntityPlayer) sender));
-        HerbariumApi.EFFECT_TRACKER.syncEffects(((EntityPlayer) sender));
-      }
-    });
-  }
-
-  @Override
-  public Set<IPage> all() {
-    return Collections.unmodifiableSet(this.pages);
-  }
-
-  @Override
-  public IPage get(String uuid) {
-    for (IPage page : this.pages) {
-      if (page.uuid()
-              .equals(uuid)) {
-        return page;
-      }
     }
 
-    return null;
-  }
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+        HerbariumNetwork.init();
 
-  @Override
-  public IPageGroup getPageGroup(String uuid) {
-    for (IPageGroup group : this.groups) {
-      if (group.uuid()
-               .equals(uuid)) {
-        return group;
-      }
+        MinecraftForge.EVENT_BUS.register(HerbariumApi.PAGE_TRACKER);
+        MinecraftForge.EVENT_BUS.register(HerbariumApi.EFFECT_TRACKER);
+        MinecraftForge.EVENT_BUS.register(new KeyHandler());
+
+        EnumJournalChapters.init();
     }
 
-    return null;
-  }
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent e) {
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "pages_all";
+            }
 
-  @Override
-  public List<IPageGroup> sortedGroups() {
-    Collections.sort(this.groups, new Comparator<IPageGroup>() {
-      @Override
-      public int compare(IPageGroup iPageGroup, IPageGroup t1) {
-        return Integer.compare(iPageGroup.ordinal(), t1.ordinal());
-      }
-    });
-    return Collections.unmodifiableList(this.groups);
-  }
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "pages_all";
+            }
 
-  @Override
-  public void register(IPage page) {
-    this.pages.add(page);
-  }
+            @Override
+            public void execute(MinecraftServer server, ICommandSender sender, String[] args)
+                    throws CommandException {
+                for (IPage page : HerbariumApi.PAGE_MANAGER.all()) {
+                    if (!HerbariumApi.PAGE_TRACKER.learned(((EntityPlayer) sender), page)) {
+                        HerbariumApi.PAGE_TRACKER.learn(((EntityPlayer) sender), page);
+                    }
+                }
+                HerbariumApi.PAGE_TRACKER.sync(((EntityPlayer) sender));
+            }
+        });
+        e.registerServerCommand(new CommandBase() {
+            @Override
+            public String getCommandName() {
+                return "effects_clear";
+            }
 
-  @Override
-  public void register(IPageGroup group) {
-    for (IPageGroup g : this.groups) {
-      if (group.uuid()
-               .equals(g.uuid())) {
-        return;
-      }
+            @Override
+            public String getCommandUsage(ICommandSender sender) {
+                return "effects_clear";
+            }
+
+            @Override
+            public void execute(MinecraftServer server, ICommandSender sender, String[] args)
+                    throws CommandException {
+                HerbariumApi.EFFECT_TRACKER.clearEffects(((EntityPlayer) sender));
+                HerbariumApi.EFFECT_TRACKER.syncEffects(((EntityPlayer) sender));
+            }
+        });
     }
 
-    this.groups.add(group);
-  }
+    @Override
+    public Set<IPage> all() {
+        return Collections.unmodifiableSet(this.pages);
+    }
 
-  @Override
-  public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    return null;
-  }
+    @Override
+    public IPage get(String uuid) {
+        for (IPage page : this.pages) {
+            if (page.uuid()
+                    .equals(uuid)) {
+                return page;
+            }
+        }
 
-  @Override
-  public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-    switch (ID) {
-      case GUI_JOURNAL:
-        return new GuiJournal(player);
-      default:
         return null;
     }
-  }
 
-  @Override
-  public void register(IEffect effect) {
-    for (IEffect e : this.effects) {
-      if (e.uuid()
-           .equals(effect.uuid())) {
-        return;
-      }
+    @Override
+    public IPageGroup getPageGroup(String uuid) {
+        for (IPageGroup group : this.groups) {
+            if (group.uuid()
+                    .equals(uuid)) {
+                return group;
+            }
+        }
+
+        return null;
     }
 
-    this.effects.add(effect);
-  }
-
-  @Override
-  public List<IEffect> allEffects() {
-    return Collections.unmodifiableList(this.effects);
-  }
-
-  @Override
-  public IEffect getEffect(String uuid) {
-    for (IEffect e : this.effects) {
-      if (e.uuid()
-           .equals(uuid)) {
-        return e;
-      }
+    @Override
+    public List<IPageGroup> sortedGroups() {
+        Collections.sort(this.groups, new Comparator<IPageGroup>() {
+            @Override
+            public int compare(IPageGroup iPageGroup, IPageGroup t1) {
+                return Integer.compare(iPageGroup.ordinal(), t1.ordinal());
+            }
+        });
+        return Collections.unmodifiableList(this.groups);
     }
 
-    return null;
-  }
-
-  @Override
-  public void registerSpecies(ISpecies species) {
-    for (ISpecies s : this.species) {
-      if (s.uuid()
-           .equals(species.uuid())) {
-        return;
-      }
+    @Override
+    public void register(IPage page) {
+        this.pages.add(page);
     }
 
-    this.species.add(species);
-  }
+    @Override
+    public void register(IPageGroup group) {
+        for (IPageGroup g : this.groups) {
+            if (group.uuid()
+                    .equals(g.uuid())) {
+                return;
+            }
+        }
 
-  @Override
-  public void registerAllele(IAllele allele, IChromosomeType type) {
-    for (IAllele a : this.alleles) {
-      if (a.uuid()
-           .equals(allele.uuid())) {
-        return;
-      }
+        this.groups.add(group);
     }
 
-    this.alleles.add(allele);
-  }
-
-  @Override
-  public ISpecies getSpecies(String uuid) {
-    for (ISpecies s : this.species) {
-      if (s.uuid()
-           .equals(uuid)) {
-        return s;
-      }
+    @Override
+    public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        return null;
     }
 
-    return null;
-  }
-
-  @Override
-  public IAllele getAllele(String uuid) {
-    for (IAllele a : this.alleles) {
-      if (a.uuid()
-           .equals(uuid)) {
-        return a;
-      }
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+        switch (ID) {
+            case GUI_JOURNAL:
+                return new GuiJournal(player);
+            default:
+                return null;
+        }
     }
 
-    return null;
-  }
+    @Override
+    public void register(IEffect effect) {
+        for (IEffect e : this.effects) {
+            if (e.uuid()
+                    .equals(effect.uuid())) {
+                return;
+            }
+        }
 
-  @Override
-  public boolean isGem(IBlockState state) {
-    return this.gems.contains(state.getBlock());
-  }
+        this.effects.add(effect);
+    }
 
-  @Override
-  public void register(Block block) {
-    this.gems.add(block);
-  }
+    @Override
+    public List<IEffect> allEffects() {
+        return Collections.unmodifiableList(this.effects);
+    }
+
+    @Override
+    public IEffect getEffect(String uuid) {
+        for (IEffect e : this.effects) {
+            if (e.uuid()
+                    .equals(uuid)) {
+                return e;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public void registerSpecies(ISpecies species) {
+        for (ISpecies s : this.species) {
+            if (s.uuid()
+                    .equals(species.uuid())) {
+                return;
+            }
+        }
+
+        this.species.add(species);
+    }
+
+    @Override
+    public void registerAllele(IAllele allele, IChromosomeType type) {
+        for (IAllele a : this.alleles) {
+            if (a.uuid()
+                    .equals(allele.uuid())) {
+                return;
+            }
+        }
+
+        this.alleles.add(allele);
+    }
+
+    @Override
+    public ISpecies getSpecies(String uuid) {
+        for (ISpecies s : this.species) {
+            if (s.uuid()
+                    .equals(uuid)) {
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public IAllele getAllele(String uuid) {
+        for (IAllele a : this.alleles) {
+            if (a.uuid()
+                    .equals(uuid)) {
+                return a;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public boolean isGem(IBlockState state) {
+        return this.gems.contains(state.getBlock());
+    }
+
+    @Override
+    public void register(Block block) {
+        this.gems.add(block);
+    }
 }
